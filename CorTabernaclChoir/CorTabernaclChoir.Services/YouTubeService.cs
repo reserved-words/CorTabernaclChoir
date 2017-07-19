@@ -22,10 +22,7 @@ namespace CorTabernaclChoir.Services
                 ? ParseYouTubeResponse(result.Content.ReadAsStringAsync().Result)
                 : new List<Video>();
         }
-
-        // When goes live will need to log into Google Developer Console as cor.tabernacl.choir@gmail.com
-        // to add the IP address of the new server to the allowed addresses
-
+        
         private static HttpResponseMessage GetResponse(string channelId, string apiKey, int maxResults)
         {
             var url = string.Format(YouTubeApiUrlFormat, channelId, apiKey, maxResults);
