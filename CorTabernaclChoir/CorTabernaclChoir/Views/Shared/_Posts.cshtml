@@ -1,0 +1,50 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.PostsViewModel
+@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Common.Models
+@using CorTabernaclChoir.Common
+
+@foreach (var item in Model.Items)
+{
+    var controllerName = item.Type == PostType.Visit ? "Visits" : "News";
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4>
+                @Html.DisplayFor(m => item.Title)
+                @Html.DisplayDeleteButton(Url.Action("Delete", controllerName, new { id = item.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+                @Html.DisplayEditButton(Url.Action("Edit", controllerName, new { id = item.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+            </h4>
+        </div>
+
+        <div class="panel-body">
+
+            <p>@Html.DisplayFormattedFor(m => item.Content)</p>
+
+            @foreach (var image in item.Images)
+            {
+                <img src="@string.Format(Resources.PostImageUrl, image)" />
+                <br /><br />
+            }
+
+        </div>
+
+        <div class="panel-footer">
+            <i><small>@string.Format(Resources.NewsPublished, item.Published)</small></i>
+        </div>
+    </div>
+}
+
+@if (Model.PreviousPage.HasValue)
+{
+    <small>
+        @Html.ActionLink(Resources.Previous, "Index", Model.ControllerName, new { page = Model.PreviousPage }, new { style = "float: left;" })
+    </small>
+}
+
+@if (Model.NextPage.HasValue)
+{
+    <small>
+        @Html.ActionLink(Resources.Next, "Index", Model.ControllerName, new { page = Model.NextPage }, new { style = "float: right;" })
+    </small>
+}

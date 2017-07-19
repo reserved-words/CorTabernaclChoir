@@ -1,0 +1,70 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.SidebarViewModel
+
+@using CorTabernaclChoir.Common
+@using CorTabernaclChoir.Helpers
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>@Resources.SidebarUpcomingEvents</h4>
+    </div>
+    <div class="panel-body">
+        
+        @if (!Model.UpcomingEvents.Any())
+        {
+            <p>@Resources.SidebarNoEvents</p>
+        }
+        else
+        {
+            <ul class="list-unstyled">
+
+                @foreach (var item in Model.UpcomingEvents)
+                {
+                    <li>
+                        @Html.DisplayDateFor(m => item.Date)<br />
+                        @Html.ActionLink(item.Title, "Item", "Events", new { id = item.Id }, null)
+                    </li>
+                }
+
+            </ul>
+        }
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>@Resources.SidebarLatestNews</h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-unstyled">
+
+            @foreach (var item in Model.LatestNews)
+            {
+                <li class="spaced">
+                    @Html.DisplayDateFor(m => item.Published)<br/>
+                    @Html.ActionLink(item.Title, "Item", "News", new {id = item.Id}, null)
+                </li>
+            }
+
+        </ul>
+
+        <small>
+            @Html.ActionLink(Resources.SidebarNewsLink, "Index", "News")
+        </small>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>@Resources.SidebarLinks</h4>
+    </div>
+    <div class="panel-body">
+        
+        @foreach (var item in Model.SocialMediaLinks)
+        {
+            <a href="@item.Url" target="_blank">
+                <img src="@item.ImageUrl" style="width: 50px; height: 50px;" />
+            </a>
+        }
+
+    </div>
+</div>

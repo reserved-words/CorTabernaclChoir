@@ -1,0 +1,49 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.AboutViewModel
+@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Common
+
+<p>
+    @Html.DisplayFormattedFor(m => m.AboutChoir)
+</p>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>@Resources.AboutConductor</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.DisplayFormattedFor(m => m.AboutConductor)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>@Resources.AboutAccompanist</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.DisplayFormattedFor(m => m.AboutAccompanist)
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayEditButton(Url.Action("Edit", "About"))
+    </div>
+</div>

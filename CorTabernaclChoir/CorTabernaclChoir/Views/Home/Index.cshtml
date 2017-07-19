@@ -1,0 +1,32 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.HomeViewModel
+@using CorTabernaclChoir.Helpers
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayFormattedFor(m => m.MainText)
+    </div>
+</div>
+<br />
+
+<div class="row text-center">
+    <div class="col-xs-12">
+        <img src="~/Images/home.jpg" />
+    </div>
+</div>
+<br />
+<div class="row text-center">
+    <div class="col-xs-12">
+        @Html.LabelFor(m => m.Conductor): @Html.DisplayFor(m => m.Conductor)
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-xs-12">
+        @Html.LabelFor(m => m.Accompanist): @Html.DisplayFor(m => m.Accompanist)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayEditButton(Url.Action("Edit", "Home"))
+    </div>
+</div>

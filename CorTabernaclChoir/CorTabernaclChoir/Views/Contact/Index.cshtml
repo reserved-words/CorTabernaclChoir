@@ -1,0 +1,16 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.ContactViewModel
+@using CorTabernaclChoir.Helpers
+
+<p>
+    @Html.DisplayFormattedFor(m => m.MainText)
+</p>
+
+<br />
+
+@Html.Partial("_ContactForm", Model.ContactForm)
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayEditButton(Url.Action("Edit", "Contact"))
+    </div>
+</div>

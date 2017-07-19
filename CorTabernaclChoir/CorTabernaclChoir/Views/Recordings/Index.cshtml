@@ -1,0 +1,24 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.RecordingsViewModel
+@using CorTabernaclChoir.Common
+
+<p>Under construction</p>
+
+@*<p>
+        @Resources.RecordingsText <a href="@Resources.SidebarYouTubeUrl" target="_blank">@Resources.RecordingsLinkText</a>.
+    </p>
+
+        <div class="row">
+        @foreach (var video in Model.Videos)
+        {
+            <div class="col-sm-6">
+                <div class="thumbnail text-center">
+                    <iframe class="embed-responsive-item" src="@video.Url"></iframe>
+                    <div class="caption">
+                        <h4>@video.Title</h4>
+                        <small>@string.Format(Resources.RecordingsPublished, video.Published)</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>*@
+

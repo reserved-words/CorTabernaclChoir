@@ -1,0 +1,43 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.JoinViewModel
+@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Common
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <tr>
+            <td>@Resources.JoinRehearsalTimes</td>
+            <td>@Html.DisplayFor(m => m.RehearsalTimes)</td>
+        </tr>
+        <tr>
+            <td>@Resources.JoinLocation</td>
+            <td>@Html.DisplayFor(m => m.Location)</td>
+        </tr>
+        <tr>
+            <td>@Resources.JoinAuditions</td>
+            <td>@Html.DisplayFor(m => m.Auditions)</td>
+        </tr>
+        <tr>
+            <td>@Resources.JoinConcerts</td>
+            <td>@Html.DisplayFor(m => m.Concerts)</td>
+        </tr>
+        <tr>
+            <td>@Resources.JoinSubscriptions</td>
+            <td>@Html.DisplayFor(m => m.Subscriptions)</td>
+        </tr>
+
+    </table>
+</div>
+
+<p>
+    @Html.DisplayFormattedFor(m => m.MainText)
+</p>
+
+<br />
+
+@Html.Partial("_ContactForm", Model.ContactForm)
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayEditButton(Url.Action("Edit", "Join"))
+    </div>
+</div>

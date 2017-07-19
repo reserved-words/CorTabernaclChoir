@@ -1,0 +1,62 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.WorksViewModel
+
+@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Common
+
+<p>@Resources.WorksText</p>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayAddButton(Url.Action("Add", "Works"))
+    </div>
+</div>
+
+<br />
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+
+        @foreach (var year in Model.Years)
+        {
+            var firstWork = year.Works.First();
+
+            <tr>
+                <td rowspan="@year.Works.Count">
+                    @Html.DisplayFor(y => year.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(w => firstWork.Composer)
+                </td>
+                <td>
+                    @Html.DisplayFor(w => firstWork.Title)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayEditButton(Url.Action("Edit", "Works", new { id = firstWork.Id }))
+                    @Html.DisplayDeleteButton(Url.Action("Delete", "Works", new { id = firstWork.Id }))
+                </td>
+            </tr>
+
+            foreach (var work in year.Works)
+            {
+                if (work == firstWork)
+                {
+                    continue;
+                }
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(w => work.Composer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(w => work.Title)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayEditButton(Url.Action("Edit", "Works", new { id = work.Id }))
+                        @Html.DisplayDeleteButton(Url.Action("Delete", "Works", new { id = firstWork.Id }))
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+</div>

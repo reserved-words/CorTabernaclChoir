@@ -1,0 +1,13 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.PostsViewModel
+
+@using CorTabernaclChoir.Helpers
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayAddButton(Url.Action("Add", "Visits"))
+    </div>
+</div>
+
+<br />
+
+@Html.Partial("_Posts", Model)

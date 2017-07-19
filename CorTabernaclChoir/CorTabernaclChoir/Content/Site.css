@@ -1,0 +1,32 @@
+﻿body {
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.banner{
+    background-color: #753333;
+    color: #ffffff;
+    height: 125px;
+}
+
+    .banner a{
+        margin-top: 20px;
+    }
+
+li.spaced {
+    margin-bottom: 0.5em;
+}
