@@ -11,13 +11,11 @@ namespace CorTabernaclChoir.Controllers
     {
         private readonly ICultureService _cultureService;
         private readonly IHomeService _service;
-        private readonly ISidebarService _sidebarService;
 
-        public HomeController(IHomeService service, ICultureService cultureService, ISidebarService sidebarService)
+        public HomeController(IHomeService service, ICultureService cultureService)
         {
             _cultureService = cultureService;
             _service = service;
-            _sidebarService = sidebarService;
         }
 
         [Route("~/")]
@@ -27,13 +25,6 @@ namespace CorTabernaclChoir.Controllers
             _cultureService.ValidateCulture(culture);
 
             return View(_service.Get());
-        }
-
-        [Route("~/Sidebar")]
-        [WelshRoute("Hafan/BarOchr")]
-        public ActionResult Sidebar(string culture)
-        {
-            return PartialView("_Sidebar", _sidebarService.Get());
         }
 
         [Authorize]

@@ -17,8 +17,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockViewModel = new HomeViewModel { MainText = "ABC", Conductor = "Con", Accompanist = "Acc" };
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var mockSidebarService = new Mock<ISidebarService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockSidebarService.Object);
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act
@@ -39,8 +38,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var mockSidebarService = new Mock<ISidebarService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockSidebarService.Object);
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("en") as ViewResult;
@@ -55,36 +53,13 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var mockSidebarService = new Mock<ISidebarService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockSidebarService.Object);
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("cy") as ViewResult;
 
             // Assert
             mockCultureService.Verify(c => c.ToggleCulture("cy"), Times.Once);
-        }
-
-        [TestMethod]
-        public void Sidebar_ReturnsCorrectView()
-        {
-            // Arrange
-            var mockViewModel = new SidebarViewModel();
-            var mockService = new Mock<IHomeService>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockSidebarService = new Mock<ISidebarService>();
-            var controller = new HomeController(mockService.Object, mockCultureService.Object, mockSidebarService.Object);
-            mockSidebarService.Setup(h => h.Get()).Returns(mockViewModel);
-
-            // Act
-            var result = controller.Sidebar("en") as PartialViewResult;
-
-            // Assert
-            mockSidebarService.Verify(h => h.Get(), Times.Once);
-            
-            Assert.IsNotNull(result);
-            Assert.AreEqual(mockViewModel, result.Model);
-            Assert.AreEqual("_Sidebar", result.ViewName);
         }
     }
 }

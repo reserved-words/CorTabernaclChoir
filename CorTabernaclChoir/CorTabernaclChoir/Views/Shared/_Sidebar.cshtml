@@ -4,6 +4,20 @@
 @using CorTabernaclChoir.Helpers
 
 <div class="panel panel-default">
+    <div class="panel-body">
+        <p>@Html.DisplayFormattedFor(m => m.ContactInformation)</p>
+        
+        @foreach (var item in Model.SocialMediaLinks)
+        {
+            <a href="@item.Url" target="_blank">
+                <img src="@item.ImageUrl" style="width: 50px; height: 50px;" />
+            </a>
+        }
+    </div>
+</div>
+
+
+<div class="panel panel-default">
     <div class="panel-heading">
         <h4>@Resources.SidebarUpcomingEvents</h4>
     </div>
@@ -50,21 +64,5 @@
         <small>
             @Html.ActionLink(Resources.SidebarNewsLink, "Index", "News")
         </small>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4>@Resources.SidebarLinks</h4>
-    </div>
-    <div class="panel-body">
-        
-        @foreach (var item in Model.SocialMediaLinks)
-        {
-            <a href="@item.Url" target="_blank">
-                <img src="@item.ImageUrl" style="width: 50px; height: 50px;" />
-            </a>
-        }
-
     </div>
 </div>

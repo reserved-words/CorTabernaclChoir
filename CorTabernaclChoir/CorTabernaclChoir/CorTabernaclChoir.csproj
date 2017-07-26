@@ -214,6 +214,7 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RecordingsController.cs" />
+    <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Controllers\WorksController.cs" />
     <Compile Include="Attributes\ControllerInfoAttribute.cs" />
@@ -474,6 +475,7 @@
     <Folder Include="Images\Posts\" />
     <Folder Include="Images\SocialMedia\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Sidebar\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

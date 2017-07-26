@@ -69,11 +69,14 @@ namespace CorTabernaclChoir.Services
                     })
                     .ToList();
 
+                var contact = uow.Repository<Contact>().GetSingle();
+
                 return new SidebarViewModel
                 {
                     SocialMediaLinks = socialMediaLinks,
                     UpcomingEvents = upcomingEvents,
-                    LatestNews = latestNews
+                    LatestNews = latestNews,
+                    ContactInformation = welsh ? contact.MainText_W : contact.MainText_E
                 };
             }
         }

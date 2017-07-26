@@ -18,5 +18,6 @@ namespace CorTabernaclChoir.Common.ViewModels
         public List<PostSummaryViewModel> LatestNews { get; set; }
         public List<EventSummaryViewModel> UpcomingEvents { get; set; }
         public List<SocialMediaViewModel> SocialMediaLinks { get; set; }
+        public string ContactInformation { get; set; }
     }
 }
