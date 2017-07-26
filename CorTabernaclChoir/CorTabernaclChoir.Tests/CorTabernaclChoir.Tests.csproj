@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AboutControllerTest.cs" />
-    <Compile Include="Controllers\ContactControllerTest.cs" />
     <Compile Include="Controllers\GalleryControllerTest.cs" />
     <Compile Include="Controllers\SidebarControllerTest.cs" />
     <Compile Include="Controllers\JoinControllerTest.cs" />
@@ -112,7 +111,6 @@
     <Compile Include="Services\GalleryServiceTest.cs" />
     <Compile Include="Services\SidebarServiceTest.cs" />
     <Compile Include="Services\HomeServiceTest.cs" />
-    <Compile Include="Services\ContactServiceTest.cs" />
     <Compile Include="Services\JoinServiceTest.cs" />
     <Compile Include="Services\PostsServiceTest.cs" />
     <Compile Include="Services\RecordingsServiceTest.cs" />

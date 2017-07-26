@@ -76,7 +76,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Services\IAboutService.cs" />
-    <Compile Include="Services\IContactService.cs" />
     <Compile Include="Services\IGalleryService.cs" />
     <Compile Include="Services\IHomeService.cs" />
     <Compile Include="Services\IJoinService.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Services\IWorksService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ContactFormViewModel.cs" />
-    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\JoinViewModel.cs" />
