@@ -23,6 +23,10 @@
                     @if (Request.IsAuthenticated)
                     {
                         @Html.ActionLink(Resources.AdminTitle, "Index", "Admin", null, new { @class = "btn btn-default" })
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        }
                         <a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit()">Log Off</a>
                     }
                 </div>

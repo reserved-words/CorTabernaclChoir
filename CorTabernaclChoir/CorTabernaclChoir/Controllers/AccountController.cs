@@ -132,6 +132,7 @@ namespace CorTabernaclChoir.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("~/Account/LogOff")]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
