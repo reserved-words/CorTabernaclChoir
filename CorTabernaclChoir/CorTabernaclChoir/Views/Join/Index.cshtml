@@ -1,5 +1,5 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.JoinViewModel
-@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Extensions
 @using CorTabernaclChoir.Common
 
 <div class="panel panel-default">
@@ -29,7 +29,7 @@
 </div>
 
 <p>
-    @Html.DisplayFormattedFor(m => m.MainText)
+    @Html.Markdown(Model.MainText)
 </p>
 
 <br />

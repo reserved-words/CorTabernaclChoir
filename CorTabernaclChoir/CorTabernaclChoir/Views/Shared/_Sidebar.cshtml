@@ -1,11 +1,11 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.SidebarViewModel
 
 @using CorTabernaclChoir.Common
-@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Extensions
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <p>@Html.DisplayFormattedFor(m => m.ContactInformation)</p>
+        <p>@Html.DisplayFor(m => m.ContactInformation)</p>
         
         @foreach (var item in Model.SocialMediaLinks)
         {

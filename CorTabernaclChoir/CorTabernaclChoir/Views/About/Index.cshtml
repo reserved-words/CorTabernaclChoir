@@ -1,9 +1,9 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.AboutViewModel
-@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Extensions
 @using CorTabernaclChoir.Common
 
 <p>
-    @Html.DisplayFormattedFor(m => m.AboutChoir)
+    @Html.Markdown(Model.AboutChoir)
 </p>
 
 <hr />
@@ -19,7 +19,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @Html.DisplayFormattedFor(m => m.AboutConductor)
+                    @Html.Markdown(Model.AboutConductor)
                 </p>
             </div>
         </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @Html.DisplayFormattedFor(m => m.AboutAccompanist)
+                    @Html.Markdown(Model.AboutAccompanist)
                 </p>
             </div>
         </div>

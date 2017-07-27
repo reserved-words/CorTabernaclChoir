@@ -21,11 +21,12 @@ namespace CorTabernaclChoir
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                      "~/Scripts/tinymce/tinymce.js",
+                      "~/Scripts/SimpleMDE/simplemde.min.js",
                       "~/Scripts/custom.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/SimpleMDE/simplemde.min.css",
+                      "~/Content/Bootstrap/bootstrap.css",
                       "~/Content/site.css"));
         }
     }

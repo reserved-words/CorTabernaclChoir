@@ -1,9 +1,9 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.HomeViewModel
-@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Extensions
 
 <div class="row">
     <div class="col-xs-12">
-        @Html.DisplayFormattedFor(m => m.MainText)
+        @Html.Markdown(Model.MainText)
     </div>
 </div>
 <br />

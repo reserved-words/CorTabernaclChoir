@@ -1,5 +1,5 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.PostsViewModel
-@using CorTabernaclChoir.Helpers
+@using CorTabernaclChoir.Extensions
 @using CorTabernaclChoir.Common.Models
 @using CorTabernaclChoir.Common
 
@@ -19,7 +19,7 @@
 
         <div class="panel-body">
 
-            <p>@Html.DisplayFormattedFor(m => item.Content)</p>
+            <p>@Html.Markdown(item.Content)</p>
 
             @foreach (var image in item.Images)
             {
