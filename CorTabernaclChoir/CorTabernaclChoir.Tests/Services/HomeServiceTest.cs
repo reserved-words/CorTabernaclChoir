@@ -29,7 +29,7 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Assert
             Assert.AreEqual(testData.MainText_E, result.MainText);
-            Assert.AreEqual(testData.MusicalDirector, result.Conductor);
+            Assert.AreEqual(testData.MusicalDirector, result.MusicalDirector);
             Assert.AreEqual(testData.Accompanist, result.Accompanist);
         }
 
@@ -52,7 +52,7 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Assert
             Assert.AreEqual(testData.MainText_W, result.MainText);
-            Assert.AreEqual(testData.MusicalDirector, result.Conductor);
+            Assert.AreEqual(testData.MusicalDirector, result.MusicalDirector);
             Assert.AreEqual(testData.Accompanist, result.Accompanist);
         }
     }

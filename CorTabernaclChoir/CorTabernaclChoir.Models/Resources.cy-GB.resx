@@ -120,8 +120,8 @@
   <data name="AboutAccompanist" xml:space="preserve">
     <value>Am y Cyfeilydd</value>
   </data>
-  <data name="AboutConductor" xml:space="preserve">
-    <value>Am yr Arweinydd</value>
+  <data name="AboutMusicalDirector" xml:space="preserve">
+    <value>Am y Cyfarwyddwr Cerdd</value>
   </data>
   <data name="AboutTitle" xml:space="preserve">
     <value>Am y Côr</value>
@@ -147,8 +147,8 @@
   <data name="HomeAccompanist" xml:space="preserve">
     <value>Cyfeilydd</value>
   </data>
-  <data name="HomeConductor" xml:space="preserve">
-    <value>Arweinydd</value>
+  <data name="HomeMusicalDirector" xml:space="preserve">
+    <value>Cyfarwyddwr Cerdd</value>
   </data>
   <data name="HomeTitle" xml:space="preserve">
     <value>Croeso</value>

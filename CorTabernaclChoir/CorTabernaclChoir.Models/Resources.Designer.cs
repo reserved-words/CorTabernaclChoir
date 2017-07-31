@@ -70,11 +70,11 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About the Conductor.
+        ///   Looks up a localized string similar to About the Musical Director.
         /// </summary>
-        public static string AboutConductor {
+        public static string AboutMusicalDirector {
             get {
-                return ResourceManager.GetString("AboutConductor", resourceCulture);
+                return ResourceManager.GetString("AboutMusicalDirector", resourceCulture);
             }
         }
         
@@ -178,11 +178,11 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conductor.
+        ///   Looks up a localized string similar to Musical Director.
         /// </summary>
-        public static string HomeConductor {
+        public static string HomeMusicalDirector {
             get {
-                return ResourceManager.GetString("HomeConductor", resourceCulture);
+                return ResourceManager.GetString("HomeMusicalDirector", resourceCulture);
             }
         }
         

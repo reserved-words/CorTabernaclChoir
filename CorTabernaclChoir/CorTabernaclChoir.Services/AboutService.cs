@@ -28,7 +28,7 @@ namespace CorTabernaclChoir.Services
                 var viewModel = new AboutViewModel
                 {
                     AboutChoir = isCurrentCultureWelsh ? model.AboutChoir_W : model.AboutChoir_E,
-                    AboutConductor = isCurrentCultureWelsh ? model.AboutMusicalDirector_W : model.AboutMusicalDirector_E,
+                    AboutMusicalDirector = isCurrentCultureWelsh ? model.AboutMusicalDirector_W : model.AboutMusicalDirector_E,
                     AboutAccompanist = isCurrentCultureWelsh ? model.AboutAccompanist_W : model.AboutAccompanist_E
                 };
 

@@ -120,8 +120,8 @@
   <data name="AboutAccompanist" xml:space="preserve">
     <value>About the Accompanist</value>
   </data>
-  <data name="AboutConductor" xml:space="preserve">
-    <value>About the Conductor</value>
+  <data name="AboutMusicalDirector" xml:space="preserve">
+    <value>About the Musical Director</value>
   </data>
   <data name="AboutTitle" xml:space="preserve">
     <value>About the Choir</value>
@@ -156,8 +156,8 @@
   <data name="HomeAccompanist" xml:space="preserve">
     <value>Accompanist</value>
   </data>
-  <data name="HomeConductor" xml:space="preserve">
-    <value>Conductor</value>
+  <data name="HomeMusicalDirector" xml:space="preserve">
+    <value>Musical Director</value>
   </data>
   <data name="HomeTitle" xml:space="preserve">
     <value>Welcome</value>

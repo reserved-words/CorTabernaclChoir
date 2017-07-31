@@ -11,8 +11,8 @@ namespace CorTabernaclChoir.Common.ViewModels
     {
         public string MainText { get; set; }
 
-        [Display(Name = nameof(HomeConductor), ResourceType = typeof(Resources))]
-        public string Conductor { get; set; }
+        [Display(Name = nameof(HomeMusicalDirector), ResourceType = typeof(Resources))]
+        public string MusicalDirector { get; set; }
 
         [Display(Name = nameof(HomeAccompanist), ResourceType = typeof(Resources))]
         public string Accompanist { get; set; }

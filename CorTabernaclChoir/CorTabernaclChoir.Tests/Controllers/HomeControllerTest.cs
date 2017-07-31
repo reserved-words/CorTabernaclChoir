@@ -14,7 +14,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void Index_ReturnsCorrectView()
         {
             // Arrange
-            var mockViewModel = new HomeViewModel { MainText = "ABC", Conductor = "Con", Accompanist = "Acc" };
+            var mockViewModel = new HomeViewModel { MainText = "ABC", MusicalDirector = "Con", Accompanist = "Acc" };
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
             var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
