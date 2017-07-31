@@ -21,7 +21,7 @@ namespace CorTabernaclChoir.Data.Migrations
                 context.Home.Add(new Home
                 {
                     Accompanist = "Accompanist Name",
-                    Conductor = "Musical Director Name",
+                    MusicalDirector = "Musical Director Name",
                     MainText_E = "Main text in English",
                     MainText_W = "Main text in Welsh"
                 });
@@ -33,8 +33,8 @@ namespace CorTabernaclChoir.Data.Migrations
                 {
                     AboutChoir_E = "Information about the choir in English",
                     AboutChoir_W = "Information about the choir in Welsh",
-                    AboutConductor_E = "Information about the musical director in English",
-                    AboutConductor_W = "Information about the musical director in Welsh",
+                    AboutMusicalDirector_E = "Information about the musical director in English",
+                    AboutMusicalDirector_W = "Information about the musical director in Welsh",
                     AboutAccompanist_E = "Information about the accompanist in English",
                     AboutAccompanist_W = "Information about the accompanist in Welsh"
                 });

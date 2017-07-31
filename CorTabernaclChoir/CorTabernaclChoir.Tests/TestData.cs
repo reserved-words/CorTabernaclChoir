@@ -12,8 +12,8 @@ namespace CorTabernaclChoir.Tests
                 Id = 1,
                 AboutAccompanist_E = "Acc in English",
                 AboutAccompanist_W = "Acc in Welsh",
-                AboutConductor_E = "Con in English",
-                AboutConductor_W = "Con in Welsh",
+                AboutMusicalDirector_E = "Con in English",
+                AboutMusicalDirector_W = "Con in Welsh",
                 AboutChoir_E = "Main Text in English",
                 AboutChoir_W = "Main Text in Welsh"
             };
@@ -35,7 +35,7 @@ namespace CorTabernaclChoir.Tests
             {
                 Id = 1,
                 Accompanist = "Acc",
-                Conductor = "Con",
+                MusicalDirector = "Con",
                 MainText_E = "Main Text in English",
                 MainText_W = "Main Text in Welsh"
             };

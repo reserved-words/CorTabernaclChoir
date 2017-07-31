@@ -26,7 +26,7 @@ namespace CorTabernaclChoir.Services
                 var viewModel = new HomeViewModel
                 {
                     MainText = _cultureService.IsCurrentCultureWelsh() ? model.MainText_W : model.MainText_E,
-                    Conductor = model.Conductor,
+                    Conductor = model.MusicalDirector,
                     Accompanist = model.Accompanist
                 };
 

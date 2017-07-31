@@ -22,7 +22,7 @@ namespace CorTabernaclChoir.Common.Models
 
         [StringLength(100)]
         [Display(Name = "Musical Director")]
-        public string Conductor { get; set; }
+        public string MusicalDirector { get; set; }
 
         [StringLength(100)]
         public string Accompanist { get; set; }

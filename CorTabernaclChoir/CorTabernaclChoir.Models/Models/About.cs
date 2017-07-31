@@ -21,12 +21,12 @@ namespace CorTabernaclChoir.Common.Models
         public string AboutChoir_W { get; set; }
 
         [StringLength(2000)]
-        [Display(Name = "About the Conductor (E)")]
-        public string AboutConductor_E { get; set; }
+        [Display(Name = "About the Musical Director (E)")]
+        public string AboutMusicalDirector_E { get; set; }
 
         [StringLength(2000)]
-        [Display(Name = "About the Conductor (W)")]
-        public string AboutConductor_W { get; set; }
+        [Display(Name = "About the Musical Director (W)")]
+        public string AboutMusicalDirector_W { get; set; }
 
         [StringLength(2000)]
         [Display(Name = "About the Accompanist (E)")]
