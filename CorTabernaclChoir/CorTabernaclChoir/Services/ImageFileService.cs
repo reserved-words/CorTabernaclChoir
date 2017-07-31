@@ -80,6 +80,15 @@ namespace CorTabernaclChoir.Services
             Delete(Path.Combine(directory, filename));
         }
 
+        public byte[] Convert(HttpPostedFileBase file)
+        {
+            using (var ms = new MemoryStream())
+            {
+                file.InputStream.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
+
         private bool SaveTempFile(HttpPostedFileBase file, string imagesFolder, out string result)
         {
             if (!ValidateFile(file, out result))

@@ -16,34 +16,34 @@ namespace CorTabernaclChoir.Extensions
             return MvcHtmlString.Create(model);
         }
 
-        public static MvcHtmlString DisplayEditButton(this HtmlHelper html, string url, object htmlAttributes = null)
+        public static MvcHtmlString DisplayEditButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)
         {
             return DisplayButton("pencil", "primary", "Edit", url, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplayAddButton(this HtmlHelper html, string url, object htmlAttributes = null)
+        public static MvcHtmlString DisplayAddButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("plus-sign", "primary", "Add New", url, htmlAttributes);
+            return DisplayButton("plus-sign", "primary", text ?? "Add New", url, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplayDeleteButton(this HtmlHelper html, string url, object htmlAttributes = null)
+        public static MvcHtmlString DisplayDeleteButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("trash", "danger", "Delete", url, htmlAttributes);
+            return DisplayButton("trash", "danger", text ?? "Delete", url, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplaySaveButton(this HtmlHelper html, object htmlAttributes = null)
+        public static MvcHtmlString DisplaySaveButton(this HtmlHelper html, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("ok", "danger", "Save", null, htmlAttributes);
+            return DisplayButton("ok", "danger", text ?? "Save", null, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplayDeleteConfirmButton(this HtmlHelper html, object htmlAttributes = null)
+        public static MvcHtmlString DisplayDeleteConfirmButton(this HtmlHelper html, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("ok", "danger", "Delete", null, htmlAttributes);
+            return DisplayButton("ok", "danger", text ?? "Delete", null, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplayCancelButton(this HtmlHelper html, string url, object htmlAttributes = null)
+        public static MvcHtmlString DisplayCancelButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("remove", "default", "Cancel", url, htmlAttributes);
+            return DisplayButton("remove", "default", text ?? "Cancel", url, htmlAttributes);
         }
 
         private static MvcHtmlString DisplayButton(string icon, string type, string text, string url = null, object htmlAttributes = null)

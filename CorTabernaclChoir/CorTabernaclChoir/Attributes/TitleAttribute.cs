@@ -3,9 +3,9 @@ using System.Web.Mvc;
 
 namespace CorTabernaclChoir.Attributes
 {
-    public class ControllerInfoAttribute : ActionFilterAttribute
+    public class TitleAttribute : ActionFilterAttribute
     {
-        public ControllerInfoAttribute(string titleResourceName, string menuResourceName)
+        public TitleAttribute(string titleResourceName, string menuResourceName)
         {
             TitleResourceName = titleResourceName;
             MenuResourceName = menuResourceName;

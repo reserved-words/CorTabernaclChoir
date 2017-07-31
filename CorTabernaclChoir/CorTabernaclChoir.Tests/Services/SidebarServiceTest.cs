@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Delegates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -84,7 +83,8 @@ namespace CorTabernaclChoir.Tests.Services
 
             var firstSocialMedia = result.SocialMediaLinks.First();
             var originalFirstSocialMedia = _socialMediaAccounts.Single(p => p.Url == firstSocialMedia.Url);
-            firstSocialMedia.ImageUrl.Should().Be(string.Format(Resources.SocialMediaImageUrl, originalFirstSocialMedia.Id));
+            firstSocialMedia.Url.Should().Be(originalFirstSocialMedia.Url);
+            firstSocialMedia.Name.Should().Be(originalFirstSocialMedia.Name);
         }
 
         [TestMethod]
@@ -115,7 +115,8 @@ namespace CorTabernaclChoir.Tests.Services
 
             var firstSocialMedia = result.SocialMediaLinks.First();
             var originalFirstSocialMedia = _socialMediaAccounts.Single(p => p.Url == firstSocialMedia.Url);
-            firstSocialMedia.ImageUrl.Should().Be(string.Format(Resources.SocialMediaImageUrl, originalFirstSocialMedia.Id));
+            firstSocialMedia.Url.Should().Be(originalFirstSocialMedia.Url);
+            firstSocialMedia.Name.Should().Be(originalFirstSocialMedia.Name);
         }
     }
 }

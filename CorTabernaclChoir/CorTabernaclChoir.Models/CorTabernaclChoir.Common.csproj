@@ -45,11 +45,13 @@
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\ImageFile.cs" />
     <Compile Include="Models\SocialMediaAccount.cs" />
     <Compile Include="Services\IAppSettingsService.cs" />
     <Compile Include="Services\ICultureService.cs" />
     <Compile Include="Services\IEventsService.cs" />
     <Compile Include="Services\ISidebarService.cs" />
+    <Compile Include="Services\ISocialMediaService.cs" />
     <Compile Include="Services\IYouTubeService.cs" />
     <Compile Include="ViewModels\EventSummaryViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />

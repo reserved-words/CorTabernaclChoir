@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(Resources.AboutTitle),nameof(Resources.MenuAbout))]
+    [Title(nameof(Resources.AboutTitle),nameof(Resources.MenuAbout))]
     public class AboutController : Controller
     {
         private readonly IAboutService _service;

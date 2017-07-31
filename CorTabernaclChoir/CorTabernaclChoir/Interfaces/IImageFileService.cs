@@ -13,5 +13,7 @@ namespace CorTabernaclChoir.Interfaces
         void Delete(string directory, int id);
 
         void Delete(string directory, string filename);
+
+        byte[] Convert(HttpPostedFileBase file);
     }
 }

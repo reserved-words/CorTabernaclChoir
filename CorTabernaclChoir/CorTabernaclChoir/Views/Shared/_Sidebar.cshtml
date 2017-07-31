@@ -10,9 +10,15 @@
         @foreach (var item in Model.SocialMediaLinks)
         {
             <a href="@item.Url" target="_blank">
-                <img src="@item.ImageUrl" style="width: 50px; height: 50px;" />
+                @Html.DisplayFor(m => item.Name)
             </a>
         }
+        
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.DisplayAddButton(Url.Action("Add", "SocialMedia"), null, "Add Social Media Link")
+            </div>
+        </div>
     </div>
 </div>
 

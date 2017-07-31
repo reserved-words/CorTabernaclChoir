@@ -249,6 +249,9 @@
   <data name="SidebarUpcomingEvents" xml:space="preserve">
     <value>Upcoming Events</value>
   </data>
+  <data name="SocialMediaAddTitle" xml:space="preserve">
+    <value>Add Social Media Link</value>
+  </data>
   <data name="SocialMediaImageUrl" xml:space="preserve">
     <value>~/Images/SocialMedia/{0}.png</value>
   </data>

@@ -10,7 +10,7 @@ using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(Resources.MenuGallery), nameof(Resources.MenuGallery))]
+    [Title(nameof(Resources.MenuGallery), nameof(Resources.MenuGallery))]
     public class GalleryController : Controller
     {
         private const string ImageGalleryFolder = "~/Images/Gallery";

@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(Resources.AdminTitle), nameof(Resources.AdminTitle))]
+    [Title(nameof(Resources.AdminTitle), nameof(Resources.AdminTitle))]
     [Authorize]
     public class AdminController : Controller
     {

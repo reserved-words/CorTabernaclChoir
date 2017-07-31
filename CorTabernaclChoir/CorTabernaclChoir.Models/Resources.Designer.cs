@@ -457,6 +457,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Social Media Link.
+        /// </summary>
+        public static string SocialMediaAddTitle {
+            get {
+                return ResourceManager.GetString("SocialMediaAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ~/Images/SocialMedia/{0}.png.
         /// </summary>
         public static string SocialMediaImageUrl {

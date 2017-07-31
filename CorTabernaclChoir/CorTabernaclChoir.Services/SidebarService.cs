@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
@@ -35,8 +34,10 @@ namespace CorTabernaclChoir.Services
                     .ToList()
                     .Select(sm => new SocialMediaViewModel
                     {
+                        Id = sm.Id,
                         Url = sm.Url,
-                        ImageUrl = string.Format(Resources.SocialMediaImageUrl, sm.Id)
+                        Name = sm.Name,
+                        ImageFileId = sm.ImageFileId
                     })
                     .ToList();
 

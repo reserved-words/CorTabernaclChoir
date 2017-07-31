@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(Resources.JoinTitle), nameof(Resources.MenuJoin))]
+    [Title(nameof(Resources.JoinTitle), nameof(Resources.MenuJoin))]
     public class JoinController : Controller
     {
         private readonly ICultureService _cultureService;

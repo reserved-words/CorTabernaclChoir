@@ -6,7 +6,7 @@ using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(HomeTitle), nameof(MenuHome))]
+    [Title(nameof(HomeTitle), nameof(MenuHome))]
     public class HomeController : Controller
     {
         private readonly ICultureService _cultureService;

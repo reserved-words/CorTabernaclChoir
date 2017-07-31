@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [ControllerInfo(nameof(Resources.VisitsTitle), nameof(Resources.MenuVisits))]
+    [Title(nameof(Resources.VisitsTitle), nameof(Resources.MenuVisits))]
     public class VisitsController : Controller
     {
         private readonly ICultureService _cultureService;
