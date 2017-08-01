@@ -1,7 +1,7 @@
 ﻿@using CorTabernaclChoir.Extensions
 @model CorTabernaclChoir.Common.ViewModels.SocialMediaViewModel
 
-@using (Html.BeginForm("Add", "SocialMedia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "SocialMedia", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.Partial("_Form", Model)
 }

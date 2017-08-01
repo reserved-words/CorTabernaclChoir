@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AboutService.cs" />
     <Compile Include="CultureService.cs" />
+    <Compile Include="ImageService.cs" />
     <Compile Include="GalleryService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="JoinService.cs" />

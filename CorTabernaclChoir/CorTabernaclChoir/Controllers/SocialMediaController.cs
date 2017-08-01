@@ -44,16 +44,28 @@ namespace CorTabernaclChoir.Controllers
             return View(model);
         }
 
+        [Route("~/SocialMedia/Edit")]
+        [Title(nameof(SocialMediaEditTitle), "")]
         public ActionResult Edit(int id)
         {
-            throw new NotImplementedException();
+            var model = _service.Get(id);
+
+            return View(model);
         }
 
         [HttpPost]
+        [Route("~/SocialMedia/Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                _service.Edit(model, _imageFileService.Convert(logo));
+
+                return RedirectToAction("Index", "Admin");
+            }
+
+            return View(model);
         }
 
         public ActionResult Delete(int id)

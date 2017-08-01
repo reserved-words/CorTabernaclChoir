@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using CorTabernaclChoir.Common.Exceptions;
+using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Services
@@ -80,12 +81,16 @@ namespace CorTabernaclChoir.Services
             Delete(Path.Combine(directory, filename));
         }
 
-        public byte[] Convert(HttpPostedFileBase file)
+        public ImageFile Convert(HttpPostedFileBase file)
         {
             using (var ms = new MemoryStream())
             {
                 file.InputStream.CopyTo(ms);
-                return ms.ToArray();
+                return new ImageFile
+                {
+                    File = ms.ToArray(),
+                    ContentType = file.ContentType
+                };
             }
         }
 

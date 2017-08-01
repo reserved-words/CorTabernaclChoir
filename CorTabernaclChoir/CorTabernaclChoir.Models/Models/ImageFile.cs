@@ -10,5 +10,6 @@ namespace CorTabernaclChoir.Common.Models
     {
         public int Id { get; set; }
         public byte[] File { get; set; }
+        public string ContentType { get; set; }
     }
 }

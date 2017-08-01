@@ -15,7 +15,7 @@ namespace CorTabernaclChoir.Services
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public void Add(SocialMediaViewModel model, byte[] logo)
+        public void Add(SocialMediaViewModel model, ImageFile logo)
         {
             using (var uow = _unitOfWorkFactory())
             {
@@ -23,10 +23,31 @@ namespace CorTabernaclChoir.Services
                 {
                     Name = model.Name,
                     Url = model.Url,
-                    ImageFile = new ImageFile { File = logo }
+                    ImageFile = logo
                 });
 
                 uow.Commit();
+            }
+        }
+
+        public void Edit(SocialMediaViewModel model, ImageFile logo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SocialMediaViewModel Get(int id)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var entity = uow.Repository<SocialMediaAccount>().GetById(id);
+
+                return new SocialMediaViewModel
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Url = entity.Url,
+                    ImageFileId = entity.ImageFileId
+                };
             }
         }
     }

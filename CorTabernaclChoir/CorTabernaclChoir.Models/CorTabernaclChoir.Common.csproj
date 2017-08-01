@@ -50,6 +50,7 @@
     <Compile Include="Services\IAppSettingsService.cs" />
     <Compile Include="Services\ICultureService.cs" />
     <Compile Include="Services\IEventsService.cs" />
+    <Compile Include="Services\IImageService.cs" />
     <Compile Include="Services\ISidebarService.cs" />
     <Compile Include="Services\ISocialMediaService.cs" />
     <Compile Include="Services\IYouTubeService.cs" />

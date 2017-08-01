@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.ViewModels;
 
 namespace CorTabernaclChoir.Common.Services
 {
     public interface ISocialMediaService
     {
-        void Add(SocialMediaViewModel model, byte[] logo);
+        void Add(SocialMediaViewModel model, ImageFile logo);
+        void Edit(SocialMediaViewModel model, ImageFile logo);
+        SocialMediaViewModel Get(int id);
     }
 }

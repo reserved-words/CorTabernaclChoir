@@ -9,9 +9,16 @@
         
         @foreach (var item in Model.SocialMediaLinks)
         {
-            <a href="@item.Url" target="_blank">
-                @Html.DisplayFor(m => item.Name)
-            </a>
+            <div class="row">
+                <div class="col-xs-6">
+                    <a href="@item.Url" target="_blank" title="@item.Name">
+                        @Html.DisplayFor(m => item.Name)
+                    </a>
+                </div>
+                <div class="col-xs-6 pull-right text-right">
+                    @Html.DisplayEditButton(Url.Action("Edit", "SocialMedia", new { id = item.Id }))
+                </div>
+            </div>
         }
         
         <div class="row">

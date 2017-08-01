@@ -252,6 +252,9 @@
   <data name="SocialMediaAddTitle" xml:space="preserve">
     <value>Add Social Media Link</value>
   </data>
+  <data name="SocialMediaEditTitle" xml:space="preserve">
+    <value>Edit Social Media Link</value>
+  </data>
   <data name="SocialMediaImageUrl" xml:space="preserve">
     <value>~/Images/SocialMedia/{0}.png</value>
   </data>

@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using CorTabernaclChoir.Common.Models;
 
 namespace CorTabernaclChoir.Interfaces
 {
@@ -14,6 +15,6 @@ namespace CorTabernaclChoir.Interfaces
 
         void Delete(string directory, string filename);
 
-        byte[] Convert(HttpPostedFileBase file);
+        ImageFile Convert(HttpPostedFileBase file);
     }
 }
