@@ -36,7 +36,9 @@ namespace CorTabernaclChoir.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.Add(model, _imageFileService.Convert(logo));
+                var imageFile = logo == null ? null : _imageFileService.Convert(logo);
+
+                _service.Add(model, imageFile);
 
                 return RedirectToAction("Index", "Admin");
             }
@@ -60,7 +62,9 @@ namespace CorTabernaclChoir.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.Edit(model, _imageFileService.Convert(logo));
+                var imageFile = logo == null ? null : _imageFileService.Convert(logo);
+
+                _service.Edit(model, imageFile);
 
                 return RedirectToAction("Index", "Admin");
             }

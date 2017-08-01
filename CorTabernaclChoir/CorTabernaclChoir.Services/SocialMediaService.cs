@@ -32,7 +32,20 @@ namespace CorTabernaclChoir.Services
 
         public void Edit(SocialMediaViewModel model, ImageFile logo)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkFactory())
+            {
+                var entity = uow.Repository<SocialMediaAccount>().GetById(model.Id);
+
+                entity.Name = model.Name;
+                entity.Url = model.Url;
+
+                if (logo != null)
+                {
+                    entity.ImageFile = logo;
+                }
+                
+                uow.Commit();
+            }
         }
 
         public SocialMediaViewModel Get(int id)
