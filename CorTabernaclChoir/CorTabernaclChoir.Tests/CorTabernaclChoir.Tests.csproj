@@ -109,6 +109,7 @@
     <Compile Include="Controllers\WorksControllerTest.cs" />
     <Compile Include="Services\AboutServiceTest.cs" />
     <Compile Include="Services\GalleryServiceTest.cs" />
+    <Compile Include="Services\SocialMediaServiceTest.cs" />
     <Compile Include="Services\SidebarServiceTest.cs" />
     <Compile Include="Services\HomeServiceTest.cs" />
     <Compile Include="Services\JoinServiceTest.cs" />

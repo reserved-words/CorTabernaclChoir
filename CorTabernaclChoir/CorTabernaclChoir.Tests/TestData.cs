@@ -1,5 +1,7 @@
 ﻿using CorTabernaclChoir.Common.Models;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace CorTabernaclChoir.Tests
 {
@@ -175,16 +177,36 @@ namespace CorTabernaclChoir.Tests
             return list;
         }
 
+        public static List<ImageFile> ImageFiles()
+        {
+            var list = new List<ImageFile>();
+
+            for (var i = 0; i < 25; i++)
+            {
+                list.Add(new ImageFile
+                {
+                    Id = i + 1,
+                    ContentType = "test/tst",
+                    File = Encoding.ASCII.GetBytes("test string" + i + 1)
+                });
+            }
+
+            return list;
+        }
+
         public static List<SocialMediaAccount> SocialMediaAccounts()
         {
             var list = new List<SocialMediaAccount>();
+            var images = ImageFiles();
 
             for (var i = 0; i < 25; i++)
             {
                 list.Add(new SocialMediaAccount
                 {
                     Id = i + 1,
-                    Url = "URL " + (i + 1)
+                    Url = "URL " + (i + 1),
+                    ImageFileId = i + 1,
+                    ImageFile = images.Single(im => im.Id == i + 1)
                 });
             }
 
