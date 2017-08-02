@@ -7,6 +7,7 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ImageFileId)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -39,7 +40,7 @@
             <label class="btn btn-sm btn-primary">
                 Choose File <input type="file" name="logo" class="hidden">
             </label>
-            @Html.ValidationMessage("logo", "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.ImageFileId, "", new { @class = "text-danger" })
         </div>
     </div>
 

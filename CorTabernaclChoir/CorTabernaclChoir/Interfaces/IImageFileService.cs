@@ -16,5 +16,7 @@ namespace CorTabernaclChoir.Interfaces
         void Delete(string directory, string filename);
 
         ImageFile Convert(HttpPostedFileBase file);
+
+        bool ValidateFile(HttpPostedFileBase file, out string error);
     }
 }

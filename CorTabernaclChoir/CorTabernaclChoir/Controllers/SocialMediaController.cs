@@ -12,6 +12,7 @@ namespace CorTabernaclChoir.Controllers
     [Authorize]
     public class SocialMediaController : Controller
     {
+        private const string ErrorMessageLogoRequired = "A logo is required";
         private readonly IImageFileService _imageFileService;
         private readonly ISocialMediaService _service;
 
@@ -26,7 +27,7 @@ namespace CorTabernaclChoir.Controllers
         [Title(nameof(SocialMediaAddTitle), "")]
         public ActionResult Add()
         {
-            return View();
+            return View(new SocialMediaViewModel());
         }
 
         [HttpPost]
@@ -34,6 +35,8 @@ namespace CorTabernaclChoir.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
+            ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
+
             if (ModelState.IsValid)
             {
                 var imageFile = logo == null ? null : _imageFileService.Convert(logo);
@@ -60,6 +63,8 @@ namespace CorTabernaclChoir.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
+            ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
+
             if (ModelState.IsValid)
             {
                 var imageFile = logo == null ? null : _imageFileService.Convert(logo);
@@ -82,6 +87,25 @@ namespace CorTabernaclChoir.Controllers
         public ActionResult Delete(SocialMediaViewModel model)
         {
             throw new NotImplementedException();
+        }
+
+        private void ValidateLogo(HttpPostedFileBase logo, int? existingId, string propertyName)
+        {
+            if (logo == null)
+            {
+                if (!existingId.HasValue)
+                {
+                    ModelState.AddModelError(propertyName, ErrorMessageLogoRequired);
+                }
+            }
+            else
+            {
+                string errorMessage;
+                if (!_imageFileService.ValidateFile(logo, out errorMessage))
+                {
+                    ModelState.AddModelError(propertyName, errorMessage);
+                }
+            }
         }
     }
 }

@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AboutControllerTest.cs" />
     <Compile Include="Controllers\GalleryControllerTest.cs" />
+    <Compile Include="Controllers\SocialMediaControllerTest.cs" />
     <Compile Include="Controllers\SidebarControllerTest.cs" />
     <Compile Include="Controllers\JoinControllerTest.cs" />
     <Compile Include="Controllers\NewsControllerTest.cs" />

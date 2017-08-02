@@ -117,14 +117,13 @@ namespace CorTabernaclChoir.Services
             return true;
         }
 
-        private bool ValidateFile(HttpPostedFileBase file, out string error)
+        public bool ValidateFile(HttpPostedFileBase file, out string error)
         {
             error = string.Empty;
-
-            if (file == null || file.ContentLength <= 0)
+            
+            if (file == null ||file.ContentLength <= 0)
             {
-                error = ValidationNoFileUploaded;
-                return false;
+                return true;
             }
 
             if (file.ContentLength > MaxImageBytes)
