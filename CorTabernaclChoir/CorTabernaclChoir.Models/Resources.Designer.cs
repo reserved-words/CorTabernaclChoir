@@ -466,6 +466,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Social Media Link.
+        /// </summary>
+        public static string SocialMediaDeleteTitle {
+            get {
+                return ResourceManager.GetString("SocialMediaDeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Social Media Link.
         /// </summary>
         public static string SocialMediaEditTitle {

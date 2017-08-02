@@ -77,16 +77,20 @@ namespace CorTabernaclChoir.Controllers
             return View(model);
         }
 
+        [Route("~/SocialMedia/Delete")]
+        [Title(nameof(SocialMediaDeleteTitle), "")]
         public ActionResult Delete(int id)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
+        [Route("~/SocialMedia/Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(SocialMediaViewModel model)
         {
-            throw new NotImplementedException();
+            _service.Delete(model.Id);
+            return RedirectToAction("Index", "Admin");
         }
 
         private void ValidateLogo(HttpPostedFileBase logo, int? existingId, string propertyName)

@@ -178,5 +178,19 @@ namespace CorTabernaclChoir.Tests.Controllers
             subjectUnderTest.ViewData.ModelState[nameof(_testModel.ImageFileId)].Errors[0].ErrorMessage.Should()
                 .Be(TestErrorMessage);
         }
+
+        [TestMethod]
+        public void DeleteModel_DeletesAndRedirects()
+        {
+            // Arrange
+            var subjectUnderTest = GetSubjectUnderTest();
+
+            // Act
+            var result = subjectUnderTest.Delete(_testModel) as RedirectToRouteResult;
+
+            // Assert
+            _mockService.Verify(s => s.Delete(_testModel.Id), Times.Once);
+            result.Should().NotBeNull();
+        }
     }
 }

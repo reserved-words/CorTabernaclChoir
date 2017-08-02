@@ -30,6 +30,15 @@ namespace CorTabernaclChoir.Services
             }
         }
 
+        public void Delete(int id)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                uow.Repository<SocialMediaAccount>().Delete(id);
+                uow.Commit();
+            }
+        }
+
         public void Edit(SocialMediaViewModel model, ImageFile logo)
         {
             using (var uow = _unitOfWorkFactory())

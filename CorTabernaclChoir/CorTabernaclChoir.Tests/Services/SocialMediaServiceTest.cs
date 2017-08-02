@@ -132,5 +132,20 @@ namespace CorTabernaclChoir.Tests.Services
             _testAccount.ImageFile.Should().Be(logo);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
+
+        [TestMethod]
+        public void Delete_RemovesCorrectModel()
+        {
+            // Arrange
+            var testId = 154;
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+
+            // Act
+            sut.Delete(testId);
+
+            // Assert
+            _mockSocialMediaRepository.Verify(r => r.Delete(testId));
+            _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+        }
     }
 }
