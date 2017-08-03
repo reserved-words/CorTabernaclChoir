@@ -81,7 +81,9 @@ namespace CorTabernaclChoir.Controllers
         [Title(nameof(SocialMediaDeleteTitle), "")]
         public ActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            var model = _service.Get(id);
+
+            return View(model);
         }
 
         [HttpPost]

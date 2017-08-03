@@ -17,6 +17,7 @@
                 </div>
                 <div class="col-xs-6 pull-right text-right">
                     @Html.DisplayEditButton(Url.Action("Edit", "SocialMedia", new { id = item.Id }))
+                    @Html.DisplayDeleteButton(Url.Action("Delete", "SocialMedia", new { id = item.Id }))
                 </div>
             </div>
         }

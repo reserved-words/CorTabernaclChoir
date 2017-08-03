@@ -180,6 +180,20 @@ namespace CorTabernaclChoir.Tests.Controllers
         }
 
         [TestMethod]
+        public void Delete_ReturnsCorrectView()
+        {
+            // Arrange
+            var subjectUnderTest = GetSubjectUnderTest();
+
+            // Act
+            var result = subjectUnderTest.Delete(TestId) as ViewResult;
+
+            // Assert
+            result.Model.Should().Be(_testModel);
+            result.ViewName.Should().Be("");
+        }
+
+        [TestMethod]
         public void DeleteModel_DeletesAndRedirects()
         {
             // Arrange

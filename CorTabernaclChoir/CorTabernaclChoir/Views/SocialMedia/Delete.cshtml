@@ -1,0 +1,15 @@
+﻿@using CorTabernaclChoir.Extensions
+@model CorTabernaclChoir.Common.ViewModels.SocialMediaViewModel
+
+<h5>Are you sure you want to delete the link to @Html.DisplayFor(m => m.Name)?</h5>
+<div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions">
+            @Html.DisplaySaveButton(null, "Delete")
+            @Html.DisplayCancelButton(Url.Action("Index", "Admin"))
+        </div>
+    }
+</div>
