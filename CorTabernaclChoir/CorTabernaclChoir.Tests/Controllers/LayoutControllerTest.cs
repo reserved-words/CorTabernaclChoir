@@ -8,22 +8,22 @@ using CorTabernaclChoir.Common.Services;
 namespace CorTabernaclChoir.Tests.Controllers
 {
     [TestClass]
-    public class SidebarControllerTest
+    public class LayoutControllerTest
     {
         [TestMethod]
         public void Get_ReturnsCorrectView()
         {
             // Arrange
             var mockViewModel = new SidebarViewModel();
-            var mockSidebarService = new Mock<ISidebarService>();
-            var controller = new SidebarController(mockSidebarService.Object);
-            mockSidebarService.Setup(h => h.Get()).Returns(mockViewModel);
+            var mockService = new Mock<ILayoutService>();
+            var controller = new LayoutController(mockService.Object);
+            mockService.Setup(h => h.GetSidebar()).Returns(mockViewModel);
 
             // Act
-            var result = controller.Get("") as PartialViewResult;
+            var result = controller.Sidebar("") as PartialViewResult;
 
             // Assert
-            mockSidebarService.Verify(h => h.Get(), Times.Once);
+            mockService.Verify(h => h.GetSidebar(), Times.Once);
             
             Assert.IsNotNull(result);
             Assert.AreEqual(mockViewModel, result.Model);

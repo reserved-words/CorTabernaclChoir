@@ -13,7 +13,7 @@ using FluentAssertions;
 namespace CorTabernaclChoir.Tests.Services
 {
     [TestClass]
-    public class SidebarServiceTest
+    public class LayoutServiceTest
     {
         private readonly List<Post> _posts = TestData.Posts();
         private readonly List<Event> _events = TestData.Events();
@@ -23,7 +23,7 @@ namespace CorTabernaclChoir.Tests.Services
         private readonly int _numberOfEvents = 2;
         private readonly DateTime _currentDateTime = new DateTime(1999, 12, 25);
 
-        private SidebarService GetService(bool cultureIsWelsh)
+        private LayoutService GetService(bool cultureIsWelsh)
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockPostsRepository = new Mock<IRepository<Post>>();
@@ -48,7 +48,7 @@ namespace CorTabernaclChoir.Tests.Services
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(cultureIsWelsh);
             GetCurrentTime mockGetCurrentTime = () => _currentDateTime;
 
-            return new SidebarService(
+            return new LayoutService(
                 () => mockUnitOfWork.Object,
                 mockSystemVariablesService.Object,
                 mockCultureService.Object,
@@ -62,7 +62,7 @@ namespace CorTabernaclChoir.Tests.Services
             var sut = GetService(false);
 
             // Act
-            var result = sut.Get();
+            var result = sut.GetSidebar();
 
             // Assert
             result.LatestNews.Count.Should().BeLessOrEqualTo(_numberOfNewsItems);
@@ -94,7 +94,7 @@ namespace CorTabernaclChoir.Tests.Services
             var sut = GetService(true);
 
             // Act
-            var result = sut.Get();
+            var result = sut.GetSidebar();
 
             // Assert
             result.LatestNews.Count.Should().BeLessOrEqualTo(_numberOfNewsItems);

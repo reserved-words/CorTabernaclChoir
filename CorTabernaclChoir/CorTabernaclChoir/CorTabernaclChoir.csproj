@@ -218,7 +218,7 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RecordingsController.cs" />
-    <Compile Include="Controllers\SidebarController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\SocialMediaController.cs" />
     <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Controllers\WorksController.cs" />
@@ -330,12 +330,14 @@
     <Content Include="Views\Gallery\Add.cshtml" />
     <Content Include="Views\Gallery\Delete.cshtml" />
     <Content Include="Views\Gallery\Edit.cshtml" />
-    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Layout\_Sidebar.cshtml" />
     <Content Include="Views\SocialMedia\Add.cshtml" />
     <Content Include="Views\SocialMedia\Edit.cshtml" />
     <Content Include="Views\SocialMedia\_Form.cshtml" />
     <Content Include="Views\SocialMedia\Delete.cshtml" />
     <Content Include="Views\SocialMedia\Index.cshtml" />
+    <Content Include="Views\Shared\_HeaderMenu.cshtml" />
+    <Content Include="Views\Layout\_Banner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -344,7 +346,6 @@
     <Folder Include="Images\SocialMedia\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Image\" />
-    <Folder Include="Views\Sidebar\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

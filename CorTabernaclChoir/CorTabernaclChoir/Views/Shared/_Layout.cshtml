@@ -12,92 +12,20 @@
 
 </head>
 <body>
-    <div class="banner" style="background-image: url('/Images/header.png'); background-repeat: repeat;">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-9" style="color: black;">
-                    <h1>@Resources.Title</h1>
-                    <h5>Musical Director: Matthew Nash</h5>
-                </div>
-                <div class="col-md-3 text-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        @Html.ActionLink(Resources.AdminTitle, "Index", "Admin", null, new { @class = "btn btn-default" })
-                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                        {
-                            @Html.AntiForgeryToken()
-                        }
-                        <a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit()">Log Off</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuHome ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuHome, "Index", "Home")
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuAbout ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuAbout, "Index", "About")
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuNews ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuNews, "Index", "News", new { page = 1 }, null)
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuRecordings ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuRecordings, "Index", "Recordings")
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuWorks ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuWorks, "Index", "Works")
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuVisits ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuVisits, "Index", "Visits", new { page = 1 }, null)
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuGallery ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuGallery, "Index", "Gallery")
-                    </li>
-                    <li class="@(ViewBag.MenuTitle == Resources.MenuJoin ? "active" : "")">
-                        @Html.ActionLink(Resources.MenuJoin, "Index", "Join")
-                    </li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        @Html.ActionLink("Switch Language", "ToggleLanguage", "Home", new { returnUrl = Context.Request.Url }, null)
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
+    @Html.Action("Banner", "Layout")
+    @Html.Partial("_HeaderMenu")
     <div class="container-fluid body-content">
         <div class="row">
             <div class="col-md-8 col-lg-9">
-
                 <div class="well well-sm text-center">
                     <h4>@ViewBag.Title</h4>
                 </div>
-
                 @RenderBody()
-
             </div>
-            <div class="hidden-xs hidden-sm col-md-4 col-lg-3">
-
-                @Html.Action("Get", "Sidebar")
-
+            <div class="col-md-4 col-lg-3">
+                @Html.Action("Sidebar", "Layout")
             </div>
         </div>
-
-
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - @Resources.Title</p>
@@ -113,14 +41,12 @@
     <script type="text/javascript">
         $(function () {
 
-            var onSuccess = function () {
-                window.location.reload();
-            }
-
             var toggleLanguage = function () {
                 $.post({
                     url: "/Home/ToggleLanguage",
-                    success: onSuccess
+                    success: function(data) {
+                        window.location.reload();
+                    }
                 });
             }
 

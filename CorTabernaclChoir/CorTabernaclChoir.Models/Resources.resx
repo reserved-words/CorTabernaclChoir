@@ -207,6 +207,9 @@
   <data name="MenuWorks" xml:space="preserve">
     <value>Works</value>
   </data>
+  <data name="MusicalDirector" xml:space="preserve">
+    <value>Musical Director</value>
+  </data>
   <data name="NewsPublished" xml:space="preserve">
     <value>Published {0:dd/MM/yyyy}</value>
   </data>

@@ -198,6 +198,9 @@
   <data name="MenuWorks" xml:space="preserve">
     <value>Gweithiau</value>
   </data>
+  <data name="MusicalDirector" xml:space="preserve">
+    <value>Cyfarwyddwr Cerdd</value>
+  </data>
   <data name="NewsPublished" xml:space="preserve">
     <value>Cyhoeddwyd {0:dd/MM/yyyy}</value>
   </data>

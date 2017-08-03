@@ -331,6 +331,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Musical Director.
+        /// </summary>
+        public static string MusicalDirector {
+            get {
+                return ResourceManager.GetString("MusicalDirector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published {0:dd/MM/yyyy}.
         /// </summary>
         public static string NewsPublished {

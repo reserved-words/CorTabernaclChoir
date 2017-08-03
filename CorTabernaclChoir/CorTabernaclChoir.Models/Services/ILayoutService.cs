@@ -7,8 +7,9 @@ using CorTabernaclChoir.Common.ViewModels;
 
 namespace CorTabernaclChoir.Common.Services
 {
-    public interface ISidebarService
+    public interface ILayoutService
     {
-        SidebarViewModel Get();
+        SidebarViewModel GetSidebar();
+        string GetMusicalDirectorName();
     }
 }

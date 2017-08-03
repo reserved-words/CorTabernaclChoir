@@ -1,0 +1,23 @@
+﻿@model string
+@using CorTabernaclChoir.Common
+<div class="banner" style="background-image: url('/Images/header.png'); background-repeat: repeat;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9" style="color: black;">
+                <h1>@Resources.Title</h1>
+                <h5>@Resources.MusicalDirector: @Html.DisplayFor(m => m)</h5>
+            </div>
+            <div class="col-md-3 text-right">
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.ActionLink(Resources.AdminTitle, "Index", "Admin", null, new { @class = "btn btn-default" })
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+                    <a class="btn btn-default" href="javascript:document.getElementById('logoutForm').submit()">Log Off</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

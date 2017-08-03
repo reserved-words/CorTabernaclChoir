@@ -8,14 +8,14 @@ using CorTabernaclChoir.Data.Contracts;
 
 namespace CorTabernaclChoir.Services
 {
-    public class SidebarService : ISidebarService
+    public class LayoutService : ILayoutService
     {
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
         private readonly ICultureService _cultureService;
         private readonly IAppSettingsService _appSettingsService;
         private readonly GetCurrentTime _getCurrentTime;
 
-        public SidebarService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService, 
+        public LayoutService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService, 
             ICultureService cultureService, GetCurrentTime getCurrentTime)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
@@ -24,7 +24,7 @@ namespace CorTabernaclChoir.Services
             _getCurrentTime = getCurrentTime;
         }
 
-        public SidebarViewModel Get()
+        public SidebarViewModel GetSidebar()
         {
             var welsh = _cultureService.IsCurrentCultureWelsh();
 
@@ -79,6 +79,14 @@ namespace CorTabernaclChoir.Services
                     LatestNews = latestNews,
                     ContactInformation = welsh ? contact.MainText_W : contact.MainText_E
                 };
+            }
+        }
+
+        public string GetMusicalDirectorName()
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                return uow.Repository<Home>().GetSingle().MusicalDirector;
             }
         }
     }
