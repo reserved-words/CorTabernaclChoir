@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using CorTabernaclChoir.Common.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,6 +34,10 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockImageFileService = new Mock<IImageFileService>();
             var subjectUnderTest = new SocialMediaController(_mockService.Object, mockImageFileService.Object);
 
+            _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>()
+            {
+                _testModel
+            });
             _mockService.Setup(s => s.Get(TestId)).Returns(_testModel);
 
             mockImageFileService.Setup(s => s.Convert(_mockLogo.Object)).Returns(_testLogo);
@@ -40,12 +46,12 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             if (isLogoValid)
             {
-                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), out _errorMessage))
+                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), It.IsAny<string[]>(), out _errorMessage))
                     .Returns(true);
             }
             else
             {
-                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), out _errorMessage))
+                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), It.IsAny<string[]>(), out _errorMessage))
                     .Returns(false);
             }
 
@@ -55,6 +61,23 @@ namespace CorTabernaclChoir.Tests.Controllers
             }
 
             return subjectUnderTest;
+        }
+
+        [TestMethod]
+        public void Index_ReturnsCorrectView()
+        {
+            // Arrange
+            var subjectUnderTest = GetSubjectUnderTest();
+
+            // Act
+            var result = subjectUnderTest.Index() as ViewResult;
+
+            // Assert
+            var model = result.Model as List<SocialMediaViewModel>;
+            model.Should().NotBeNull();
+            model.Count.Should().Be(1);
+            model.Single().ShouldBeEquivalentTo(_testModel);
+            result.ViewName.Should().Be("");
         }
 
         [TestMethod]

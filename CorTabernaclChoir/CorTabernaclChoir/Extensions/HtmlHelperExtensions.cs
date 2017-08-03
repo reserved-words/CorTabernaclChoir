@@ -18,7 +18,7 @@ namespace CorTabernaclChoir.Extensions
 
         public static MvcHtmlString DisplayEditButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)
         {
-            return DisplayButton("pencil", "primary", "Edit", url, htmlAttributes);
+            return DisplayButton("pencil", "primary", text ?? "Edit", url, htmlAttributes);
         }
 
         public static MvcHtmlString DisplayAddButton(this HtmlHelper html, string url, object htmlAttributes = null, string text = null)

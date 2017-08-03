@@ -30,3 +30,7 @@ textarea {
 li.spaced {
     margin-bottom: 0.5em;
 }
+
+li.no-padding {
+    padding:0;
+}

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common.Services;
@@ -16,10 +15,20 @@ namespace CorTabernaclChoir.Controllers
         private readonly IImageFileService _imageFileService;
         private readonly ISocialMediaService _service;
 
+        private readonly string[] _validExtensions = { ".png" };
+
         public SocialMediaController(ISocialMediaService service, IImageFileService imageFileService)
         {
             _service = service;
             _imageFileService = imageFileService;
+        }
+
+        [HttpGet]
+        [Route("~/SocialMedia")]
+        [Title(nameof(SocialMediaTitle), "")]
+        public ActionResult Index()
+        {
+            return View(_service.GetAll());
         }
 
         [HttpGet]
@@ -33,6 +42,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Add")]
         [ValidateAntiForgeryToken]
+        [Title(nameof(SocialMediaAddTitle), "")]
         public ActionResult Add(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
             ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
@@ -43,7 +53,7 @@ namespace CorTabernaclChoir.Controllers
 
                 _service.Add(model, imageFile);
 
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(model);
@@ -61,6 +71,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Edit")]
         [ValidateAntiForgeryToken]
+        [Title(nameof(SocialMediaEditTitle), "")]
         public ActionResult Edit(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
             ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
@@ -71,7 +82,7 @@ namespace CorTabernaclChoir.Controllers
 
                 _service.Edit(model, imageFile);
 
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(model);
@@ -89,10 +100,11 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Delete")]
         [ValidateAntiForgeryToken]
+        [Title(nameof(SocialMediaDeleteTitle), "")]
         public ActionResult Delete(SocialMediaViewModel model)
         {
             _service.Delete(model.Id);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         private void ValidateLogo(HttpPostedFileBase logo, int? existingId, string propertyName)
@@ -107,7 +119,7 @@ namespace CorTabernaclChoir.Controllers
             else
             {
                 string errorMessage;
-                if (!_imageFileService.ValidateFile(logo, out errorMessage))
+                if (!_imageFileService.ValidateFile(logo, _validExtensions, out errorMessage))
                 {
                     ModelState.AddModelError(propertyName, errorMessage);
                 }

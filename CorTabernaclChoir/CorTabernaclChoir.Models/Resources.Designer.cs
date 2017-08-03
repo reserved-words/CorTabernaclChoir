@@ -493,6 +493,24 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visit our {0} page.
+        /// </summary>
+        public static string SocialMediaTextFormat {
+            get {
+                return ResourceManager.GetString("SocialMediaTextFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Social Media Links.
+        /// </summary>
+        public static string SocialMediaTitle {
+            get {
+                return ResourceManager.GetString("SocialMediaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bridgend Tabernacl Choir.
         /// </summary>
         public static string Title {

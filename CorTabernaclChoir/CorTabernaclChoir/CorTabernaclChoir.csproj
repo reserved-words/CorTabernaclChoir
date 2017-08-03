@@ -335,6 +335,7 @@
     <Content Include="Views\SocialMedia\Edit.cshtml" />
     <Content Include="Views\SocialMedia\_Form.cshtml" />
     <Content Include="Views\SocialMedia\Delete.cshtml" />
+    <Content Include="Views\SocialMedia\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

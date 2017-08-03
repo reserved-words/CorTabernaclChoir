@@ -5,7 +5,7 @@ namespace CorTabernaclChoir.Interfaces
 {
     public interface IImageFileService
     {
-        string Save(HttpPostedFileBase file, string imagesFolder, bool throwIfNoFileUploaded);
+        string Save(HttpPostedFileBase file, string imagesFolder, string[] validExtensions, bool throwIfNoFileUploaded);
 
         void Move(string currentLocation, string newDirectory, int id);
 
@@ -17,6 +17,6 @@ namespace CorTabernaclChoir.Interfaces
 
         ImageFile Convert(HttpPostedFileBase file);
 
-        bool ValidateFile(HttpPostedFileBase file, out string error);
+        bool ValidateFile(HttpPostedFileBase file, string[] validExtensions, out string error);
     }
 }

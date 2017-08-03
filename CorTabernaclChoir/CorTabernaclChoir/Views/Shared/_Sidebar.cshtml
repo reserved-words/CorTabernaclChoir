@@ -7,24 +7,20 @@
     <div class="panel-body">
         <p>@Html.DisplayFor(m => m.ContactInformation)</p>
         
-        @foreach (var item in Model.SocialMediaLinks)
-        {
-            <div class="row">
-                <div class="col-xs-6">
-                    <a href="@item.Url" target="_blank" title="@item.Name">
-                        @Html.DisplayFor(m => item.Name)
+        <ul class="list-unstyled list-inline">
+            @foreach (var item in Model.SocialMediaLinks)
+            {
+                <li class="no-padding">
+                    <a href="@item.Url" target="_blank" title="@item.Text">
+                        <img src="@Url.Action("Get", "Image", new {id = item.ImageFileId})" width="50" height="50"/>
                     </a>
-                </div>
-                <div class="col-xs-6 pull-right text-right">
-                    @Html.DisplayEditButton(Url.Action("Edit", "SocialMedia", new { id = item.Id }))
-                    @Html.DisplayDeleteButton(Url.Action("Delete", "SocialMedia", new { id = item.Id }))
-                </div>
-            </div>
-        }
+                </li>
+            }
+        </ul>
         
         <div class="row">
             <div class="col-xs-12">
-                @Html.DisplayAddButton(Url.Action("Add", "SocialMedia"), null, "Add Social Media Link")
+                @Html.DisplayEditButton(Url.Action("Index", "SocialMedia"), null, "Edit Social Media Links")
             </div>
         </div>
     </div>

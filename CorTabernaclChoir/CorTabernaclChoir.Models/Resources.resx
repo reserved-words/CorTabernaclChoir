@@ -261,6 +261,12 @@
   <data name="SocialMediaImageUrl" xml:space="preserve">
     <value>~/Images/SocialMedia/{0}.png</value>
   </data>
+  <data name="SocialMediaTextFormat" xml:space="preserve">
+    <value>Visit our {0} page</value>
+  </data>
+  <data name="SocialMediaTitle" xml:space="preserve">
+    <value>Social Media Links</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Bridgend Tabernacl Choir</value>
   </data>

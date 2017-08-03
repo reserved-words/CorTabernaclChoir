@@ -19,6 +19,8 @@ namespace CorTabernaclChoir.Controllers
         private readonly IGalleryService _service;
         private readonly IImageFileService _imageFileService;
 
+        private readonly string[] _validExtensions = { ".jpg", ".jpeg" };
+
         public GalleryController(IGalleryService service, ICultureService cultureService, IImageFileService imageFileService)
         {
             _cultureService = cultureService;
@@ -55,7 +57,7 @@ namespace CorTabernaclChoir.Controllers
             {
                 try
                 {
-                    var tempFile = _imageFileService.Save(file, ImagesFolder, model.Id == 0);
+                    var tempFile = _imageFileService.Save(file, ImagesFolder, _validExtensions, model.Id == 0);
 
                     try
                     {

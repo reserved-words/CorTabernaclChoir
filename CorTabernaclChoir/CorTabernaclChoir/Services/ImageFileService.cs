@@ -19,10 +19,9 @@ namespace CorTabernaclChoir.Services
         private const string ImageFilenameFormat = "{0}.jpg";
 
         private readonly string _maxImageBytesString = $"{MaxImageMegaBytes}MB";
-        private readonly string[] _validContentTypes = { "image/jpeg", "image/pjpeg" };
-        private readonly string[] _validExtensions = { ".jpg", ".jpeg" };
-
-        public string Save(HttpPostedFileBase file, string imagesFolder, bool throwIfNoFileUploaded)
+        private readonly string[] _validContentTypes = { "image/jpeg", "image/pjpeg", "image/png" };
+        
+        public string Save(HttpPostedFileBase file, string imagesFolder, string[] validExtensions, bool throwIfNoFileUploaded)
         {
             if (!FileUploaded(file))
             {
@@ -33,15 +32,14 @@ namespace CorTabernaclChoir.Services
 
                 return string.Empty;
             }
-
-            string tempSaveResult;
-
-            if (!SaveTempFile(file, imagesFolder, out tempSaveResult))
+            
+            string result;
+            if (!ValidateFile(file, validExtensions, out result) || !SaveTempFile(file, imagesFolder, out result))
             {
-                throw new ValidationException(tempSaveResult);
+                throw new ValidationException(result);
             }
 
-            return tempSaveResult;
+            return result;
         }
 
         private static bool FileUploaded(HttpPostedFileBase file)
@@ -96,11 +94,6 @@ namespace CorTabernaclChoir.Services
 
         private bool SaveTempFile(HttpPostedFileBase file, string imagesFolder, out string result)
         {
-            if (!ValidateFile(file, out result))
-            {
-                return false;
-            }
-
             var tempFilename = string.Format(TempImageFilenameFormat, DateTime.Now.ToString("yyyyMMddHHmmss"));
             result = Path.Combine(imagesFolder, tempFilename);
 
@@ -117,7 +110,7 @@ namespace CorTabernaclChoir.Services
             return true;
         }
 
-        public bool ValidateFile(HttpPostedFileBase file, out string error)
+        public bool ValidateFile(HttpPostedFileBase file, string[] validExtensions, out string error)
         {
             error = string.Empty;
             
@@ -132,9 +125,9 @@ namespace CorTabernaclChoir.Services
                 return false;
             }
 
-            if (!_validContentTypes.Contains(file.ContentType) || !_validExtensions.Contains(Path.GetExtension(file.FileName.ToLower())))
+            if (!_validContentTypes.Contains(file.ContentType) || !validExtensions.Contains(Path.GetExtension(file.FileName.ToLower())))
             {
-                error = string.Format(ValidationInvalidExtension, string.Join(" or ", _validExtensions));
+                error = string.Format(ValidationInvalidExtension, string.Join(" or ", validExtensions));
                 return false;
             }
 

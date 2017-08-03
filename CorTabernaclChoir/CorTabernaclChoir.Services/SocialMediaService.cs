@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
@@ -13,6 +15,22 @@ namespace CorTabernaclChoir.Services
         public SocialMediaService(Func<IUnitOfWork> unitOfWorkFactory)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
+        }
+
+        public List<SocialMediaViewModel> GetAll()
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                return uow.Repository<SocialMediaAccount>()
+                    .GetAll()
+                    .Select(entity => new SocialMediaViewModel
+                    {
+                        Id = entity.Id,
+                        Name = entity.Name,
+                        Url = entity.Url,
+                        ImageFileId = entity.ImageFileId
+                    }).ToList();
+            }
         }
 
         public void Add(SocialMediaViewModel model, ImageFile logo)

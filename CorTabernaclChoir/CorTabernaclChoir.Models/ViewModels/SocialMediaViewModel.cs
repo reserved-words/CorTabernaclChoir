@@ -13,5 +13,7 @@ namespace CorTabernaclChoir.Common.ViewModels
         [MaxLength(30, ErrorMessage = "Name must not be more than {0} characters")]
         public string Name { get; set; }
         public int? ImageFileId { get; set; }
+
+        public string Text => string.Format(Resources.SocialMediaTextFormat, Name);
     }
 }

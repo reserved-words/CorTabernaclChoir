@@ -1,0 +1,29 @@
+﻿@model List<CorTabernaclChoir.Common.ViewModels.SocialMediaViewModel>
+@using CorTabernaclChoir.Extensions
+
+<p>The following social media links have are currently displayed in the sidebar:</p>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 1px;">
+                <img src="@Url.Action("Get", "Image", new {id = item.ImageFileId})" width="50" height="50" />
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Name)<br />
+                <a href="@item.Url">@item.Url</a>
+            </td>
+            <td class="text-right">
+                @Html.DisplayEditButton(Url.Action("Edit", "SocialMedia", new {id = item.Id}))
+                @Html.DisplayDeleteButton(Url.Action("Delete", "SocialMedia", new {id = item.Id}))
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayAddButton(Url.Action("Add", "SocialMedia"))
+    </div>
+</div>

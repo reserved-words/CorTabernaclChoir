@@ -31,11 +31,29 @@ namespace CorTabernaclChoir.Tests.Services
 
             _mockUnitOfWork.Setup(u => u.Repository<SocialMediaAccount>()).Returns(_mockSocialMediaRepository.Object);
             _mockSocialMediaRepository.Setup(r => r.GetById(It.IsAny<int>())).Returns(_testAccount);
+            _mockSocialMediaRepository.Setup(r => r.GetAll()).Returns(_socialMediaAccounts.AsQueryable());
             _mockSocialMediaRepository.Setup(r => r.Insert(It.IsAny<SocialMediaAccount>())).Callback<SocialMediaAccount>(sm =>
             {
                 _socialMediaAccounts.Add(sm);
                 _imageFiles.Add(sm.ImageFile);
             });
+        }
+
+        [TestMethod]
+        public void GetAll_ReturnsCorrectModel()
+        {
+            // Arrange
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+
+            // Act
+            var result = sut.GetAll();
+
+            // Assert
+            result.Count.Should().Be(_socialMediaAccounts.Count);
+            result[5].Id.Should().Be(_socialMediaAccounts[5].Id);
+            result[5].Name.Should().Be(_socialMediaAccounts[5].Name);
+            result[5].Url.Should().Be(_socialMediaAccounts[5].Url);
+            result[5].ImageFileId.Should().Be(_socialMediaAccounts[5].ImageFileId);
         }
 
         [TestMethod]
