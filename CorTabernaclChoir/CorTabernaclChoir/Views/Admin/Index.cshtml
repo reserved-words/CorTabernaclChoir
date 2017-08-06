@@ -1,5 +1,41 @@
-﻿<div class="row">
+﻿@using CorTabernaclChoir.Extensions
+@model CorTabernaclChoir.Common.ViewModels.AdminViewModel
+
+<div class="row">
     <div class="col-xs-12">
         <p>While logged in as an Administrator you should see Edit buttons on each page of the site. Click these to edit the content of each page.</p>
     </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-md-6">
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Forwarding Email Addresses</div>
+            </div>
+
+            <table class="table table-hover table-condensed">
+                @foreach (var item in Model.ForwardingEmailAddresses)
+                {
+                    <tr>
+                        <td style="padding-left: 1em;">
+                            @Html.DisplayFor(m => item)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayDeleteButton("")
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <div class="panel-footer">
+                @Html.DisplayAddButton("")
+            </div>
+        </div>
+
+    </div>
+
+
 </div>

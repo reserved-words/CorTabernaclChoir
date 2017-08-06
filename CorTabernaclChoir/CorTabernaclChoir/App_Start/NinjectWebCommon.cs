@@ -20,7 +20,7 @@ namespace CorTabernaclChoir.App_Start
     using Data.Contracts;
     using Services;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
@@ -88,6 +88,11 @@ namespace CorTabernaclChoir.App_Start
             kernel.Bind<IImageFileService>().To<ImageFileService>();
 
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
-        }        
+
+            kernel.Bind<IEmailService>()
+                .ToMethod(context => new GmailService(
+                    HttpContext.Current.Server.MapPath("~/client_secret.json"), 
+                    HttpContext.Current.Server.MapPath("~/App_Data")));
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace CorTabernaclChoir.Services
         public int NumberOfItemsPerPage => 10;
         public string YouTubeApiKey => GetValue("YouTubeApiKey", "");
         public string YouTubeChannelId => GetValue("YouTubeChannelId", "");
+        public string ValidGmailLogin => GetValue("ValidGmailLogin", "");
         public int NumberOfVideosToDisplay => 8;
         public int NumberOfNewsItemsInSidebar => 3;
         public int NumberOfEventsInSidebar => 3;

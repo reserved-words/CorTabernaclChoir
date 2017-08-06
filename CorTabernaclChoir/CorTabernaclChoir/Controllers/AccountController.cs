@@ -1,25 +1,37 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CorTabernaclChoir.Attributes;
+using CorTabernaclChoir.Common;
+using CorTabernaclChoir.Common.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Data;
 
 namespace CorTabernaclChoir.Controllers
 {
     [Authorize]
+    [Title(nameof(Resources.AdminTitle), nameof(Resources.AdminTitle))]
     public class AccountController : Controller
     {
+        private const string ExternalProviderName = "Google";
+        private const string InvalidEmailAddressMessage = "You are currently signed in to Google with account {0}, " +
+                                                          "which is not a valid account for this site. Please log out of this account " +
+                                                          "and log in to the choir Gmail account.";
+
+        private readonly IAppSettingsService _appSettings;
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountController(IAppSettingsService appSettings)
         {
+            _appSettings = appSettings;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAppSettingsService appSettings)
+            :this(appSettings)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -59,76 +71,55 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("~/Account/Login")]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        [Route("~/Account/ExternalLogin")]
+        public ActionResult ExternalLogin()
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToAction("Index", "Admin");
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            return new ChallengeResult(ExternalProviderName, Url.Action("ExternalLoginCallback", "Account"));
         }
 
-        //[AllowAnonymous]
-        //[Route("Account/Register")]
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
+        [AllowAnonymous]
+        [Route("~/Account/ExternalLoginCallback")]
+        public async Task<ActionResult> ExternalLoginCallback()
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //[Route("Account/Register")]
-        //public async Task<ActionResult> Register(RegisterViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        //        var result = await UserManager.CreateAsync(user, model.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            if (loginInfo.Email != _appSettings.ValidGmailLogin)
+            {
+                ModelState.AddModelError("", string.Format(InvalidEmailAddressMessage, loginInfo.Email));
 
-        //            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-        //            // Send an email with this link
-        //            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-        //            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-        //            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return View("Login");
+            }
 
-        //            return RedirectToAction("Index", "Admin");
-        //        }
-        //        AddErrors(result);
-        //    }
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            if (result == SignInStatus.Success)
+                return RedirectToAction("Index", "Admin");
 
-        //[AllowAnonymous]
-        //public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        //{
-        //    if (userId == null || code == null)
-        //    {
-        //        return View("Error");
-        //    }
-        //    var result = await UserManager.ConfirmEmailAsync(userId, code);
-        //    return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        //}
+            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return View("ExternalLoginFailure");
+            }
+
+            var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+            var createUser = await UserManager.CreateAsync(user);
+
+            if (createUser.Succeeded)
+            {
+                var addLogin = await UserManager.AddLoginAsync(user.Id, info.Login);
+                if (addLogin.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+
+            return View("ExternalLoginFailure");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,27 +151,14 @@ namespace CorTabernaclChoir.Controllers
         }
 
         #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {
+            // Used for XSRF protection when adding external logins
+            private const string XsrfKey = "XsrfId";
+
             public ChallengeResult(string provider, string redirectUri)
                 : this(provider, redirectUri, null)
             {

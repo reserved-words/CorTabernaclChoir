@@ -34,3 +34,8 @@ li.spaced {
 li.no-padding {
     padding:0;
 }
+
+.validation-summary-errors ul { 
+    list-style: none;
+    margin-left:-40px
+}

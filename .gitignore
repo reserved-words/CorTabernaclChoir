@@ -241,5 +241,7 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-# Exclude config file
+# Exclude private config files
 *PrivateSettings.config
+*client_secret.json
+*Google.Apis.Auth.OAuth2.Responses.TokenResponse-user

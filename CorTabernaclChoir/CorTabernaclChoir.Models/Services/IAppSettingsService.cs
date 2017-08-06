@@ -11,6 +11,7 @@ namespace CorTabernaclChoir.Common.Services
         int NumberOfItemsPerPage { get; }
         string YouTubeApiKey { get; }
         string YouTubeChannelId { get; }
+        string ValidGmailLogin { get; }
         int NumberOfVideosToDisplay { get; }
         int NumberOfNewsItemsInSidebar { get; }
         int NumberOfEventsInSidebar { get; }

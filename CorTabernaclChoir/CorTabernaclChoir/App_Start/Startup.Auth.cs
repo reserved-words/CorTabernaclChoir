@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -6,6 +8,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using CorTabernaclChoir.Data;
+using Google.Apis.Auth.OAuth2;
 
 namespace CorTabernaclChoir
 {
@@ -34,16 +37,29 @@ namespace CorTabernaclChoir
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });     
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            
+            app.ConfigureGoogleAuth();
+        }
+    }
 
-            // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
-            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+    public static class AuthExtensionMethods
+    {
+        public static void ConfigureGoogleAuth(this IAppBuilder app)
+        {
+            ClientSecrets googleClientSecrets;
 
-            // Enables the application to remember the second login verification factor such as phone or email.
-            // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
-            // This is similar to the RememberMe option when you log in.
-            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+            using (var stream = new FileStream(HttpContext.Current.Server.MapPath("~/client_secret.json"), FileMode.Open, FileAccess.Read))
+            {
+                googleClientSecrets = GoogleClientSecrets.Load(stream).Secrets;
+            }
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = googleClientSecrets.ClientId,
+                ClientSecret = googleClientSecrets.ClientSecret
+            });
         }
     }
 }
