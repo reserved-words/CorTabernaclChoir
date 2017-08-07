@@ -364,6 +364,7 @@
     <Content Include="Views\Shared\_HeaderMenu.cshtml" />
     <Content Include="Views\Layout\_Banner.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Admin\RemoveForwardingEmailAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

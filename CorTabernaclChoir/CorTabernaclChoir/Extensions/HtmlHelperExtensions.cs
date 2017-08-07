@@ -31,9 +31,9 @@ namespace CorTabernaclChoir.Extensions
             return DisplayButton("trash", "danger", text ?? "Delete", url, htmlAttributes);
         }
 
-        public static MvcHtmlString DisplaySaveButton(this HtmlHelper html, object htmlAttributes = null, string text = null)
+        public static MvcHtmlString DisplaySaveButton(this HtmlHelper html, object htmlAttributes = null, string text = null, string type = null, string icon = null)
         {
-            return DisplayButton("ok", "danger", text ?? "Save", null, htmlAttributes);
+            return DisplayButton(icon ?? "ok", type ?? "danger", text ?? "Save", null, htmlAttributes);
         }
 
         public static MvcHtmlString DisplayDeleteConfirmButton(this HtmlHelper html, object htmlAttributes = null, string text = null)

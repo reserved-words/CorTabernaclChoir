@@ -9,5 +9,7 @@ namespace CorTabernaclChoir.Common.Services
     public interface IEmailService
     {
         List<string> GetForwardingAddresses();
+        void AddForwardingAddress(string email);
+        void RemoveForwardingAddress(string email);
     }
 }

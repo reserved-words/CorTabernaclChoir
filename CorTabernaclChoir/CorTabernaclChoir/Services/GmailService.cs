@@ -39,6 +39,16 @@ namespace CorTabernaclChoir.Services
             return addresses.Select(a => a.ForwardingEmail).ToList();
         }
 
+        public void AddForwardingAddress(string email)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void RemoveForwardingAddress(string email)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private UserCredential GetUserCredential()
         {
             using (var stream = new FileStream(_clientSecretPath, FileMode.Open, FileAccess.Read))

@@ -27,5 +27,30 @@ namespace CorTabernaclChoir.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        [Route("~/Admin/AddForwardingEmailAddress")]
+        public RedirectToRouteResult AddForwardingEmailAddress(string email)
+        {
+            _emailService.AddForwardingAddress(email);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Route("~/Admin/RemoveForwardingEmailAddress")]
+        public ViewResult RemoveForwardingEmailAddress(string email)
+        {
+            return View(string.Empty, string.Empty, email);
+        }
+
+        [HttpPost]
+        [Route("~/Admin/ConfirmRemoveForwardingEmailAddress")]
+        public RedirectToRouteResult ConfirmRemoveForwardingEmailAddress(string email)
+        {
+            _emailService.RemoveForwardingAddress(email);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
