@@ -9,24 +9,25 @@
 
 <hr />
 
+<p>Contact email addresses are currently forwarded to the following addresses:</p>
+
 <div class="row">
     
-    <div class="col-md-6">
-        
-        <p>Contact email addresses are currently forwarded to the following addresses:</p>
+    <div class="col-md-4">
         
         <ul class="list-unstyled">
             @foreach (var item in Model.ContactEmailAddresses)
             {
                 <li class="spaced">
-                   @Html.Partial("_RemoveEmailAddress", item)
+                    @(Model.AllowRemovingEmailAddresses
+                        ? Html.Partial("_RemoveEmailAddress", item)
+                        : Html.DisplayFor(m => item.Address))
                 </li>
             }
             <li>
                 @Html.Partial("_InsertEmailAddress", Model.NewContactEmailAddress)
             </li>
         </ul>
-
     </div>
     
 </div>

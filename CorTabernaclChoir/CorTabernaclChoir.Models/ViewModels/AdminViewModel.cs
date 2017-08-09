@@ -16,5 +16,6 @@ namespace CorTabernaclChoir.Common.ViewModels
 
         public List<ContactEmail> ContactEmailAddresses { get; set; }
         public ContactEmail NewContactEmailAddress { get; set; }
+        public bool AllowRemovingEmailAddresses => ContactEmailAddresses.Count > 1;
     }
 }
