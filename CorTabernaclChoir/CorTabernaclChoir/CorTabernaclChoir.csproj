@@ -261,7 +261,6 @@
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Interfaces\IImageFileService.cs" />
-    <Compile Include="Services\GmailService.cs" />
     <Compile Include="Services\ImageFileService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -364,7 +363,9 @@
     <Content Include="Views\Shared\_HeaderMenu.cshtml" />
     <Content Include="Views\Layout\_Banner.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Admin\RemoveForwardingEmailAddress.cshtml" />
+    <Content Include="Views\Admin\RemoveEmailAddress.cshtml" />
+    <Content Include="Views\Admin\_InsertEmailAddress.cshtml" />
+    <Content Include="Views\Admin\_RemoveEmailAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

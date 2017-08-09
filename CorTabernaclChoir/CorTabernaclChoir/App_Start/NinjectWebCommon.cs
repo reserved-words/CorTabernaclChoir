@@ -85,14 +85,11 @@ namespace CorTabernaclChoir.App_Start
                 .InNamespaceOf<HomeService>()
                 .BindDefaultInterface());
 
+            kernel.Bind<IEmailService>().To<ContactEmailService>();
+
             kernel.Bind<IImageFileService>().To<ImageFileService>();
 
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
-
-            kernel.Bind<IEmailService>()
-                .ToMethod(context => new GmailService(
-                    HttpContext.Current.Server.MapPath("~/client_secret.json"), 
-                    HttpContext.Current.Server.MapPath("~/App_Data")));
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿@using CorTabernaclChoir.Extensions
+@model CorTabernaclChoir.Common.Models.ContactEmail
+
+@using (Html.BeginForm("RemoveEmailAddress", "Admin"))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-xs-9">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Address)
+            @Html.DisplayFor(m => m.Address)
+        </div>
+        <div class="col-xs-3 text-right">
+            @Html.DisplaySaveButton(null, "Remove", "primary", "trash")
+        </div>
+    </div>
+}

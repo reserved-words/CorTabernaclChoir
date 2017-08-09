@@ -1,4 +1,5 @@
-﻿using CorTabernaclChoir.Common.Services;
+﻿using CorTabernaclChoir.Common.Models;
+using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,9 +10,10 @@ namespace CorTabernaclChoir.Tests.Controllers
     [TestClass]
     public class AdminControllerTest
     {
-        private const string TestEmail = "test@email.com";
         private const string RouteKeyController = "Controller";
         private const string RouteKeyAction = "Action";
+
+        private readonly ContactEmail _testEmail = new ContactEmail { Id = 5, Address = "test@email.com" };
 
         [TestMethod]
         public void AddForwardingEmailAddress_CallsServiceAndRedirects()
@@ -21,10 +23,10 @@ namespace CorTabernaclChoir.Tests.Controllers
             var controller = new AdminController(mockService.Object);
 
             // Act
-            var result = controller.AddForwardingEmailAddress(TestEmail);
+            var result = controller.AddEmailAddress(_testEmail);
 
             // Assert
-            mockService.Verify(s => s.AddForwardingAddress(TestEmail), Times.Once);
+            mockService.Verify(s => s.AddAddress(_testEmail), Times.Once);
             result.RouteValues[RouteKeyController].Should().BeNull();
             result.RouteValues[RouteKeyAction].Should().Be(nameof(controller.Index));
         }
@@ -37,11 +39,11 @@ namespace CorTabernaclChoir.Tests.Controllers
             var controller = new AdminController(mockService.Object);
 
             // Act
-            var result = controller.RemoveForwardingEmailAddress(TestEmail);
+            var result = controller.RemoveEmailAddress(_testEmail);
 
             // Assert
-            mockService.Verify(s => s.RemoveForwardingAddress(TestEmail), Times.Never);
-            result.Model.Should().Be(TestEmail);
+            mockService.Verify(s => s.RemoveAddress(It.IsAny<int>()), Times.Never);
+            result.Model.Should().Be(_testEmail);
             result.ViewName.Should().Be(string.Empty);
         }
 
@@ -53,10 +55,10 @@ namespace CorTabernaclChoir.Tests.Controllers
             var controller = new AdminController(mockService.Object);
 
             // Act
-            var result = controller.ConfirmRemoveForwardingEmailAddress(TestEmail);
+            var result = controller.ConfirmRemoveEmailAddress(_testEmail.Id);
 
             // Assert
-            mockService.Verify(s => s.RemoveForwardingAddress(TestEmail), Times.Once);
+            mockService.Verify(s => s.RemoveAddress(_testEmail.Id), Times.Once);
             result.RouteValues[RouteKeyController].Should().BeNull();
             result.RouteValues[RouteKeyAction].Should().Be(nameof(controller.Index));
         }

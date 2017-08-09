@@ -16,35 +16,14 @@
         <p>Contact email addresses are currently forwarded to the following addresses:</p>
         
         <ul class="list-unstyled">
-            @foreach (var item in Model.ForwardingEmailAddresses)
+            @foreach (var item in Model.ContactEmailAddresses)
             {
                 <li class="spaced">
-                    @using (Html.BeginForm("RemoveForwardingEmailAddress", "Admin"))
-                    {
-                        <div class="row">
-                            <div class="col-xs-9">
-                                @Html.Hidden("email", item)
-                                @Html.DisplayFor(m => item)
-                            </div>
-                            <div class="col-xs-3 text-right">
-                                @Html.DisplaySaveButton(null, "Remove", "primary", "trash")
-                            </div>
-                        </div>
-                    }
+                   @Html.Partial("_RemoveEmailAddress", item)
                 </li>
             }
             <li>
-                @using (Html.BeginForm("AddForwardingEmailAddress", "Admin"))
-                {
-                    <div class="row">
-                        <div class="col-xs-9">
-                            @Html.TextBox("email", null, new { @class = "form-control" })
-                        </div>
-                        <div class="col-xs-3 text-right">
-                            @Html.DisplaySaveButton(null, "Add New", "primary", "plus-sign")
-                        </div>
-                    </div>
-                }
+                @Html.Partial("_InsertEmailAddress", Model.NewContactEmailAddress)
             </li>
         </ul>
 

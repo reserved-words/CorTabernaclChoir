@@ -1,15 +1,18 @@
 ﻿@using CorTabernaclChoir.Extensions
-@model string
+@model CorTabernaclChoir.Common.Models.ContactEmail
 
 
 <p>Are you sure you want to stop emails being forwarded to the following address?</p>
 
-@Html.Display(Model)
+@Html.DisplayFor(m => m.Address)
 
-@using (Html.BeginForm("ConfirmRemoveForwardingEmailAddress", "Admin"))
+<br />
+<br />
+
+@using (Html.BeginForm("ConfirmRemoveEmailAddress", "Admin"))
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("email", Model)
+    @Html.HiddenFor(m => m.Id)
     
     <div class="form-actions">
         @Html.DisplaySaveButton(null, "Delete")

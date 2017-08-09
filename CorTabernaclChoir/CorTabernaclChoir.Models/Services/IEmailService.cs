@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CorTabernaclChoir.Common.Models;
 
 namespace CorTabernaclChoir.Common.Services
 {
     public interface IEmailService
     {
-        List<string> GetForwardingAddresses();
-        void AddForwardingAddress(string email);
-        void RemoveForwardingAddress(string email);
+        List<ContactEmail> GetAddresses();
+        void AddAddress(ContactEmail email);
+        void RemoveAddress(int id);
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="ImageService.cs" />
     <Compile Include="GalleryService.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="ContactEmailService.cs" />
     <Compile Include="JoinService.cs" />
     <Compile Include="EventsService.cs" />
     <Compile Include="PostsService.cs" />

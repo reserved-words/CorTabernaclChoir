@@ -74,6 +74,10 @@
     <Compile Include="Migrations\201708011727048_AddedContentTypeToImageFileTable.Designer.cs">
       <DependentUpon>201708011727048_AddedContentTypeToImageFileTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708090547315_AddedContactEmailsTable.cs" />
+    <Compile Include="Migrations\201708090547315_AddedContactEmailsTable.Designer.cs">
+      <DependentUpon>201708090547315_AddedContactEmailsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708011727048_AddedContentTypeToImageFileTable.resx">
       <DependentUpon>201708011727048_AddedContentTypeToImageFileTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708090547315_AddedContactEmailsTable.resx">
+      <DependentUpon>201708090547315_AddedContactEmailsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

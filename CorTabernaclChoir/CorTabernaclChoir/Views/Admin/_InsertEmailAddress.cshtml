@@ -1,0 +1,17 @@
+﻿@using CorTabernaclChoir.Extensions
+@model CorTabernaclChoir.Common.Models.ContactEmail
+    
+@using (Html.BeginForm("AddEmailAddress", "Admin"))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-xs-9">
+            @Html.TextBoxFor(m => m.Address, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-3 text-right">
+            @Html.DisplaySaveButton(null, "Add New", "primary", "plus-sign")
+        </div>
+    </div>
+}
+

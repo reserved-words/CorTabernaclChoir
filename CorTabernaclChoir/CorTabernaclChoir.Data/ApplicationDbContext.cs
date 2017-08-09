@@ -34,6 +34,7 @@ namespace CorTabernaclChoir.Data
         public DbSet<Home> Home { get; set; }
         public DbSet<About> About { get; set; }
         public DbSet<Contact> Contact { get; set; }
+        public DbSet<ContactEmail> ContactEmails { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<GalleryImage> GalleryImages { get; set; }
         public DbSet<Join> Join { get; set; }

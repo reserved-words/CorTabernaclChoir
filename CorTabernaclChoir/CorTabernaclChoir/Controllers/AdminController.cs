@@ -1,6 +1,7 @@
 ﻿using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 
@@ -22,33 +23,36 @@ namespace CorTabernaclChoir.Controllers
         {
             var model = new AdminViewModel
             {
-                ForwardingEmailAddresses = _emailService.GetForwardingAddresses()
+                ContactEmailAddresses = _emailService.GetAddresses()
             };
 
             return View(model);
         }
 
         [HttpPost]
-        [Route("~/Admin/AddForwardingEmailAddress")]
-        public RedirectToRouteResult AddForwardingEmailAddress(string email)
+        [Route("~/Admin/AddEmailAddress")]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult AddEmailAddress(ContactEmail email)
         {
-            _emailService.AddForwardingAddress(email);
+            _emailService.AddAddress(email);
 
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        [Route("~/Admin/RemoveForwardingEmailAddress")]
-        public ViewResult RemoveForwardingEmailAddress(string email)
+        [Route("~/Admin/RemoveEmailAddress")]
+        [ValidateAntiForgeryToken]
+        public ViewResult RemoveEmailAddress(ContactEmail email)
         {
             return View(string.Empty, string.Empty, email);
         }
 
         [HttpPost]
-        [Route("~/Admin/ConfirmRemoveForwardingEmailAddress")]
-        public RedirectToRouteResult ConfirmRemoveForwardingEmailAddress(string email)
+        [Route("~/Admin/ConfirmRemoveEmailAddress")]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult ConfirmRemoveEmailAddress(int id)
         {
-            _emailService.RemoveForwardingAddress(email);
+            _emailService.RemoveAddress(id);
 
             return RedirectToAction(nameof(Index));
         }
