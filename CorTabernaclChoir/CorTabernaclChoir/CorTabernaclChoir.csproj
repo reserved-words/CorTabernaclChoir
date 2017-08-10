@@ -253,6 +253,7 @@
     </Compile>
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
+    <Compile Include="Interfaces\IUploadedFileValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -260,8 +261,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
-    <Compile Include="Interfaces\IImageFileService.cs" />
-    <Compile Include="Services\ImageFileService.cs" />
+    <Compile Include="Interfaces\IUploadedFileService.cs" />
+    <Compile Include="Services\UploadedFileValidator.cs" />
+    <Compile Include="Services\UploadedFileService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

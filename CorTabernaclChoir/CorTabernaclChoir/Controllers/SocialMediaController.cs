@@ -12,15 +12,21 @@ namespace CorTabernaclChoir.Controllers
     public class SocialMediaController : Controller
     {
         private const string ErrorMessageLogoRequired = "A logo is required";
-        private readonly IImageFileService _imageFileService;
+        private const int MinLogoWidth = 48;
+        private const int MaxLogoWidth = 256;
+        private const int MaxLogoFileSizeKB = 100;
+
+        private readonly IUploadedFileService _uploadedFileService;
+        private readonly IUploadedFileValidator _uploadedFileValidator;
         private readonly ISocialMediaService _service;
 
         private readonly string[] _validExtensions = { ".png" };
 
-        public SocialMediaController(ISocialMediaService service, IImageFileService imageFileService)
+        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator)
         {
             _service = service;
-            _imageFileService = imageFileService;
+            _uploadedFileService = uploadedFileService;
+            _uploadedFileValidator = uploadedFileValidator;
         }
 
         [HttpGet]
@@ -49,7 +55,7 @@ namespace CorTabernaclChoir.Controllers
 
             if (ModelState.IsValid)
             {
-                var imageFile = logo == null ? null : _imageFileService.Convert(logo);
+                var imageFile = logo == null ? null : _uploadedFileService.Convert(logo);
 
                 _service.Add(model, imageFile);
 
@@ -78,7 +84,7 @@ namespace CorTabernaclChoir.Controllers
 
             if (ModelState.IsValid)
             {
-                var imageFile = logo == null ? null : _imageFileService.Convert(logo);
+                var imageFile = logo == null ? null : _uploadedFileService.Convert(logo);
 
                 _service.Edit(model, imageFile);
 
@@ -119,7 +125,7 @@ namespace CorTabernaclChoir.Controllers
             else
             {
                 string errorMessage;
-                if (!_imageFileService.ValidateFile(logo, _validExtensions, out errorMessage))
+                if (!_uploadedFileValidator.ValidateSquareImage(logo, _validExtensions, MinLogoWidth, MaxLogoWidth, MaxLogoFileSizeKB, out errorMessage))
                 {
                     ModelState.AddModelError(propertyName, errorMessage);
                 }

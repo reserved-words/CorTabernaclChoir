@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 using CorTabernaclChoir.Common.Exceptions;
 using CorTabernaclChoir.Common.Models;
@@ -8,43 +7,21 @@ using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Services
 {
-    public class ImageFileService : IImageFileService
+    public class UploadedFileService : IUploadedFileService
     {
-        private const int MaxImageMegaBytes = 1;
-        private const int MaxImageBytes = 1000000 * MaxImageMegaBytes;
-        private const string ValidationNoFileUploaded = "No image file was uploaded";
-        private const string ValidationFileTooLarge = "The image uploaded was larger than {0}";
-        private const string ValidationInvalidExtension = "The file uploaded must be an image file with extension {0}.";
         private const string TempImageFilenameFormat = "temp{0}.jpg";
         private const string ImageFilenameFormat = "{0}.jpg";
-
-        private readonly string _maxImageBytesString = $"{MaxImageMegaBytes}MB";
-        private readonly string[] _validContentTypes = { "image/jpeg", "image/pjpeg", "image/png" };
         
         public string Save(HttpPostedFileBase file, string imagesFolder, string[] validExtensions, bool throwIfNoFileUploaded)
         {
-            if (!FileUploaded(file))
-            {
-                if (throwIfNoFileUploaded)
-                {
-                    throw new ValidationException(ValidationNoFileUploaded);
-                }
-
-                return string.Empty;
-            }
-            
             string result;
-            if (!ValidateFile(file, validExtensions, out result) || !SaveTempFile(file, imagesFolder, out result))
+
+            if (!SaveTempFile(file, imagesFolder, out result))
             {
                 throw new ValidationException(result);
             }
 
             return result;
-        }
-
-        private static bool FileUploaded(HttpPostedFileBase file)
-        {
-            return file != null && file.ContentLength > 0;
         }
 
         public void Move(string currentLocation, string newDirectory, int id)
@@ -92,7 +69,7 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        private bool SaveTempFile(HttpPostedFileBase file, string imagesFolder, out string result)
+        private static bool SaveTempFile(HttpPostedFileBase file, string imagesFolder, out string result)
         {
             var tempFilename = string.Format(TempImageFilenameFormat, DateTime.Now.ToString("yyyyMMddHHmmss"));
             result = Path.Combine(imagesFolder, tempFilename);
@@ -104,30 +81,6 @@ namespace CorTabernaclChoir.Services
             catch (Exception ex)
             {
                 result = ex.Message;
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool ValidateFile(HttpPostedFileBase file, string[] validExtensions, out string error)
-        {
-            error = string.Empty;
-            
-            if (file == null ||file.ContentLength <= 0)
-            {
-                return true;
-            }
-
-            if (file.ContentLength > MaxImageBytes)
-            {
-                error = string.Format(ValidationFileTooLarge, _maxImageBytesString);
-                return false;
-            }
-
-            if (!_validContentTypes.Contains(file.ContentType) || !validExtensions.Contains(Path.GetExtension(file.FileName.ToLower())))
-            {
-                error = string.Format(ValidationInvalidExtension, string.Join(" or ", validExtensions));
                 return false;
             }
 

@@ -17,15 +17,15 @@ namespace CorTabernaclChoir.Controllers
 
         private readonly ICultureService _cultureService;
         private readonly IGalleryService _service;
-        private readonly IImageFileService _imageFileService;
+        private readonly IUploadedFileService _uploadedFileService;
 
         private readonly string[] _validExtensions = { ".jpg", ".jpeg" };
 
-        public GalleryController(IGalleryService service, ICultureService cultureService, IImageFileService imageFileService)
+        public GalleryController(IGalleryService service, ICultureService cultureService, IUploadedFileService uploadedFileService)
         {
             _cultureService = cultureService;
             _service = service;
-            _imageFileService = imageFileService;
+            _uploadedFileService = uploadedFileService;
         }
 
         private string ImagesFolder => ControllerContext.HttpContext.Server.MapPath(ImageGalleryFolder);
@@ -57,7 +57,7 @@ namespace CorTabernaclChoir.Controllers
             {
                 try
                 {
-                    var tempFile = _imageFileService.Save(file, ImagesFolder, _validExtensions, model.Id == 0);
+                    var tempFile = _uploadedFileService.Save(file, ImagesFolder, _validExtensions, model.Id == 0);
 
                     try
                     {
@@ -65,14 +65,14 @@ namespace CorTabernaclChoir.Controllers
 
                         if (string.IsNullOrEmpty(tempFile))
                         {
-                            _imageFileService.Move(tempFile, ImagesFolder, model.Id);
+                            _uploadedFileService.Move(tempFile, ImagesFolder, model.Id);
                         }
                     }
                     catch (Exception)
                     {
                         try
                         {
-                            _imageFileService.Delete(tempFile);
+                            _uploadedFileService.Delete(tempFile);
                         }
                         finally
                         {
@@ -145,7 +145,7 @@ namespace CorTabernaclChoir.Controllers
 
                     try
                     {
-                        _imageFileService.Delete(ImagesFolder, model.Id);
+                        _uploadedFileService.Delete(ImagesFolder, model.Id);
                     }
                     catch (Exception)
                     {

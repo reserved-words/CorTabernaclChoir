@@ -87,7 +87,8 @@ namespace CorTabernaclChoir.App_Start
 
             kernel.Bind<IEmailService>().To<ContactEmailService>();
 
-            kernel.Bind<IImageFileService>().To<ImageFileService>();
+            kernel.Bind<IUploadedFileValidator>().To<UploadedFileValidator>();
+            kernel.Bind<IUploadedFileService>().To<UploadedFileService>();
 
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
         }

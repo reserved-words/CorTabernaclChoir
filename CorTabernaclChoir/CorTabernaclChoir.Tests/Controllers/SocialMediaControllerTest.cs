@@ -31,8 +31,9 @@ namespace CorTabernaclChoir.Tests.Controllers
         {
             _mockService = new Mock<ISocialMediaService>();
 
-            var mockImageFileService = new Mock<IImageFileService>();
-            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockImageFileService.Object);
+            var mockFileService = new Mock<IUploadedFileService>();
+            var mockFileValidator = new Mock<IUploadedFileValidator>();
+            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object);
 
             _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>()
             {
@@ -40,18 +41,30 @@ namespace CorTabernaclChoir.Tests.Controllers
             });
             _mockService.Setup(s => s.Get(TestId)).Returns(_testModel);
 
-            mockImageFileService.Setup(s => s.Convert(_mockLogo.Object)).Returns(_testLogo);
+            mockFileService.Setup(s => s.Convert(_mockLogo.Object)).Returns(_testLogo);
 
             _errorMessage = TestErrorMessage;
 
             if (isLogoValid)
             {
-                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), It.IsAny<string[]>(), out _errorMessage))
+                mockFileValidator.Setup(h => h.ValidateSquareImage(
+                    It.IsAny<HttpPostedFileBase>(), 
+                    It.IsAny<string[]>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int?>(), 
+                    out _errorMessage))
                     .Returns(true);
             }
             else
             {
-                mockImageFileService.Setup(h => h.ValidateFile(It.IsAny<HttpPostedFileBase>(), It.IsAny<string[]>(), out _errorMessage))
+                mockFileValidator.Setup(h => h.ValidateSquareImage(
+                    It.IsAny<HttpPostedFileBase>(), 
+                    It.IsAny<string[]>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int?>(),
+                    out _errorMessage))
                     .Returns(false);
             }
 

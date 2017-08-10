@@ -3,7 +3,7 @@ using CorTabernaclChoir.Common.Models;
 
 namespace CorTabernaclChoir.Interfaces
 {
-    public interface IImageFileService
+    public interface IUploadedFileService
     {
         string Save(HttpPostedFileBase file, string imagesFolder, string[] validExtensions, bool throwIfNoFileUploaded);
 
@@ -17,6 +17,5 @@ namespace CorTabernaclChoir.Interfaces
 
         ImageFile Convert(HttpPostedFileBase file);
 
-        bool ValidateFile(HttpPostedFileBase file, string[] validExtensions, out string error);
     }
 }
