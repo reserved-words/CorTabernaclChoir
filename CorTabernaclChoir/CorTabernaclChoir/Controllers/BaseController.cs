@@ -14,7 +14,7 @@ namespace CorTabernaclChoir.Controllers
 
         protected override void OnException(ExceptionContext filterContext)
         {
-            _logger.Error(filterContext.Exception, "");
+            _logger.Error(filterContext.Exception, filterContext.HttpContext.Request.Url?.ToString(), "");
 
             filterContext.ExceptionHandled = true;
 

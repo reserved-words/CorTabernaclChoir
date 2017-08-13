@@ -9,6 +9,6 @@ namespace CorTabernaclChoir.Common
     public interface ILogger
     {
         void Info(string message);
-        void Error(Exception ex, string message);
+        void Error(Exception ex, string requestUrl, string message);
     }
 }

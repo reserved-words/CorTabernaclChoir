@@ -78,6 +78,14 @@
     <Compile Include="Migrations\201708090547315_AddedContactEmailsTable.Designer.cs">
       <DependentUpon>201708090547315_AddedContactEmailsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708130729051_AddedLogsTable.cs" />
+    <Compile Include="Migrations\201708130729051_AddedLogsTable.Designer.cs">
+      <DependentUpon>201708130729051_AddedLogsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708130733137_AddedMessageFieldToLog.cs" />
+    <Compile Include="Migrations\201708130733137_AddedMessageFieldToLog.Designer.cs">
+      <DependentUpon>201708130733137_AddedMessageFieldToLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
@@ -112,6 +120,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708090547315_AddedContactEmailsTable.resx">
       <DependentUpon>201708090547315_AddedContactEmailsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708130729051_AddedLogsTable.resx">
+      <DependentUpon>201708130729051_AddedLogsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708130733137_AddedMessageFieldToLog.resx">
+      <DependentUpon>201708130733137_AddedMessageFieldToLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

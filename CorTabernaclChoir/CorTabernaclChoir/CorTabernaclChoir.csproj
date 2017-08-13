@@ -262,7 +262,6 @@
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Interfaces\IUploadedFileService.cs" />
-    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Services\UploadedFileValidator.cs" />
     <Compile Include="Services\UploadedFileService.cs" />
     <Compile Include="Startup.cs" />

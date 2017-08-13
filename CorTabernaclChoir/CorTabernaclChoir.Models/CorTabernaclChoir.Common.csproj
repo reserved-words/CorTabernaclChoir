@@ -48,6 +48,7 @@
     <Compile Include="Models\ContactEmail.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\ImageFile.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="Models\SocialMediaAccount.cs" />
     <Compile Include="Services\IAppSettingsService.cs" />
     <Compile Include="Services\ICultureService.cs" />

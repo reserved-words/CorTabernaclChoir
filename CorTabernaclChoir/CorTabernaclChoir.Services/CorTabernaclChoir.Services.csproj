@@ -52,6 +52,7 @@
     <Compile Include="ContactEmailService.cs" />
     <Compile Include="JoinService.cs" />
     <Compile Include="EventsService.cs" />
+    <Compile Include="LoggingService.cs" />
     <Compile Include="PostsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordingsService.cs" />

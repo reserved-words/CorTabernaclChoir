@@ -38,6 +38,7 @@ namespace CorTabernaclChoir.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<GalleryImage> GalleryImages { get; set; }
         public DbSet<Join> Join { get; set; }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
         public DbSet<SocialMediaAccount> SocialMediaAccounts { get; set; }
