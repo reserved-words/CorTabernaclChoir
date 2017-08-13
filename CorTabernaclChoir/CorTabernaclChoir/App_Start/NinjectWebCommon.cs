@@ -1,6 +1,8 @@
+using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
+using CorTabernaclChoir.Logging;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Stop")]
@@ -89,6 +91,8 @@ namespace CorTabernaclChoir.App_Start
 
             kernel.Bind<IUploadedFileValidator>().To<UploadedFileValidator>();
             kernel.Bind<IUploadedFileService>().To<UploadedFileService>();
+
+            kernel.Bind<ILogger>().To<Logger>();
 
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
         }

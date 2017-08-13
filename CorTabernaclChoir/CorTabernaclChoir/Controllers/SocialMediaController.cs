@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using CorTabernaclChoir.Attributes;
+using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Interfaces;
@@ -9,7 +10,7 @@ using static CorTabernaclChoir.Common.Resources;
 namespace CorTabernaclChoir.Controllers
 {
     [Authorize]
-    public class SocialMediaController : Controller
+    public class SocialMediaController : BaseController
     {
         private const string ErrorMessageLogoRequired = "A logo is required";
         private const int MinLogoWidth = 48;
@@ -22,7 +23,8 @@ namespace CorTabernaclChoir.Controllers
 
         private readonly string[] _validExtensions = { ".png" };
 
-        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator)
+        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator, ILogger logger)
+            : base(logger)
         {
             _service = service;
             _uploadedFileService = uploadedFileService;

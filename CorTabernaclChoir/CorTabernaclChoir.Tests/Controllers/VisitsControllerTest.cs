@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -20,7 +21,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockViewModel = new PostsViewModel { PageNo = pageNo, Items = new List<PostViewModel>() };
             var mockHandler = new Mock<IPostsService>();
             var mockCultureService = new Mock<ICultureService>();
-            var controller = new VisitsController(mockHandler.Object, mockCultureService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new VisitsController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
             var section = PostType.Visit;
 
             mockHandler.Setup(h => h.Get(pageNo, section)).Returns(mockViewModel);

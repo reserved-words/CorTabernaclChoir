@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CorTabernaclChoir.Controllers;
 using Moq;
@@ -17,7 +19,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockViewModel = new HomeViewModel { MainText = "ABC", MusicalDirector = "Con", Accompanist = "Acc" };
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act
@@ -38,7 +41,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("en") as ViewResult;
@@ -53,7 +57,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("cy") as ViewResult;

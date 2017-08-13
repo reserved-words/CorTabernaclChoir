@@ -153,6 +153,9 @@
   <data name="GalleryImageUrl" xml:space="preserve">
     <value>~/Images/Gallery/{0}.jpg</value>
   </data>
+  <data name="GenericErrorMessage" xml:space="preserve">
+    <value>An unexpected error occurred. We apologise for any inconvenience. If  this error persists please contact us.</value>
+  </data>
   <data name="HomeAccompanist" xml:space="preserve">
     <value>Accompanist</value>
   </data>

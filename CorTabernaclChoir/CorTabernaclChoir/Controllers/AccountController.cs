@@ -13,7 +13,7 @@ namespace CorTabernaclChoir.Controllers
 {
     [Authorize]
     [Title(nameof(Resources.AdminTitle), nameof(Resources.AdminTitle))]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private const string ExternalProviderName = "Google";
         private const string InvalidEmailAddressMessage = "You are currently signed in to Google with account {0}, " +
@@ -25,13 +25,14 @@ namespace CorTabernaclChoir.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(IAppSettingsService appSettings)
+        public AccountController(IAppSettingsService appSettings, ILogger logger)
+            : base(logger)
         {
             _appSettings = appSettings;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAppSettingsService appSettings)
-            :this(appSettings)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAppSettingsService appSettings, ILogger logger)
+            :this(appSettings, logger)
         {
             UserManager = userManager;
             SignInManager = signInManager;

@@ -11,7 +11,7 @@ using CorTabernaclChoir.Interfaces;
 namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(Resources.MenuGallery), nameof(Resources.MenuGallery))]
-    public class GalleryController : Controller
+    public class GalleryController : BaseController
     {
         private const string ImageGalleryFolder = "~/Images/Gallery";
 
@@ -21,7 +21,8 @@ namespace CorTabernaclChoir.Controllers
 
         private readonly string[] _validExtensions = { ".jpg", ".jpeg" };
 
-        public GalleryController(IGalleryService service, ICultureService cultureService, IUploadedFileService uploadedFileService)
+        public GalleryController(IGalleryService service, ICultureService cultureService, IUploadedFileService uploadedFileService, ILogger logger)
+            : base(logger)
         {
             _cultureService = cultureService;
             _service = service;

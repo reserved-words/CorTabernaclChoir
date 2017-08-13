@@ -169,6 +169,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An unexpected error occurred. We apologise for any inconvenience. If  this error persists please contact us..
+        /// </summary>
+        public static string GenericErrorMessage {
+            get {
+                return ResourceManager.GetString("GenericErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accompanist.
         /// </summary>
         public static string HomeAccompanist {

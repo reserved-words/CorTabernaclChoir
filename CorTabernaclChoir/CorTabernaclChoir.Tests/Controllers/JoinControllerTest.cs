@@ -4,6 +4,7 @@ using CorTabernaclChoir.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -18,7 +19,8 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             var mockHandler = new Mock<IJoinService>();
             var mockCultureService = new Mock<ICultureService>();
-            var controller = new JoinController(mockHandler.Object, mockCultureService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new JoinController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act

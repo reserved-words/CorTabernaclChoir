@@ -6,12 +6,13 @@ using System.Web.Mvc;
 namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(Resources.RecordingsTitle), nameof(Resources.MenuRecordings))]
-    public class RecordingsController : Controller
+    public class RecordingsController : BaseController
     {
         private readonly ICultureService _cultureService;
         private readonly IRecordingsService _service;
 
-        public RecordingsController(IRecordingsService service, ICultureService cultureService)
+        public RecordingsController(IRecordingsService service, ICultureService cultureService, ILogger logger)
+            : base(logger)
         {
             _cultureService = cultureService;
             _service = service;

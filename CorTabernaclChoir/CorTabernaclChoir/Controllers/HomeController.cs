@@ -2,17 +2,19 @@
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(HomeTitle), nameof(MenuHome))]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ICultureService _cultureService;
         private readonly IHomeService _service;
 
-        public HomeController(IHomeService service, ICultureService cultureService)
+        public HomeController(IHomeService service, ICultureService cultureService, ILogger logger)
+            : base(logger)
         {
             _cultureService = cultureService;
             _service = service;

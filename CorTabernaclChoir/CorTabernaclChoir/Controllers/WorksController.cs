@@ -7,12 +7,13 @@ using System.Web.Mvc;
 namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(Resources.WorksTitle), nameof(Resources.MenuWorks))]
-    public class WorksController : Controller
+    public class WorksController : BaseController
     {
         private readonly ICultureService _cultureService;
         private readonly IWorksService _service;
 
-        public WorksController(IWorksService service, ICultureService cultureService)
+        public WorksController(IWorksService service, ICultureService cultureService, ILogger logger)
+            : base(logger)
         {
             _cultureService = cultureService;
             _service = service;

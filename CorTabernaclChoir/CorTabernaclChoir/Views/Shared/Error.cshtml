@@ -1,9 +1,7 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@using CorTabernaclChoir.Common
 
-@{
-    ViewBag.Title = "Error";
-}
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="alert alert-danger">
+    <p class="text-danger">@Resources.GenericErrorMessage</p>
+</div>
 

@@ -9,11 +9,12 @@ namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(Resources.AdminTitle), nameof(Resources.AdminTitle))]
     [Authorize]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly IEmailService _emailService;
 
-        public AdminController(IEmailService emailService)
+        public AdminController(IEmailService emailService, ILogger logger)
+            : base(logger)
         {
             _emailService = emailService;
         }

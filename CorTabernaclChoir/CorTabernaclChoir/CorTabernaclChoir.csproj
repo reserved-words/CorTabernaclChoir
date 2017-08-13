@@ -234,11 +234,11 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\JoinController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RecordingsController.cs" />
@@ -262,6 +262,7 @@
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Interfaces\IUploadedFileService.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Services\UploadedFileValidator.cs" />
     <Compile Include="Services\UploadedFileService.cs" />
     <Compile Include="Startup.cs" />

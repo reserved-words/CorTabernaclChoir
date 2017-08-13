@@ -1,4 +1,5 @@
-﻿using CorTabernaclChoir.Common.Models;
+﻿using CorTabernaclChoir.Common;
+using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,7 +21,8 @@ namespace CorTabernaclChoir.Tests.Controllers
         {
             // Arrange
             var mockService = new Mock<IEmailService>();
-            var controller = new AdminController(mockService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object);
 
             // Act
             var result = controller.AddEmailAddress(_testEmail);
@@ -36,7 +38,8 @@ namespace CorTabernaclChoir.Tests.Controllers
         {
             // Arrange
             var mockService = new Mock<IEmailService>();
-            var controller = new AdminController(mockService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object);
 
             // Act
             var result = controller.RemoveEmailAddress(_testEmail);
@@ -52,7 +55,8 @@ namespace CorTabernaclChoir.Tests.Controllers
         {
             // Arrange
             var mockService = new Mock<IEmailService>();
-            var controller = new AdminController(mockService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object);
 
             // Act
             var result = controller.ConfirmRemoveEmailAddress(_testEmail.Id);

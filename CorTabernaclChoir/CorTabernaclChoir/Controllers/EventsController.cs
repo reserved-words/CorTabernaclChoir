@@ -8,12 +8,13 @@ using System.Web.Mvc;
 namespace CorTabernaclChoir.Controllers
 {
     [Title(nameof(Resources.MenuNews), nameof(Resources.MenuNews))]
-    public class EventsController : Controller
+    public class EventsController : BaseController
     {
         private readonly ICultureService _cultureService;
         private readonly IPostsService _service;
 
-        public EventsController(IPostsService service, ICultureService cultureService)
+        public EventsController(IPostsService service, ICultureService cultureService, ILogger logger)
+            : base(logger)
         {
             _cultureService = cultureService;
             _service = service;

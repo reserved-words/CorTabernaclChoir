@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CorTabernaclChoir.Controllers;
@@ -33,7 +34,8 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             var mockFileService = new Mock<IUploadedFileService>();
             var mockFileValidator = new Mock<IUploadedFileValidator>();
-            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object);
+            var mockLogger = new Mock<ILogger>();
+            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object, mockLogger.Object);
 
             _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>()
             {

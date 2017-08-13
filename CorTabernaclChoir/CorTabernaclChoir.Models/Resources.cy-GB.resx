@@ -144,6 +144,9 @@
   <data name="ContactTitle" xml:space="preserve">
     <value>Cysylltu â'r Côr</value>
   </data>
+  <data name="GenericErrorMessage" xml:space="preserve">
+    <value>Roedd problem annisgwyl. Ymddiheurwn am unrhyw anghyfleuster. Os yw'r broblem yn parhau cysylltwch â ni os gwelwch yn dda.</value>
+  </data>
   <data name="HomeAccompanist" xml:space="preserve">
     <value>Cyfeilydd</value>
   </data>

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using CorTabernaclChoir.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CorTabernaclChoir.Controllers;
 using Moq;
@@ -19,7 +20,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockHandler = new Mock<IGalleryService>();
             var mockCultureService = new Mock<ICultureService>();
             var mockImageSaveService = new Mock<IUploadedFileService>();
-            var controller = new GalleryController(mockHandler.Object, mockCultureService.Object, mockImageSaveService.Object);
+            var mockLogger = new Mock<ILogger>();
+            var controller = new GalleryController(mockHandler.Object, mockCultureService.Object, mockImageSaveService.Object, mockLogger.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act
