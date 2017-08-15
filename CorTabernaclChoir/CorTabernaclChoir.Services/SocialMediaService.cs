@@ -10,10 +10,12 @@ namespace CorTabernaclChoir.Services
 {
     public class SocialMediaService : ISocialMediaService
     {
+        private readonly IMapper _mapper;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
 
-        public SocialMediaService(Func<IUnitOfWork> unitOfWorkFactory)
+        public SocialMediaService(Func<IUnitOfWork> unitOfWorkFactory, IMapper mapper)
         {
+            _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
@@ -23,13 +25,8 @@ namespace CorTabernaclChoir.Services
             {
                 return uow.Repository<SocialMediaAccount>()
                     .GetAll()
-                    .Select(entity => new SocialMediaViewModel
-                    {
-                        Id = entity.Id,
-                        Name = entity.Name,
-                        Url = entity.Url,
-                        ImageFileId = entity.ImageFileId
-                    }).ToList();
+                    .Select(entity => _mapper.Map<SocialMediaAccount, SocialMediaViewModel>(entity))
+                    .ToList();
             }
         }
 

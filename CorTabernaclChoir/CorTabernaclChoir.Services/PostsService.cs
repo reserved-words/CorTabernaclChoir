@@ -9,13 +9,16 @@ namespace CorTabernaclChoir.Services
 {
     public class PostsService : IPostsService
     {
+        private readonly IMapper _mapper;
         private readonly ICultureService _cultureService;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
         private readonly int _postsPerPage;
 
-        public PostsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService)
+        public PostsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService,
+            IMapper mapper)
         {
             _cultureService = cultureService;
+            _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
 
             _postsPerPage = appSettingsService.NumberOfItemsPerPage;
@@ -30,8 +33,6 @@ namespace CorTabernaclChoir.Services
 
         public PostsViewModel Get(int page, PostType postType)
         {
-            var isCurrentCultureWelsh = _cultureService.IsCurrentCultureWelsh();
-
             using (var uow = _unitOfWorkFactory())
             {
                 var totalItems = uow.Repository<Post>()
@@ -49,15 +50,8 @@ namespace CorTabernaclChoir.Services
                         .OrderByDescending(n => n.Published)
                         .Skip((page - 1) * _postsPerPage)
                         .Take(_postsPerPage)
-                        .Select(n => new PostViewModel
-                        {
-                            Id = n.Id,
-                            Type = n.Type,
-                            Title = isCurrentCultureWelsh ? n.Title_W : n.Title_E,
-                            Content = isCurrentCultureWelsh ? n.Content_W : n.Content_E,
-                            Published = n.Published,
-                            Images = n.PostImages.Select(im => im.Id).ToList()
-                        })
+                        .ToList()
+                        .Select(n => _mapper.Map<Post,PostViewModel>(n))
                         .ToList(),
                     PreviousPage = page == 1 ? (int?)null : page - 1,
                     NextPage = (page >= maximumPageNumber) ? (int?)null : (page + 1),

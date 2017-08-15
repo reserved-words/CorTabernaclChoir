@@ -2,6 +2,7 @@
 using Moq;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
+using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Services;
 using CorTabernaclChoir.Data.Contracts;
 
@@ -11,49 +12,25 @@ namespace CorTabernaclChoir.Tests.Services
     public class HomeServiceTest
     {
         [TestMethod]
-        public void Get_GivenEnglishCulture_ReturnsCorrectModel()
+        public void Get_ReturnsCorrectModel()
         {
             // Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
+            var mockMapper = new Mock<IMapper>();
             var mockRepository = new Mock<IRepository<Home>>();
             var testData = TestData.Home();
+            var testModel = new HomeViewModel { };
             mockRepository.Setup(r => r.GetSingle()).Returns(testData);
             mockUnitOfWork.Setup(u => u.Repository<Home>()).Returns(mockRepository.Object);
-            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
+            mockMapper.Setup(s => s.Map<Home,HomeViewModel>(testData)).Returns(testModel);
 
-            var sut = new HomeService(() => mockUnitOfWork.Object, mockCultureService.Object);
+            var sut = new HomeService(() => mockUnitOfWork.Object, mockMapper.Object);
 
             // Act
             var result = sut.Get();
 
             // Assert
-            Assert.AreEqual(testData.MainText_E, result.MainText);
-            Assert.AreEqual(testData.MusicalDirector, result.MusicalDirector);
-            Assert.AreEqual(testData.Accompanist, result.Accompanist);
-        }
-
-        [TestMethod]
-        public void Get_GivenWelshCulture_ReturnsCorrectModel()
-        {
-            // Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockRepository = new Mock<IRepository<Home>>();
-            var testData = TestData.Home();
-            mockRepository.Setup(r => r.GetSingle()).Returns(testData);
-            mockUnitOfWork.Setup(u => u.Repository<Home>()).Returns(mockRepository.Object);
-            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(true);
-
-            var sut = new HomeService(() => mockUnitOfWork.Object, mockCultureService.Object);
-
-            // Act
-            var result = sut.Get();
-
-            // Assert
-            Assert.AreEqual(testData.MainText_W, result.MainText);
-            Assert.AreEqual(testData.MusicalDirector, result.MusicalDirector);
-            Assert.AreEqual(testData.Accompanist, result.Accompanist);
+            Assert.AreEqual(testModel, result);
         }
     }
 }

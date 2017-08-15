@@ -8,12 +8,12 @@ namespace CorTabernaclChoir.Services
 {
     public class HomeService : IHomeService
     {
-        private readonly ICultureService _cultureService;
+        private readonly IMapper _mapper;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
 
-        public HomeService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService)
+        public HomeService(Func<IUnitOfWork> unitOfWorkFactory, IMapper mapper)
         {
-            _cultureService = cultureService;
+            _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
@@ -22,15 +22,8 @@ namespace CorTabernaclChoir.Services
             using (var uow = _unitOfWorkFactory())
             {
                 var model = uow.Repository<Home>().GetSingle();
-
-                var viewModel = new HomeViewModel
-                {
-                    MainText = _cultureService.IsCurrentCultureWelsh() ? model.MainText_W : model.MainText_E,
-                    MusicalDirector = model.MusicalDirector,
-                    Accompanist = model.Accompanist
-                };
-
-                return viewModel;
+                
+                return _mapper.Map<Home,HomeViewModel>(model);
             }
         }
 

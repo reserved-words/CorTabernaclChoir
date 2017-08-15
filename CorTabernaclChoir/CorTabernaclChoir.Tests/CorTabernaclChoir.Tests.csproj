@@ -109,6 +109,8 @@
     <Compile Include="Controllers\RecordingsControllerTest.cs" />
     <Compile Include="Controllers\VisitsControllerTest.cs" />
     <Compile Include="Controllers\WorksControllerTest.cs" />
+    <Compile Include="Mappers\EnglishMapperTest.cs" />
+    <Compile Include="Mappers\WelshMapperTest.cs" />
     <Compile Include="Services\AboutServiceTest.cs" />
     <Compile Include="Services\GalleryServiceTest.cs" />
     <Compile Include="Services\SocialMediaServiceTest.cs" />
@@ -136,6 +138,10 @@
     <ProjectReference Include="..\CorTabernaclChoir.Data.Contracts\CorTabernaclChoir.Data.Contracts.csproj">
       <Project>{A4512B22-CEBA-4135-A267-50E772B7D6CF}</Project>
       <Name>CorTabernaclChoir.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CorTabernaclChoir.Mapper\CorTabernaclChoir.Mapper.csproj">
+      <Project>{c057ff65-69ad-4c64-9420-67ef5cd2d680}</Project>
+      <Name>CorTabernaclChoir.Mapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\CorTabernaclChoir.Models\CorTabernaclChoir.Common.csproj">
       <Project>{B5447CF1-51FB-4F0E-AE02-AAEC3AA6672C}</Project>

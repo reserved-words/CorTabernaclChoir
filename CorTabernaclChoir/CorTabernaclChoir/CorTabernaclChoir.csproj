@@ -392,6 +392,10 @@
       <Project>{4BF5E40B-B449-440C-A9E6-C78F0A30BE73}</Project>
       <Name>CorTabernaclChoir.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CorTabernaclChoir.Mapper\CorTabernaclChoir.Mapper.csproj">
+      <Project>{c057ff65-69ad-4c64-9420-67ef5cd2d680}</Project>
+      <Name>CorTabernaclChoir.Mapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CorTabernaclChoir.Models\CorTabernaclChoir.Common.csproj">
       <Project>{B5447CF1-51FB-4F0E-AE02-AAEC3AA6672C}</Project>
       <Name>CorTabernaclChoir.Common</Name>

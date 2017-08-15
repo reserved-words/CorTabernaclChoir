@@ -92,6 +92,7 @@ namespace CorTabernaclChoir.App_Start
             kernel.Bind<IUploadedFileService>().To<UploadedFileService>();
 
             kernel.Bind<ILogger>().To<LoggingService>();
+            kernel.Bind<IMapper>().To<Mapper.Mapper>().InSingletonScope();
 
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
         }

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using CorTabernaclChoir.Common.Models;
+using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Services;
 using CorTabernaclChoir.Data.Contracts;
@@ -43,33 +44,34 @@ namespace CorTabernaclChoir.Tests.Services
         public void GetAll_ReturnsCorrectModel()
         {
             // Arrange
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
+            mockMapper.Setup(m => m.Map<SocialMediaAccount, SocialMediaViewModel>(It.IsAny<SocialMediaAccount>()))
+                .Returns<SocialMediaAccount>(sm => new SocialMediaViewModel { Id = sm.Id });
 
             // Act
             var result = sut.GetAll();
 
             // Assert
             result.Count.Should().Be(_socialMediaAccounts.Count);
+            result[0].Id.Should().Be(_socialMediaAccounts[0].Id);
             result[5].Id.Should().Be(_socialMediaAccounts[5].Id);
-            result[5].Name.Should().Be(_socialMediaAccounts[5].Name);
-            result[5].Url.Should().Be(_socialMediaAccounts[5].Url);
-            result[5].ImageFileId.Should().Be(_socialMediaAccounts[5].ImageFileId);
         }
 
         [TestMethod]
         public void Get_ReturnsCorrectModel()
         {
             // Arrange
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
+            mockMapper.Setup(m => m.Map<SocialMediaAccount, SocialMediaViewModel>(_testAccount))
+                .Returns<SocialMediaAccount>(sm => new SocialMediaViewModel {Id = sm.Id});
 
             // Act
             var result = sut.Get(_testAccount.Id);
 
             // Assert
             result.Id.Should().Be(_testAccount.Id);
-            result.Name.Should().Be(_testAccount.Name);
-            result.Url.Should().Be(_testAccount.Url);
-            result.ImageFileId.Should().Be(_testAccount.ImageFileId);
         }
 
         [TestMethod]
@@ -86,7 +88,8 @@ namespace CorTabernaclChoir.Tests.Services
                 File = Encoding.ASCII.GetBytes("teststring"),
                 ContentType = "image/png"
             };
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
 
             // Act
             sut.Add(model, logo);
@@ -111,7 +114,8 @@ namespace CorTabernaclChoir.Tests.Services
                 Name = _testAccount.Name + "test",
                 Url = _testAccount.Url + "/something-else"
             };
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
 
             // Act
             sut.Edit(model, null);
@@ -139,7 +143,8 @@ namespace CorTabernaclChoir.Tests.Services
                 File = Encoding.ASCII.GetBytes("test string"),
                 ContentType = "image/png"
             };
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
 
             // Act
             sut.Edit(model, logo);
@@ -156,7 +161,8 @@ namespace CorTabernaclChoir.Tests.Services
         {
             // Arrange
             var testId = 154;
-            var sut = new SocialMediaService(() => _mockUnitOfWork.Object);
+            var mockMapper = new Mock<IMapper>();
+            var sut = new SocialMediaService(() => _mockUnitOfWork.Object, mockMapper.Object);
 
             // Act
             sut.Delete(testId);

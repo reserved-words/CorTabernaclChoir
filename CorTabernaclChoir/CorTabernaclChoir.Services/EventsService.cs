@@ -9,22 +9,20 @@ namespace CorTabernaclChoir.Services
 {
     public class EventsService : IEventsService
     {
-        private readonly ICultureService _cultureService;
+        private readonly IMapper _mapper;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
         private readonly int _itemsPerPage;
 
-        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService)
+        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService, IMapper mapper)
         {
-            _cultureService = cultureService;
             _unitOfWorkFactory = unitOfWorkFactory;
+            _mapper = mapper;
 
             _itemsPerPage = appSettingsService.NumberOfItemsPerPage;
         }
 
         public EventsViewModel Get(int page)
         {
-            var isCurrentCultureWelsh = _cultureService.IsCurrentCultureWelsh();
-
             using (var uow = _unitOfWorkFactory())
             {
                 var totalItems = uow.Repository<Event>()
@@ -41,15 +39,7 @@ namespace CorTabernaclChoir.Services
                         .OrderByDescending(n => n.Date)
                         .Skip((page - 1) * _itemsPerPage)
                         .Take(_itemsPerPage)
-                        .Select(n => new EventViewModel
-                        {
-                            Id = n.Id,
-                            Title = isCurrentCultureWelsh ? n.Title_W : n.Title_E,
-                            Venue = isCurrentCultureWelsh ? n.Venue_W : n.Venue_E,
-                            Address = isCurrentCultureWelsh ? n.Address_W : n.Address_E,
-                            Date = n.Date,
-                            Images = n.PostImages.Select(im => im.Id).ToList()
-                        })
+                        .Select(n => _mapper.Map<Event,EventViewModel>(n))
                         .ToList(),
                     PreviousPage = page == 1 ? (int?)null : page - 1,
                     NextPage = (page >= maximumPageNumber) ? (int?)null : (page + 1)

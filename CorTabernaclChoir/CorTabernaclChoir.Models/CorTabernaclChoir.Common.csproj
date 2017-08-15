@@ -56,6 +56,7 @@
     <Compile Include="Services\IEventsService.cs" />
     <Compile Include="Services\IImageService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
+    <Compile Include="Services\IMapper.cs" />
     <Compile Include="Services\ISocialMediaService.cs" />
     <Compile Include="Services\IYouTubeService.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />

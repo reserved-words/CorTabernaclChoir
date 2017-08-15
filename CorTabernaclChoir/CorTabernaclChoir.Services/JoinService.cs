@@ -8,12 +8,12 @@ namespace CorTabernaclChoir.Services
 {
     public class JoinService : IJoinService
     {
-        private readonly ICultureService _cultureService;
+        private readonly IMapper _mapper;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
 
-        public JoinService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService)
+        public JoinService(Func<IUnitOfWork> unitOfWorkFactory, IMapper mapper)
         {
-            _cultureService = cultureService;
+            _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
@@ -23,27 +23,7 @@ namespace CorTabernaclChoir.Services
             {
                 var model = uow.Repository<Join>().GetSingle();
 
-                var viewModel = _cultureService.IsCurrentCultureWelsh()
-                    ? new JoinViewModel
-                    {
-                        MainText = model.MainText_W,
-                        RehearsalTimes = model.RehearsalTimes_W,
-                        Location = model.Location_W,
-                        Auditions = model.Auditions_W,
-                        Concerts = model.Concerts_W,
-                        Subscriptions = model.Subscriptions_W
-                    }
-                    : new JoinViewModel
-                    {
-                        MainText = model.MainText_E,
-                        RehearsalTimes = model.RehearsalTimes_E,
-                        Location = model.Location_E,
-                        Auditions = model.Auditions_E,
-                        Concerts = model.Concerts_E,
-                        Subscriptions = model.Subscriptions_E
-                    };
-
-                return viewModel;
+                return _mapper.Map<Join,JoinViewModel>(model);
             }
         }
 

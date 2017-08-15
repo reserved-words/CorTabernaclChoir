@@ -4,18 +4,17 @@ using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Data.Contracts;
-using CorTabernaclChoir.Common;
 
 namespace CorTabernaclChoir.Services
 {
     public class GalleryService : IGalleryService
     {
-        private readonly ICultureService _cultureService;
+        private readonly IMapper _mapper;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
 
-        public GalleryService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService)
+        public GalleryService(Func<IUnitOfWork> unitOfWorkFactory, IMapper mapper)
         {
-            _cultureService = cultureService;
+            _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
@@ -28,15 +27,7 @@ namespace CorTabernaclChoir.Services
                     Images = uow.Repository<GalleryImage>()
                         .GetAll()
                         .ToList()
-                        .Select(im => new Image
-                        {
-                            Id = im.Id,
-                            Caption = string.Format(Resources.GalleryImageCaption,
-                                _cultureService.IsCurrentCultureWelsh()
-                                    ? im.Caption_W
-                                    : im.Caption_E,
-                                im.Year)
-                        })
+                        .Select(im => _mapper.Map<GalleryImage,Image>(im))
                         .ToList()
                 };
             }
