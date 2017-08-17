@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using CorTabernaclChoir.Common;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -28,7 +29,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockHandler = new Mock<IRecordingsService>();
             var mockCultureService = new Mock<ICultureService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new RecordingsController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new RecordingsController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act

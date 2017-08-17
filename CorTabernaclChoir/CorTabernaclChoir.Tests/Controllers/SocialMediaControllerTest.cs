@@ -10,7 +10,9 @@ using Moq;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
+using CorTabernaclChoir.Messages;
 using FluentAssertions;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -26,18 +28,20 @@ namespace CorTabernaclChoir.Tests.Controllers
         private readonly Mock<HttpPostedFileBase> _mockLogo = new Mock<HttpPostedFileBase>();
         
         private Mock<ISocialMediaService> _mockService;
+        private Mock<IMessageContainer> _mockMessageContainer;
         private string _errorMessage;
 
         private SocialMediaController GetSubjectUnderTest(bool isModelValid = true, bool isLogoValid = true)
         {
             _mockService = new Mock<ISocialMediaService>();
+            _mockMessageContainer = new Mock<IMessageContainer>();
 
             var mockFileService = new Mock<IUploadedFileService>();
             var mockFileValidator = new Mock<IUploadedFileValidator>();
             var mockLogger = new Mock<ILogger>();
-            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object, mockLogger.Object);
+            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object, mockLogger.Object, _mockMessageContainer.Object);
 
-            _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>()
+            _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>
             {
                 _testModel
             });
@@ -120,6 +124,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Add(_testModel, _testLogo), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
         }
 
@@ -134,6 +139,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Add(It.IsAny<SocialMediaViewModel>(), It.IsAny<ImageFile>()), Times.Never);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
             result.Model.Should().Be(_testModel);
             result.ViewName.Should().Be("");
         }
@@ -149,6 +155,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Add(It.IsAny<SocialMediaViewModel>(), It.IsAny<ImageFile>()), Times.Never);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
             result.Model.Should().Be(_testModel);
             result.ViewName.Should().Be("");
             subjectUnderTest.ViewData.ModelState[nameof(_testModel.ImageFileId)].Errors.Count.Should().Be(1);
@@ -181,6 +188,8 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Edit(_testModel, _testLogo), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
+            result.Should().NotBeNull();
             result.Should().NotBeNull();
         }
 
@@ -195,6 +204,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Edit(It.IsAny<SocialMediaViewModel>(), It.IsAny<ImageFile>()), Times.Never);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
             result.Model.Should().Be(_testModel);
             result.ViewName.Should().Be("");
         }
@@ -210,6 +220,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Edit(It.IsAny<SocialMediaViewModel>(), It.IsAny<ImageFile>()), Times.Never);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
             result.Model.Should().Be(_testModel);
             result.ViewName.Should().Be("");
             subjectUnderTest.ViewData.ModelState[nameof(_testModel.ImageFileId)].Errors.Count.Should().Be(1);
@@ -242,6 +253,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Assert
             _mockService.Verify(s => s.Delete(_testModel.Id), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
         }
     }

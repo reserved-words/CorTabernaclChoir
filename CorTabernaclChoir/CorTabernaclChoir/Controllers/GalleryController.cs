@@ -21,8 +21,8 @@ namespace CorTabernaclChoir.Controllers
 
         private readonly string[] _validExtensions = { ".jpg", ".jpeg" };
 
-        public GalleryController(IGalleryService service, ICultureService cultureService, IUploadedFileService uploadedFileService, ILogger logger)
-            : base(logger)
+        public GalleryController(IGalleryService service, ICultureService cultureService, IUploadedFileService uploadedFileService, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _cultureService = cultureService;
             _service = service;

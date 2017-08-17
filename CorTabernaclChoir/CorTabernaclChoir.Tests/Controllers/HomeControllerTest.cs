@@ -6,6 +6,7 @@ using CorTabernaclChoir.Controllers;
 using Moq;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Common.Services;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -20,7 +21,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act
@@ -42,7 +44,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("en") as ViewResult;
@@ -58,7 +61,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockHandler = new Mock<IHomeService>();
             var mockCultureService = new Mock<ICultureService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
 
             // Act
             ViewResult result = controller.ToggleLanguage("cy") as ViewResult;

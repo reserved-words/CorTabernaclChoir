@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CorTabernaclChoir.Data;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
@@ -25,14 +26,14 @@ namespace CorTabernaclChoir.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(IAppSettingsService appSettings, ILogger logger)
-            : base(logger)
+        public AccountController(IAppSettingsService appSettings, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _appSettings = appSettings;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAppSettingsService appSettings, ILogger logger)
-            :this(appSettings, logger)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAppSettingsService appSettings, ILogger logger, IMessageContainer messageContainer)
+            :this(appSettings, logger, messageContainer)
         {
             UserManager = userManager;
             SignInManager = signInManager;

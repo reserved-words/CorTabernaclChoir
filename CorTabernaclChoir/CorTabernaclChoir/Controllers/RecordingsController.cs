@@ -2,6 +2,7 @@
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
 using System.Web.Mvc;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
@@ -11,8 +12,8 @@ namespace CorTabernaclChoir.Controllers
         private readonly ICultureService _cultureService;
         private readonly IRecordingsService _service;
 
-        public RecordingsController(IRecordingsService service, ICultureService cultureService, ILogger logger)
-            : base(logger)
+        public RecordingsController(IRecordingsService service, ICultureService cultureService, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _cultureService = cultureService;
             _service = service;

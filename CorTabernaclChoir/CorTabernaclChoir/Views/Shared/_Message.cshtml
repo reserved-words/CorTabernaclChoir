@@ -1,0 +1,29 @@
+﻿@using CorTabernaclChoir.Messages
+
+@if (ViewData.ContainsKey("Messages"))
+{
+    MessageContainer messageContainer = ViewData["Messages"] as MessageContainer;
+
+    if (messageContainer != null)
+    {
+        <script>
+            $(document).ready(function () {
+                toastr.options.closeButton = '@messageContainer.ShowCloseButton';
+                toastr.options.newestOnTop = '@messageContainer.ShowNewestOnTop';
+
+                @foreach (Message message in messageContainer.Messages)
+                {
+                    string toastTypeValue = message.Type.ToString("F").ToLower();
+                    @: var optionsOverride = { /* Add message specific options here */ };
+                    if (message.IsSticky)
+                    {
+                        @:optionsOverride.timeOut = 0;
+                        @:optionsOverride.extendedTimeout = 0;
+                    }
+                    @:toastr['@toastTypeValue']('@message.Text', '@message.Title', optionsOverride);
+                }
+            });
+        </script>
+    }
+}
+

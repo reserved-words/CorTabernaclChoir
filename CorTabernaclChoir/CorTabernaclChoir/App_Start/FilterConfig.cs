@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using CorTabernaclChoir.Attributes;
 
 namespace CorTabernaclChoir
 {
@@ -7,6 +8,7 @@ namespace CorTabernaclChoir
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new MessageAttribute());
         }
     }
 }

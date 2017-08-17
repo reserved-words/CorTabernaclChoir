@@ -340,6 +340,42 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was a problem saving your changes.
+        /// </summary>
+        public static string MessageTextSaveError {
+            get {
+                return ResourceManager.GetString("MessageTextSaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your changes were saved.
+        /// </summary>
+        public static string MessageTextSaveSuccess {
+            get {
+                return ResourceManager.GetString("MessageTextSaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string MessageTitleError {
+            get {
+                return ResourceManager.GetString("MessageTitleError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string MessageTitleSuccess {
+            get {
+                return ResourceManager.GetString("MessageTitleSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Musical Director.
         /// </summary>
         public static string MusicalDirector {

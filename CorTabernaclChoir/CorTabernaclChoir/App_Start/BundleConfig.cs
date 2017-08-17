@@ -24,10 +24,16 @@ namespace CorTabernaclChoir
                       "~/Scripts/SimpleMDE/simplemde.min.js",
                       "~/Scripts/custom.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+                .Include("~/Scripts/toastr.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/SimpleMDE/simplemde.min.css",
                       "~/Content/Bootstrap/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/content/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+                .Include("~/Content/toastr.css"));
         }
     }
 }

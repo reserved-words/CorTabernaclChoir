@@ -3,6 +3,7 @@ using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
 using System.Web.Mvc;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
@@ -12,8 +13,8 @@ namespace CorTabernaclChoir.Controllers
         private readonly IAboutService _service;
         private readonly ICultureService _cultureService;
 
-        public AboutController(IAboutService service, ICultureService cultureService, ILogger logger)
-            :base(logger)
+        public AboutController(IAboutService service, ICultureService cultureService, ILogger logger, IMessageContainer messageContainer)
+            :base(logger, messageContainer)
         {
             _cultureService = cultureService;
             _service = service;

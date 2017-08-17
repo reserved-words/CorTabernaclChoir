@@ -1,15 +1,20 @@
 ﻿using System.Web.Mvc;
 using CorTabernaclChoir.Common;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         private readonly ILogger _logger;
 
-        public BaseController(ILogger logger)
+        public IMessageContainer MessageContainer;
+
+        protected BaseController(ILogger logger, IMessageContainer messageContainer)
         {
             _logger = logger;
+
+            MessageContainer = messageContainer;
         }
 
         protected override void OnException(ExceptionContext filterContext)

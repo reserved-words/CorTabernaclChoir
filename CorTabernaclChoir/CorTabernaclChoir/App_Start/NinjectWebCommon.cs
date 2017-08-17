@@ -2,6 +2,7 @@ using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
+using CorTabernaclChoir.Messages;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Stop")]
@@ -92,8 +93,9 @@ namespace CorTabernaclChoir.App_Start
             kernel.Bind<IUploadedFileService>().To<UploadedFileService>();
 
             kernel.Bind<ILogger>().To<LoggingService>();
-            kernel.Bind<IMapper>().To<Mapper.Mapper>().InSingletonScope();
+            kernel.Bind<IMessageContainer>().To<MessageContainer>();
 
+            kernel.Bind<IMapper>().To<Mapper.Mapper>().InSingletonScope();
             kernel.Bind<IAppSettingsService>().To<AppSettingsService>().InSingletonScope();
         }
     }

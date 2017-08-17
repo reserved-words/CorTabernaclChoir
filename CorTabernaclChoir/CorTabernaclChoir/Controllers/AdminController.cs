@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
@@ -13,8 +14,8 @@ namespace CorTabernaclChoir.Controllers
     {
         private readonly IEmailService _emailService;
 
-        public AdminController(IEmailService emailService, ILogger logger)
-            : base(logger)
+        public AdminController(IEmailService emailService, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _emailService = emailService;
         }
@@ -37,6 +38,8 @@ namespace CorTabernaclChoir.Controllers
         {
             _emailService.AddAddress(email);
 
+            MessageContainer.AddSaveSuccessMessage();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -54,6 +57,8 @@ namespace CorTabernaclChoir.Controllers
         public RedirectToRouteResult ConfirmRemoveEmailAddress(int id)
         {
             _emailService.RemoveAddress(id);
+
+            MessageContainer.AddSaveSuccessMessage();
 
             return RedirectToAction(nameof(Index));
         }

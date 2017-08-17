@@ -21,7 +21,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockCultureService = new Mock<ICultureService>();
             var mockImageSaveService = new Mock<IUploadedFileService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new GalleryController(mockHandler.Object, mockCultureService.Object, mockImageSaveService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new GalleryController(mockHandler.Object, mockCultureService.Object, mockImageSaveService.Object, mockLogger.Object, mockMessageContainer.Object);
             mockHandler.Setup(h => h.Get()).Returns(mockViewModel);
 
             // Act

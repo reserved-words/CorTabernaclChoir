@@ -2,6 +2,7 @@
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Controllers;
+using CorTabernaclChoir.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using FluentAssertions;
@@ -22,13 +23,15 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockService = new Mock<IEmailService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new AdminController(mockService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object, mockMessageContainer.Object);
 
             // Act
             var result = controller.AddEmailAddress(_testEmail);
 
             // Assert
             mockService.Verify(s => s.AddAddress(_testEmail), Times.Once);
+            mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.RouteValues[RouteKeyController].Should().BeNull();
             result.RouteValues[RouteKeyAction].Should().Be(nameof(controller.Index));
         }
@@ -39,7 +42,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockService = new Mock<IEmailService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new AdminController(mockService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object, mockMessageContainer.Object);
 
             // Act
             var result = controller.RemoveEmailAddress(_testEmail);
@@ -56,13 +60,15 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Arrange
             var mockService = new Mock<IEmailService>();
             var mockLogger = new Mock<ILogger>();
-            var controller = new AdminController(mockService.Object, mockLogger.Object);
+            var mockMessageContainer = new Mock<IMessageContainer>();
+            var controller = new AdminController(mockService.Object, mockLogger.Object, mockMessageContainer.Object);
 
             // Act
             var result = controller.ConfirmRemoveEmailAddress(_testEmail.Id);
 
             // Assert
             mockService.Verify(s => s.RemoveAddress(_testEmail.Id), Times.Once);
+            mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.RouteValues[RouteKeyController].Should().BeNull();
             result.RouteValues[RouteKeyAction].Should().Be(nameof(controller.Index));
         }

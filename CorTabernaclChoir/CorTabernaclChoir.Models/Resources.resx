@@ -210,6 +210,18 @@
   <data name="MenuWorks" xml:space="preserve">
     <value>Works</value>
   </data>
+  <data name="MessageTextSaveError" xml:space="preserve">
+    <value>There was a problem saving your changes</value>
+  </data>
+  <data name="MessageTextSaveSuccess" xml:space="preserve">
+    <value>Your changes were saved</value>
+  </data>
+  <data name="MessageTitleError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MessageTitleSuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
   <data name="MusicalDirector" xml:space="preserve">
     <value>Musical Director</value>
   </data>

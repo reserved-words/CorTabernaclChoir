@@ -230,6 +230,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attributes\MessageAttribute.cs" />
     <Compile Include="Attributes\WelshRouteAttribute.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -253,6 +254,7 @@
     </Compile>
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
+    <Compile Include="Interfaces\IMessageContainer.cs" />
     <Compile Include="Interfaces\IUploadedFileValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -265,12 +267,17 @@
     <Compile Include="Services\UploadedFileValidator.cs" />
     <Compile Include="Services\UploadedFileService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MessageContainer.cs" />
+    <Compile Include="Messages\MessageType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bootstrap\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -284,6 +291,8 @@
     <Content Include="Content\Bootstrap\bootstrap.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -308,6 +317,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Content\SimpleMDE\simplemde.min.css" />
     <Content Include="Scripts\SimpleMDE\simplemde.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -368,6 +379,7 @@
     <Content Include="Views\Admin\RemoveEmailAddress.cshtml" />
     <Content Include="Views\Admin\_InsertEmailAddress.cshtml" />
     <Content Include="Views\Admin\_RemoveEmailAddress.cshtml" />
+    <Content Include="Views\Shared\_Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,8 +23,8 @@ namespace CorTabernaclChoir.Controllers
 
         private readonly string[] _validExtensions = { ".png" };
 
-        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator, ILogger logger)
-            : base(logger)
+        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _service = service;
             _uploadedFileService = uploadedFileService;
@@ -61,8 +61,12 @@ namespace CorTabernaclChoir.Controllers
 
                 _service.Add(model, imageFile);
 
+                MessageContainer.AddSaveSuccessMessage();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            MessageContainer.AddSaveErrorMessage();
 
             return View(model);
         }
@@ -90,8 +94,12 @@ namespace CorTabernaclChoir.Controllers
 
                 _service.Edit(model, imageFile);
 
+                MessageContainer.AddSaveSuccessMessage();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            MessageContainer.AddSaveErrorMessage();
 
             return View(model);
         }
@@ -112,6 +120,9 @@ namespace CorTabernaclChoir.Controllers
         public ActionResult Delete(SocialMediaViewModel model)
         {
             _service.Delete(model.Id);
+
+            MessageContainer.AddSaveSuccessMessage();
+
             return RedirectToAction(nameof(Index));
         }
 

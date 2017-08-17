@@ -8,6 +8,7 @@
 
     <title> @Resources.Title | @ViewBag.Title </title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/toastr")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -36,6 +37,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/custom")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toastr")
 
     @RenderSection("scripts", required: false)
 
@@ -54,6 +56,8 @@
             $("#ToggleLanguage").click(toggleLanguage);
         });
     </script>
+    
+    @Html.Partial("_Message")
 
 </body>
 

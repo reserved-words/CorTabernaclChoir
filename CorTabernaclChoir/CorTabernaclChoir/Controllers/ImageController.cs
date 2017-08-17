@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Services;
+using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
 {
@@ -8,8 +9,8 @@ namespace CorTabernaclChoir.Controllers
     {
         private readonly IImageService _service;
 
-        public ImageController(IImageService service, ILogger logger)
-            : base(logger)
+        public ImageController(IImageService service, ILogger logger, IMessageContainer messageContainer)
+            : base(logger, messageContainer)
         {
             _service = service;
         }

@@ -25,6 +25,7 @@ namespace CorTabernaclChoir.Services
             {
                 return uow.Repository<SocialMediaAccount>()
                     .GetAll()
+                    .ToList()
                     .Select(entity => _mapper.Map<SocialMediaAccount, SocialMediaViewModel>(entity))
                     .ToList();
             }
