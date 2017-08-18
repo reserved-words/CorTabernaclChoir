@@ -36,7 +36,7 @@ namespace CorTabernaclChoir.Controllers
         {
             _cultureService.ValidateCulture(culture);
 
-            throw new NotImplementedException();
+            return View(_service.Get(id));
         }
 
         [HttpGet]
