@@ -100,5 +100,34 @@ namespace CorTabernaclChoir.Tests.Services
             Assert.AreEqual(itemsShouldBe.First().Id, result.Items.First().Id);
             Assert.AreEqual(itemsShouldBe.Last().Id, result.Items.Last().Id);
         }
+
+        [TestMethod]
+        public void GetById_ReturnsCorrectModel()
+        {
+            // Arrange
+            var testData = TestData.Posts();
+            var testId = testData[5].Id;
+
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockCultureService = new Mock<ICultureService>();
+            var mockMapper = new Mock<IMapper>();
+            var mockSystemVariablesService = new Mock<IAppSettingsService>();
+            var mockRepository = new Mock<IRepository<Post>>();
+            
+            mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(testData.AsQueryable());
+            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
+            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
+            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
+                .Returns<Post>(p => new PostViewModel { Id = p.Id });
+
+            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object, mockMapper.Object);
+
+            // Act
+            var result = sut.Get(testId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(testId, result.Id);
+        }
     }
 }

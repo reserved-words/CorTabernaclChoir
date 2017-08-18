@@ -60,6 +60,18 @@ namespace CorTabernaclChoir.Services
             }
         }
 
+        public PostViewModel Get(int id)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var entity = uow.Repository<Post>()
+                    .Including(n => n.PostImages)
+                    .Single(p => p.Id == id);
+
+                return _mapper.Map<Post, PostViewModel>(entity);
+            }
+        }
+
         public void Save(Post model)
         {
             using (var uow = _unitOfWorkFactory())
