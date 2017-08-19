@@ -565,6 +565,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cymraeg.
+        /// </summary>
+        public static string SwitchLanguageLabel {
+            get {
+                return ResourceManager.GetString("SwitchLanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bridgend Tabernacl Choir.
         /// </summary>
         public static string Title {
