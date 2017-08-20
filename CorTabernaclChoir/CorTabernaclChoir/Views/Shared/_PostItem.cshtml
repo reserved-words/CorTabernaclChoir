@@ -1,0 +1,38 @@
+﻿@using CorTabernaclChoir.Common
+@using CorTabernaclChoir.Common.Models
+@using CorTabernaclChoir.Extensions
+@model CorTabernaclChoir.Common.ViewModels.PostViewModel
+
+@{ var controllerName = Model.Type == PostType.Visit ? "Visits" : "News"; }
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h4>
+            @Html.DisplayFor(m => m.Title)
+            @Html.DisplayDeleteButton(Url.Action("Delete", controllerName, new { id = Model.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+            @Html.DisplayEditButton(Url.Action("Edit", controllerName, new { id = Model.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+        </h4>
+    </div>
+
+    <div class="panel-body">
+
+        <p>@Html.Markdown(Model.Content)</p>
+
+        @foreach (var image in Model.Images)
+        {
+            <img src="@string.Format(Resources.PostImageUrl, image)" />
+            <br /><br />
+        }
+
+    </div>
+
+    <div class="panel-footer">
+        <i><small>@string.Format(Resources.NewsPublished, Model.Published)</small></i>
+        <span class="pull-right">
+            <a href="@Url.Action("Item", controllerName, new {id = Model.Id})">
+                <span class="glyphicon glyphicon-link"></span>
+            </a>
+        </span>
+    </div>
+</div>

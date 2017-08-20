@@ -1,0 +1,15 @@
+﻿@using CorTabernaclChoir.Common
+@model CorTabernaclChoir.Common.ViewModels.PostViewModel
+
+
+@Html.Partial("_PostItem", Model)
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="text-center">
+            <small>
+                @Html.ActionLink(Resources.SidebarNewsLink, "Index", "News", new { page = 1 }, null)
+            </small>
+        </div>
+    </div>
+</div>

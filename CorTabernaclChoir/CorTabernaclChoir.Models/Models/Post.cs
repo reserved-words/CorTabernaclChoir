@@ -6,7 +6,12 @@ using System.Web;
 
 namespace CorTabernaclChoir.Common.Models
 {
-    public enum PostType { News, Visit, Event }
+    public enum PostType
+    {
+        News = 1,
+        Visit = 2,
+        Event = 3
+    }
 
     public class Post
     {
