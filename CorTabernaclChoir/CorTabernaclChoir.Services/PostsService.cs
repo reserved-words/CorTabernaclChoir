@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.ViewModels;
@@ -12,14 +13,16 @@ namespace CorTabernaclChoir.Services
         private readonly IMapper _mapper;
         private readonly ICultureService _cultureService;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
+        private readonly GetCurrentTime _getCurrentTime;
         private readonly int _postsPerPage;
 
         public PostsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService,
-            IMapper mapper)
+            IMapper mapper, GetCurrentTime getCurrentTime)
         {
             _cultureService = cultureService;
             _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
+            _getCurrentTime = getCurrentTime;
 
             _postsPerPage = appSettingsService.NumberOfItemsPerPage;
         }
@@ -82,7 +85,7 @@ namespace CorTabernaclChoir.Services
                 }
                 else
                 {
-                    model.Published = DateTime.Now;
+                    model.Published = _getCurrentTime();
                     uow.Repository<Post>().Insert(model);
                 }
 
