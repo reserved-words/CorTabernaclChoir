@@ -151,6 +151,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string DefaultCulture {
+            get {
+                return ResourceManager.GetString("DefaultCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ({1}).
         /// </summary>
         public static string GalleryImageCaption {
@@ -381,6 +390,15 @@ namespace CorTabernaclChoir.Common {
         public static string MusicalDirector {
             get {
                 return ResourceManager.GetString("MusicalDirector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add News Item.
+        /// </summary>
+        public static string NewsAddTitle {
+            get {
+                return ResourceManager.GetString("NewsAddTitle", resourceCulture);
             }
         }
         

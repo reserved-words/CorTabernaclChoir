@@ -33,7 +33,7 @@ namespace CorTabernaclChoir.Controllers
 
         [HttpGet]
         [Route("~/SocialMedia")]
-        [Title(nameof(SocialMediaTitle), "")]
+        [Title(nameof(SocialMediaTitle))]
         public ActionResult Index()
         {
             return View(_service.GetAll());
@@ -41,7 +41,7 @@ namespace CorTabernaclChoir.Controllers
 
         [HttpGet]
         [Route("~/SocialMedia/Add")]
-        [Title(nameof(SocialMediaAddTitle), "")]
+        [Title(nameof(SocialMediaAddTitle))]
         public ActionResult Add()
         {
             return View(new SocialMediaViewModel());
@@ -50,7 +50,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Add")]
         [ValidateAntiForgeryToken]
-        [Title(nameof(SocialMediaAddTitle), "")]
+        [Title(nameof(SocialMediaAddTitle))]
         public ActionResult Add(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
             ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
@@ -72,7 +72,7 @@ namespace CorTabernaclChoir.Controllers
         }
 
         [Route("~/SocialMedia/Edit")]
-        [Title(nameof(SocialMediaEditTitle), "")]
+        [Title(nameof(SocialMediaEditTitle))]
         public ActionResult Edit(int id)
         {
             var model = _service.Get(id);
@@ -83,7 +83,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Edit")]
         [ValidateAntiForgeryToken]
-        [Title(nameof(SocialMediaEditTitle), "")]
+        [Title(nameof(SocialMediaEditTitle))]
         public ActionResult Edit(SocialMediaViewModel model, HttpPostedFileBase logo)
         {
             ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
@@ -105,7 +105,7 @@ namespace CorTabernaclChoir.Controllers
         }
 
         [Route("~/SocialMedia/Delete")]
-        [Title(nameof(SocialMediaDeleteTitle), "")]
+        [Title(nameof(SocialMediaDeleteTitle))]
         public ActionResult Delete(int id)
         {
             var model = _service.Get(id);
@@ -116,7 +116,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Route("~/SocialMedia/Delete")]
         [ValidateAntiForgeryToken]
-        [Title(nameof(SocialMediaDeleteTitle), "")]
+        [Title(nameof(SocialMediaDeleteTitle))]
         public ActionResult Delete(SocialMediaViewModel model)
         {
             _service.Delete(model.Id);

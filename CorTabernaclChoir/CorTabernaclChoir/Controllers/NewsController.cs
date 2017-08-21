@@ -1,14 +1,14 @@
-﻿using System;
-using CorTabernaclChoir.Common.Models;
+﻿using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
 using System.Web.Mvc;
 using CorTabernaclChoir.Interfaces;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Controllers
 {
-    [Title(nameof(Resources.MenuNews), nameof(Resources.MenuNews))]
+    [Title(nameof(MenuNews), nameof(MenuNews))]
     public class NewsController : BaseController
     {
         private readonly ICultureService _cultureService;
@@ -42,6 +42,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpGet]
         [Authorize]
         [Route("~/News/Add")]
+        [Title(nameof(NewsAddTitle))]
         public ActionResult Add()
         {
             return View(new Post { Type = PostType.News });
@@ -50,6 +51,8 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Route("~/News/Add")]
+        [Title(nameof(NewsAddTitle))]
         public ActionResult Add(Post model)
         {
             if (ModelState.IsValid)
@@ -58,7 +61,7 @@ namespace CorTabernaclChoir.Controllers
 
                 MessageContainer.AddSaveSuccessMessage();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
             }
 
             MessageContainer.AddSaveErrorMessage();

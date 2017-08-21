@@ -5,7 +5,7 @@ namespace CorTabernaclChoir.Attributes
 {
     public class TitleAttribute : ActionFilterAttribute
     {
-        public TitleAttribute(string titleResourceName, string menuResourceName)
+        public TitleAttribute(string titleResourceName, string menuResourceName = "")
         {
             TitleResourceName = titleResourceName;
             MenuResourceName = menuResourceName;

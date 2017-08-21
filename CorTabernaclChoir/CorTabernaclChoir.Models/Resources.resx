@@ -147,6 +147,9 @@
   <data name="ContactTitle" xml:space="preserve">
     <value>Contacting the Choir</value>
   </data>
+  <data name="DefaultCulture" xml:space="preserve">
+    <value>en</value>
+  </data>
   <data name="GalleryImageCaption" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
@@ -224,6 +227,9 @@
   </data>
   <data name="MusicalDirector" xml:space="preserve">
     <value>Musical Director</value>
+  </data>
+  <data name="NewsAddTitle" xml:space="preserve">
+    <value>Add News Item</value>
   </data>
   <data name="NewsPublished" xml:space="preserve">
     <value>Published {0:dd/MM/yyyy}</value>

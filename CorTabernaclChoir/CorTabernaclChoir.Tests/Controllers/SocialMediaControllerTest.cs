@@ -10,9 +10,7 @@ using Moq;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
-using CorTabernaclChoir.Messages;
 using FluentAssertions;
-using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
