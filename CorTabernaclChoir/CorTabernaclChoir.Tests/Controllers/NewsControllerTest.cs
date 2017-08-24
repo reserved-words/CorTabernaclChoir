@@ -194,5 +194,41 @@ namespace CorTabernaclChoir.Tests.Controllers
             result.Model.Should().Be(model);
             result.ViewName.Should().Be("");
         }
+
+        [TestMethod]
+        public void Delete_ReturnsCorrectView()
+        {
+            // Arrange
+            var sut = GetSubjectUnderTest();
+
+            // Act
+            var result = sut.Delete(TestId) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+
+            var model = result.Model as Post;
+            Assert.IsNotNull(model);
+            Assert.AreEqual(_mockPost, model);
+            Assert.AreEqual("", result.ViewName);
+        }
+
+        [TestMethod]
+        public void DeleteModel_GivenValidModel_CallsServiceAndRedirects()
+        {
+            // Arrange
+            var model = new Post();
+            var subjectUnderTest = GetSubjectUnderTest();
+
+            // Act
+            var result = subjectUnderTest.Delete(model) as RedirectToRouteResult;
+
+            // Assert
+            _mockService.Verify(s => s.Delete(model), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
+            result.Should().NotBeNull();
+            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyPage].Should().Be(1);
+        }
     }
 }

@@ -110,14 +110,11 @@ namespace CorTabernaclChoir.Controllers
         [Route("~/News/Delete")]
         public ActionResult Delete(Post model)
         {
-            if (ModelState.IsValid)
-            {
-                _service.Delete(model);
+            _service.Delete(model);
 
-                return RedirectToAction(nameof(Index));
-            }
+            MessageContainer.AddSaveSuccessMessage();
 
-            return View(model);
+            return RedirectToIndex();
         }
 
         private ActionResult RedirectToIndex()

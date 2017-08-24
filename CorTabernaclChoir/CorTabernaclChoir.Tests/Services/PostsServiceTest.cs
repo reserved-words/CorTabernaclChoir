@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Data.Contracts;
 using CorTabernaclChoir.Services;
@@ -15,33 +16,46 @@ namespace CorTabernaclChoir.Tests.Services
     public class PostsServiceTest
     {
         private readonly DateTime _mockCurrentTime = new DateTime(2017,1,1);
-        
+        private readonly List<Post> _testData = TestData.Posts();
+
+        private Mock<IUnitOfWork> _mockUnitOfWork;
+        private Mock<IRepository<Post>> _mockRepository;
+        private Mock<IAppSettingsService> _mockAppSettingsService;
+
+        private int _postsPerPage;
+
+        private PostsService GetSubjectUnderTest(int postsPerPage = 5)
+        {
+            var mockCultureService = new Mock<ICultureService>();
+            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
+
+            var mockMapper = new Mock<IMapper>();
+            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
+                .Returns<Post>(p => new PostViewModel { Id = p.Id });
+
+            _postsPerPage = postsPerPage;
+            _mockAppSettingsService = new Mock<IAppSettingsService>();
+            _mockAppSettingsService.Setup(s => s.NumberOfItemsPerPage).Returns(_postsPerPage);
+
+            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
+
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockRepository = new Mock<IRepository<Post>>();
+            _mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(_testData.AsQueryable());
+            _mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(_mockRepository.Object);
+            
+            return new PostsService(() => _mockUnitOfWork.Object, mockCultureService.Object, _mockAppSettingsService.Object,
+                mockMapper.Object, mockGetCurrentTime);
+        }
+
         [TestMethod]
         public void Get_GivenPage1News_ReturnsCorrectModel()
         {
             // Arrange
             var section = PostType.News;
             var pageNo = 1;
-            var postsPerPage = 5;
+            var sut = GetSubjectUnderTest();
 
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockMapper = new Mock<IMapper>();
-            var mockSystemVariablesService = new Mock<IAppSettingsService>();
-            var mockRepository = new Mock<IRepository<Post>>();
-            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
-
-            var testData = TestData.Posts();
-            mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(testData.AsQueryable());
-            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
-            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
-            mockSystemVariablesService.Setup(s => s.NumberOfItemsPerPage).Returns(postsPerPage);
-            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
-                .Returns<Post>(p => new PostViewModel {Id = p.Id});
-
-            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object, 
-                mockMapper.Object, mockGetCurrentTime);
-            
             // Act
             var result = sut.Get(pageNo, section);
 
@@ -50,13 +64,13 @@ namespace CorTabernaclChoir.Tests.Services
             Assert.AreEqual(pageNo, result.PageNo);
             Assert.IsNull(result.PreviousPage);
             Assert.AreEqual(pageNo + 1, result.NextPage);
-            Assert.AreEqual(postsPerPage, result.Items.Count);
+            Assert.AreEqual(_postsPerPage, result.Items.Count);
 
-            var itemsShouldBe = testData
+            var itemsShouldBe = _testData
                 .Where(n => n.Type == section)
                 .OrderByDescending(t => t.Published)
-                .Skip(postsPerPage * (pageNo - 1))
-                .Take(postsPerPage)
+                .Skip(_postsPerPage * (pageNo - 1))
+                .Take(_postsPerPage)
                 .ToList();
 
             Assert.AreEqual(itemsShouldBe.First().Id, result.Items.First().Id);
@@ -69,25 +83,7 @@ namespace CorTabernaclChoir.Tests.Services
             // Arrange
             var section = PostType.Visit;
             var pageNo = 3;
-            var postsPerPage = 10;
-
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockMapper = new Mock<IMapper>();
-            var mockSystemVariablesService = new Mock<IAppSettingsService>();
-            var mockRepository = new Mock<IRepository<Post>>();
-            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
-
-            var testData = TestData.Posts();
-            mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(testData.AsQueryable());
-            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
-            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
-            mockSystemVariablesService.Setup(s => s.NumberOfItemsPerPage).Returns(postsPerPage);
-            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
-                .Returns<Post>(p => new PostViewModel { Id = p.Id });
-
-            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object,
-                mockMapper.Object, mockGetCurrentTime);
+            var sut = GetSubjectUnderTest(10);
 
             // Act
             var result = sut.Get(pageNo, section);
@@ -99,11 +95,11 @@ namespace CorTabernaclChoir.Tests.Services
             Assert.AreEqual(5, result.Items.Count);
             Assert.AreEqual("Visits", result.ControllerName);
 
-            var itemsShouldBe = testData
+            var itemsShouldBe = _testData
                 .Where(n => n.Type == section)
                 .OrderByDescending(t => t.Published)
-                .Skip(postsPerPage * (pageNo - 1))
-                .Take(postsPerPage)
+                .Skip(_postsPerPage * (pageNo - 1))
+                .Take(_postsPerPage)
                 .ToList();
             
             Assert.AreEqual(itemsShouldBe.First().Id, result.Items.First().Id);
@@ -114,24 +110,9 @@ namespace CorTabernaclChoir.Tests.Services
         public void GetById_ReturnsCorrectModel()
         {
             // Arrange
-            var testData = TestData.Posts();
-            var testId = testData[5].Id;
+            var testId = _testData[5].Id;
 
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockMapper = new Mock<IMapper>();
-            var mockSystemVariablesService = new Mock<IAppSettingsService>();
-            var mockRepository = new Mock<IRepository<Post>>();
-            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
-
-            mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(testData.AsQueryable());
-            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
-            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
-            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
-                .Returns<Post>(p => new PostViewModel { Id = p.Id });
-
-            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object, 
-                mockMapper.Object, mockGetCurrentTime);
+            var sut = GetSubjectUnderTest();
 
             // Act
             var result = sut.Get(testId);
@@ -145,63 +126,46 @@ namespace CorTabernaclChoir.Tests.Services
         public void Save_GivenNewRecord_InsertsPost()
         {
             // Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockMapper = new Mock<IMapper>();
-            var mockSystemVariablesService = new Mock<IAppSettingsService>();
-            var mockRepository = new Mock<IRepository<Post>>();
-            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
-
-            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
-
-            var model = new Post
-            {
-                Id = 0,
-                Content_E = "New English Content",
-                Content_W = "New Welsh Content"
-            };
-
-            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object, 
-                mockMapper.Object, mockGetCurrentTime);
+            var model = new Post { Id = 0 };
+            var sut = GetSubjectUnderTest();
 
             // Act
             sut.Save(model);
 
             // Assert
             Assert.AreEqual(_mockCurrentTime, model.Published);
-            mockRepository.Verify(r => r.Insert(model), Times.Once);
-            mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+            _mockRepository.Verify(r => r.Insert(model), Times.Once);
+            _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 
         [TestMethod]
         public void Save_GivenExistingRecord_UpdatesPost()
         {
             // Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockMapper = new Mock<IMapper>();
-            var mockSystemVariablesService = new Mock<IAppSettingsService>();
-            var mockRepository = new Mock<IRepository<Post>>();
-            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
-
-            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
-
-            var model = new Post
-            {
-                Id = 2,
-                Content_E = "New English Content",
-                Content_W = "New Welsh Content"
-            };
-
-            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object,
-                mockMapper.Object, mockGetCurrentTime);
+            var model = _testData[10];
+            var sut = GetSubjectUnderTest();
 
             // Act
             sut.Save(model);
 
             // Assert
-            mockRepository.Verify(r => r.Update(model), Times.Once);
-            mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+            _mockRepository.Verify(r => r.Update(model), Times.Once);
+            _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+        }
+
+        [TestMethod]
+        public void Delete_DeletesPost()
+        {
+            // Arrange
+            var model = _testData[2];
+            var sut = GetSubjectUnderTest();
+
+            // Act
+            sut.Delete(model);
+
+            // Assert
+            _mockRepository.Verify(r => r.Delete(model), Times.Once);
+            _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
     }
 }
