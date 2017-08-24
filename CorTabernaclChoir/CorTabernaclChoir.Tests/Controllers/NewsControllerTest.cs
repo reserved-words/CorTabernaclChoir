@@ -19,9 +19,12 @@ namespace CorTabernaclChoir.Tests.Controllers
         private const string TestPropertyName = "PropName";
         private const int TestPageNo = 4;
         private const int TestId = 23;
+        private const string RouteKeyCulture = "culture";
+        private const string RouteKeyPage = "page";
 
         private readonly PostsViewModel _mockPostsViewModel = new PostsViewModel { PageNo = TestPageNo, Items = new List<PostViewModel>() };
-        private readonly PostViewModel _mockPostViewModel = new PostViewModel {Id = 23};
+        private readonly PostViewModel _mockPostViewModel = new PostViewModel {Id = TestId };
+        private readonly Post _mockPost = new Post {Id = TestId};
 
         private Mock<IPostsService> _mockService;
         private Mock<ICultureService> _mockCultureService;
@@ -37,6 +40,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             
             _mockService.Setup(h => h.Get(TestPageNo, PostType.News)).Returns(_mockPostsViewModel);
             _mockService.Setup(h => h.Get(TestId)).Returns(_mockPostViewModel);
+            _mockService.Setup(h => h.GetForEdit(TestId)).Returns(_mockPost);
 
             var subjectUnderTest = new NewsController(_mockService.Object, _mockCultureService.Object, mockLogger.Object, _mockMessageContainer.Object);
 
@@ -117,6 +121,8 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockService.Verify(s => s.Save(model), Times.Once);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
+            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyPage].Should().Be(1);
         }
 
         [TestMethod]
@@ -128,6 +134,59 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             // Act
             var result = subjectUnderTest.Add(model) as ViewResult;
+
+            // Assert
+            _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
+            result.Model.Should().Be(model);
+            result.ViewName.Should().Be("");
+        }
+
+        [TestMethod]
+        public void Edit_ReturnsCorrectView()
+        {
+            // Arrange
+            var sut = GetSubjectUnderTest();
+
+            // Act
+            var result = sut.Edit(TestId) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+
+            var model = result.Model as Post;
+            Assert.IsNotNull(model);
+            Assert.AreEqual(_mockPost, model);
+            Assert.AreEqual("", result.ViewName);
+        }
+
+        [TestMethod]
+        public void EditModel_GivenValidModel_CallsServiceAndRedirects()
+        {
+            // Arrange
+            var model = new Post();
+            var subjectUnderTest = GetSubjectUnderTest();
+
+            // Act
+            var result = subjectUnderTest.Edit(model) as RedirectToRouteResult;
+
+            // Assert
+            _mockService.Verify(s => s.Save(model), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
+            result.Should().NotBeNull();
+            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyPage].Should().Be(1);
+        }
+
+        [TestMethod]
+        public void EditModel_GivenInvalidModel_ReturnsError()
+        {
+            // Arrange
+            var model = new Post();
+            var subjectUnderTest = GetSubjectUnderTest(false);
+
+            // Act
+            var result = subjectUnderTest.Edit(model) as ViewResult;
 
             // Assert
             _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);

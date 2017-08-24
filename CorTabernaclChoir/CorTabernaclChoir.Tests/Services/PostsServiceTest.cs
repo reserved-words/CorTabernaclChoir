@@ -172,5 +172,36 @@ namespace CorTabernaclChoir.Tests.Services
             mockRepository.Verify(r => r.Insert(model), Times.Once);
             mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
+
+        [TestMethod]
+        public void Save_GivenExistingRecord_UpdatesPost()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockCultureService = new Mock<ICultureService>();
+            var mockMapper = new Mock<IMapper>();
+            var mockSystemVariablesService = new Mock<IAppSettingsService>();
+            var mockRepository = new Mock<IRepository<Post>>();
+            var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
+
+            mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockRepository.Object);
+
+            var model = new Post
+            {
+                Id = 2,
+                Content_E = "New English Content",
+                Content_W = "New Welsh Content"
+            };
+
+            var sut = new PostsService(() => mockUnitOfWork.Object, mockCultureService.Object, mockSystemVariablesService.Object,
+                mockMapper.Object, mockGetCurrentTime);
+
+            // Act
+            sut.Save(model);
+
+            // Assert
+            mockRepository.Verify(r => r.Update(model), Times.Once);
+            mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+        }
     }
 }

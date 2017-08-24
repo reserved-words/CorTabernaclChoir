@@ -61,7 +61,7 @@ namespace CorTabernaclChoir.Controllers
 
                 MessageContainer.AddSaveSuccessMessage();
 
-                return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
+                return RedirectToIndex();
             }
 
             MessageContainer.AddSaveErrorMessage();
@@ -80,14 +80,19 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Route("~/News/Edit")]
         public ActionResult Edit(Post model)
         {
             if (ModelState.IsValid)
             {
                 _service.Save(model);
 
-                return RedirectToAction(nameof(Index));
+                MessageContainer.AddSaveSuccessMessage();
+
+                return RedirectToIndex();
             }
+
+            MessageContainer.AddSaveErrorMessage();
 
             return View(model);
         }
@@ -102,6 +107,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Route("~/News/Delete")]
         public ActionResult Delete(Post model)
         {
             if (ModelState.IsValid)
@@ -112,6 +118,11 @@ namespace CorTabernaclChoir.Controllers
             }
 
             return View(model);
+        }
+
+        private ActionResult RedirectToIndex()
+        {
+            return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
         }
     }
 }

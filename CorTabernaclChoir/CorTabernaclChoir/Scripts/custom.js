@@ -4,7 +4,8 @@
         function (index, value) {
             new SimpleMDE({
                 element: value,
-                hideIcons: ["image", "heading", "guide"]
+                hideIcons: ["image", "heading", "guide"],
+                status: false
             });
         });
 
