@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
@@ -74,8 +70,8 @@ namespace CorTabernaclChoir.Tests.Mappers
             Assert.AreEqual(testData.Title_W, result.Title);
             Assert.AreEqual(testData.Content_W, result.Content);
             Assert.AreEqual(testData.Published, result.Published);
-            Assert.AreEqual(testData.PostImages.Select(im => im.Id).First(), result.Images.First());
-            Assert.AreEqual(testData.PostImages.Select(im => im.Id).Last(), result.Images.Last());
+            Assert.AreEqual(testData.PostImages.First(), result.Images.First());
+            Assert.AreEqual(testData.PostImages.Last(), result.Images.Last());
         }
 
         [TestMethod]

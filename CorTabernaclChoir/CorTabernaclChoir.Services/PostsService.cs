@@ -118,7 +118,9 @@ namespace CorTabernaclChoir.Services
         {
             using (var uow = _unitOfWorkFactory())
             {
-                return uow.Repository<Post>().GetById(id);
+                return uow.Repository<Post>()
+                    .Including(n => n.PostImages)
+                    .Single(p => p.Id == id);
             }
         }
 

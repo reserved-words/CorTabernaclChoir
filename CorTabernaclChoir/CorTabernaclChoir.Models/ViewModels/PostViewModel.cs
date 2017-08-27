@@ -11,7 +11,7 @@ namespace CorTabernaclChoir.Common.ViewModels
     {
         public PostViewModel()
         {
-            Images = new List<int>();
+            Images = new List<PostImage>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace CorTabernaclChoir.Common.ViewModels
         public string Content { get; set; }
         public DateTime Published { get; set; }
 
-        public List<int> Images { get; set; }
+        public List<PostImage> Images { get; set; }
     }
 }

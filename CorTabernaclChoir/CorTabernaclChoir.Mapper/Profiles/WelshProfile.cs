@@ -39,7 +39,7 @@ namespace CorTabernaclChoir.Mapper.Profiles
             CreateMap<Post, PostViewModel>()
                 .ForMember(dest => dest.Title, act => act.MapFrom(src => src.Title_W))
                 .ForMember(dest => dest.Content, act => act.MapFrom(src => src.Content_W))
-                .ForMember(dest => dest.Images, act => act.MapFrom(src => src.PostImages.Select(im => im.Id).ToList()));
+                .ForMember(dest => dest.Images, act => act.MapFrom(src => src.PostImages.ToList()));
 
             CreateMap<SocialMediaAccount, SocialMediaViewModel>();
         }
