@@ -13,22 +13,21 @@ namespace CorTabernaclChoir.Controllers
     public class SocialMediaController : BaseController
     {
         private const string ErrorMessageLogoRequired = "A logo is required";
-        private const int MinLogoWidth = 48;
-        private const int MaxLogoWidth = 256;
-        private const int MaxLogoFileSizeKB = 100;
-
+        
         private readonly IUploadedFileService _uploadedFileService;
         private readonly IUploadedFileValidator _uploadedFileValidator;
         private readonly ISocialMediaService _service;
+        private readonly IAppSettingsService _appSettings;
 
-        private readonly string[] _validExtensions = { ".png" };
-
-        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, IUploadedFileValidator uploadedFileValidator, ILogger logger, IMessageContainer messageContainer)
+        public SocialMediaController(ISocialMediaService service, IUploadedFileService uploadedFileService, 
+            IUploadedFileValidator uploadedFileValidator, ILogger logger, IMessageContainer messageContainer,
+            IAppSettingsService appSettings)
             : base(logger, messageContainer)
         {
             _service = service;
             _uploadedFileService = uploadedFileService;
             _uploadedFileValidator = uploadedFileValidator;
+            _appSettings = appSettings;
         }
 
         [HttpGet]
@@ -138,7 +137,8 @@ namespace CorTabernaclChoir.Controllers
             else
             {
                 string errorMessage;
-                if (!_uploadedFileValidator.ValidateSquareImage(logo, _validExtensions, MinLogoWidth, MaxLogoWidth, MaxLogoFileSizeKB, out errorMessage))
+                if (!_uploadedFileValidator.ValidateSquareImage(logo, _appSettings.ValidLogoFileExtensions,
+                    _appSettings.MinLogoWidth, _appSettings.MaxLogoWidth, _appSettings.MaxLogoFileSizeKB, out errorMessage))
                 {
                     ModelState.AddModelError(propertyName, errorMessage);
                 }

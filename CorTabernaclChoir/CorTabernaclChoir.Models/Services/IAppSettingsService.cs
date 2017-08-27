@@ -15,5 +15,11 @@ namespace CorTabernaclChoir.Common.Services
         int NumberOfVideosToDisplay { get; }
         int NumberOfNewsItemsInSidebar { get; }
         int NumberOfEventsInSidebar { get; }
+        string[] ValidPostImageFileExtensions { get; }
+        int MaxPostImageFileSizeKB { get; }
+        int MinLogoWidth { get; }
+        int MaxLogoWidth { get; }
+        int MaxLogoFileSizeKB { get; }
+        string[] ValidLogoFileExtensions { get; }
     }
 }

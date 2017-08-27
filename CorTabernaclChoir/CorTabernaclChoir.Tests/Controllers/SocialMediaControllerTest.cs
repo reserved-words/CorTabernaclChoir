@@ -37,7 +37,17 @@ namespace CorTabernaclChoir.Tests.Controllers
             var mockFileService = new Mock<IUploadedFileService>();
             var mockFileValidator = new Mock<IUploadedFileValidator>();
             var mockLogger = new Mock<ILogger>();
-            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object, mockLogger.Object, _mockMessageContainer.Object);
+            var mockAppSettings = new Mock<IAppSettingsService>();
+
+            var minLogoWidth = 5;
+            var maxLogoWidth = 5000;
+            var maxLogoSize = 500;
+            var validLogoFileExtensions = new string[] {"", "k"};
+
+            mockAppSettings.Setup(s => s.MinLogoWidth).Returns(minLogoWidth);
+            mockAppSettings.Setup(s => s.MaxLogoWidth).Returns(maxLogoWidth);
+            mockAppSettings.Setup(s => s.MaxLogoFileSizeKB).Returns(maxLogoSize);
+            mockAppSettings.Setup(s => s.ValidLogoFileExtensions).Returns(validLogoFileExtensions);
 
             _mockService.Setup(s => s.GetAll()).Returns(new List<SocialMediaViewModel>
             {
@@ -49,28 +59,17 @@ namespace CorTabernaclChoir.Tests.Controllers
 
             _errorMessage = TestErrorMessage;
 
-            if (isLogoValid)
-            {
-                mockFileValidator.Setup(h => h.ValidateSquareImage(
-                    It.IsAny<HttpPostedFileBase>(), 
-                    It.IsAny<string[]>(),
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<int?>(), 
+            mockFileValidator.Setup(h => h.ValidateSquareImage(
+                    It.IsAny<HttpPostedFileBase>(),
+                    validLogoFileExtensions,
+                    minLogoWidth,
+                    maxLogoWidth,
+                    maxLogoSize,
                     out _errorMessage))
-                    .Returns(true);
-            }
-            else
-            {
-                mockFileValidator.Setup(h => h.ValidateSquareImage(
-                    It.IsAny<HttpPostedFileBase>(), 
-                    It.IsAny<string[]>(),
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<int?>(),
-                    out _errorMessage))
-                    .Returns(false);
-            }
+                .Returns(isLogoValid);
+
+            var subjectUnderTest = new SocialMediaController(_mockService.Object, mockFileService.Object, mockFileValidator.Object,
+                mockLogger.Object, _mockMessageContainer.Object, mockAppSettings.Object);
 
             if (!isModelValid)
             {

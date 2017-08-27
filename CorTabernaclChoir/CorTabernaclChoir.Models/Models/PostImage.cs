@@ -9,6 +9,7 @@ namespace CorTabernaclChoir.Common.Models
     {
         public int Id { get; set; }
         public int PostId { get; set; }
+        public string FileExtension { get; set; }
 
         public virtual Post Post { get; set; }
     }

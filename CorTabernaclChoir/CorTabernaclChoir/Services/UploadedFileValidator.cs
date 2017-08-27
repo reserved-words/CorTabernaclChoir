@@ -22,6 +22,11 @@ namespace CorTabernaclChoir.Services
             return file != null && file.ContentLength > 0;
         }
 
+        public string GetFileExtension(HttpPostedFileBase file)
+        {
+            return Path.GetExtension(file.FileName);
+        }
+
         public bool ValidateFile(HttpPostedFileBase file, string[] validExtensions, int? maxFileSizeKB, out string error)
         {
             error = string.Empty;

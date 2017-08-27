@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Web;
-using CorTabernaclChoir.Common.Exceptions;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Interfaces;
 
@@ -9,51 +7,21 @@ namespace CorTabernaclChoir.Services
 {
     public class UploadedFileService : IUploadedFileService
     {
-        private const string TempImageFilenameFormat = "temp{0}.jpg";
-        private const string ImageFilenameFormat = "{0}.jpg";
-        
-        public string Save(HttpPostedFileBase file, string imagesFolder, string[] validExtensions, bool throwIfNoFileUploaded)
+        private const string GalleryImagesDirectory = "~/Images/Gallery";
+        private const string PostImagesDirectory = "~/Images/Posts";
+
+        public void SaveImage(HttpPostedFileBase file, ImageType imageType, int id, string fileExtension)
         {
-            string result;
+            var filename = GetFilePath(imageType, id, fileExtension);
 
-            if (!SaveTempFile(file, imagesFolder, out result))
-            {
-                throw new ValidationException(result);
-            }
-
-            return result;
+            file.SaveAs(filename);
         }
 
-        public void Move(string currentLocation, string newDirectory, int id)
+        public void DeleteImage(ImageType imageType, int id, string fileExtension)
         {
-            var path = Path.Combine(newDirectory, string.Format(ImageFilenameFormat, id));
+            var filename = GetFilePath(imageType, id, fileExtension);
 
-            if (File.Exists(path))
-            {
-                Delete(path);
-            }
-
-            File.Move(currentLocation, path);
-        }
-
-        public void Delete(string path)
-        {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
-                return;
-
-            File.Delete(path);
-        }
-
-        public void Delete(string directory, int id)
-        {
-            var filename = Path.Combine(directory, string.Format(ImageFilenameFormat, id));
-
-            Delete(filename);
-        }
-
-        public void Delete(string directory, string filename)
-        {
-            Delete(Path.Combine(directory, filename));
+            File.Delete(filename);
         }
 
         public ImageFile Convert(HttpPostedFileBase file)
@@ -69,22 +37,16 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        private static bool SaveTempFile(HttpPostedFileBase file, string imagesFolder, out string result)
+        private static string GetFilePath(ImageType imageType, int id, string fileExtension)
         {
-            var tempFilename = string.Format(TempImageFilenameFormat, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            result = Path.Combine(imagesFolder, tempFilename);
+            return Path.Combine(GetDirectoryPath(imageType), $"{id}{fileExtension}");
+        }
 
-            try
-            {
-                file.SaveAs(result);
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
-                return false;
-            }
-
-            return true;
+        private static string GetDirectoryPath(ImageType imageType)
+        {
+            return imageType == ImageType.Gallery
+                ? GalleryImagesDirectory
+                : PostImagesDirectory;
         }
     }
 }

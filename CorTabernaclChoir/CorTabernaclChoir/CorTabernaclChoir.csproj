@@ -386,8 +386,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Gallery\" />
-    <Folder Include="Images\Posts\" />
-    <Folder Include="Images\SocialMedia\" />
+    <Folder Include="Images\Posts\1\" />
+    <Folder Include="Images\Posts\2\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Image\" />
   </ItemGroup>

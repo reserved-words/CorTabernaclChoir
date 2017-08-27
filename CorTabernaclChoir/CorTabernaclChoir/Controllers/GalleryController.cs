@@ -56,39 +56,39 @@ namespace CorTabernaclChoir.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var tempFile = _uploadedFileService.Save(file, ImagesFolder, _validExtensions, model.Id == 0);
+                //try
+                //{
+                //    var tempFile = _uploadedFileService.Save(file, ImageType.Gallery, );
 
-                    try
-                    {
-                        _service.Save(model);
+                //    try
+                //    {
+                //        _service.Save(model);
 
-                        if (string.IsNullOrEmpty(tempFile))
-                        {
-                            _uploadedFileService.Move(tempFile, ImagesFolder, model.Id);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        try
-                        {
-                            _uploadedFileService.Delete(tempFile);
-                        }
-                        finally
-                        {
-                            throw new ValidationException();
-                        }
-                    }
+                //        if (string.IsNullOrEmpty(tempFile))
+                //        {
+                //            _uploadedFileService.Move(tempFile, ImagesFolder, model.Id);
+                //        }
+                //    }
+                //    catch (Exception)
+                //    {
+                //        try
+                //        {
+                //            _uploadedFileService.Delete(tempFile);
+                //        }
+                //        finally
+                //        {
+                //            throw new ValidationException();
+                //        }
+                //    }
 
-                    _service.Save(model);
+                //    _service.Save(model);
 
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }    
+                //    return RedirectToAction(nameof(Index));
+                //}
+                //catch (ValidationException ex)
+                //{
+                //    ModelState.AddModelError(string.Empty, ex.Message);
+                //}    
             }
 
             return View(model);
@@ -138,28 +138,28 @@ namespace CorTabernaclChoir.Controllers
         [Route("~/Gallery/Delete/")]
         public ActionResult Delete(GalleryImage model)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _service.Delete(model);
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _service.Delete(model);
 
-                    try
-                    {
-                        _uploadedFileService.Delete(ImagesFolder, model.Id);
-                    }
-                    catch (Exception)
-                    {
-                        throw new ValidationException();
-                    }
+            //        try
+            //        {
+            //            _uploadedFileService.Delete(ImagesFolder, model.Id);
+            //        }
+            //        catch (Exception)
+            //        {
+            //            throw new ValidationException();
+            //        }
 
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //    catch (ValidationException ex)
+            //    {
+            //        ModelState.AddModelError(string.Empty, ex.Message);
+            //    }
+            //}
 
             return View(model);
         }

@@ -35,6 +35,12 @@ namespace CorTabernaclChoir.Services
         public int NumberOfVideosToDisplay => 8;
         public int NumberOfNewsItemsInSidebar => 3;
         public int NumberOfEventsInSidebar => 3;
+        public string[] ValidPostImageFileExtensions => new[] {".jpg", ".jpeg", ".bmp"};
+        public int MaxPostImageFileSizeKB => 2000;
+        public int MinLogoWidth => 48;
+        public int MaxLogoWidth => 256;
+        public int MaxLogoFileSizeKB => 100;
+        public string[] ValidLogoFileExtensions => new[] { ".png" };
 
         private string GetValue(string key, string defaultValue)
         {

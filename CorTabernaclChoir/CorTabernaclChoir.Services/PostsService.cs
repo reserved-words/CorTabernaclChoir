@@ -75,7 +75,7 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        public void Save(Post model)
+        public int Save(Post model)
         {
             using (var uow = _unitOfWorkFactory())
             {
@@ -90,6 +90,27 @@ namespace CorTabernaclChoir.Services
                 }
 
                 uow.Commit();
+
+                return model.Id;
+            }
+        }
+
+        public int SaveImage(int postId, string fileExtension)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var postImage = new PostImage
+                {
+                    PostId = postId,
+                    FileExtension = fileExtension
+                };
+
+                uow.Repository<PostImage>()
+                    .Insert(postImage);
+
+                uow.Commit();
+
+                return postImage.Id;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using CorTabernaclChoir.Common.Models;
+﻿using System.Web;
+using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
@@ -13,12 +14,19 @@ namespace CorTabernaclChoir.Controllers
     {
         private readonly ICultureService _cultureService;
         private readonly IPostsService _service;
+        private readonly IUploadedFileValidator _uploadedFileValidator;
+        private readonly IAppSettingsService _appSettings;
+        private readonly IUploadedFileService _uploadedFileService;
 
-        public NewsController(IPostsService service, ICultureService cultureService, ILogger logger, IMessageContainer messageContainer)
+        public NewsController(IPostsService service, ICultureService cultureService, ILogger logger, IMessageContainer messageContainer,
+            IUploadedFileValidator uploadedFileValidator, IAppSettingsService appSettings, IUploadedFileService uploadedFileService)
             : base(logger, messageContainer)
         {
             _cultureService = cultureService;
             _service = service;
+            _uploadedFileValidator = uploadedFileValidator;
+            _appSettings = appSettings;
+            _uploadedFileService = uploadedFileService;
         }
 
         [Route("~/News/{page}")]
@@ -53,11 +61,13 @@ namespace CorTabernaclChoir.Controllers
         [ValidateAntiForgeryToken]
         [Route("~/News/Add")]
         [Title(nameof(NewsAddTitle))]
-        public ActionResult Add(Post model)
+        public ActionResult Add(Post model, HttpPostedFileBase image)
         {
+            ValidateUploadedImage(image);
+
             if (ModelState.IsValid)
             {
-                _service.Save(model);
+                SavePost(model, image);
 
                 MessageContainer.AddSaveSuccessMessage();
 
@@ -81,11 +91,13 @@ namespace CorTabernaclChoir.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [Route("~/News/Edit")]
-        public ActionResult Edit(Post model)
+        public ActionResult Edit(Post model, HttpPostedFileBase image)
         {
+            ValidateUploadedImage(image);
+
             if (ModelState.IsValid)
             {
-                _service.Save(model);
+                SavePost(model, image);
 
                 MessageContainer.AddSaveSuccessMessage();
 
@@ -120,6 +132,32 @@ namespace CorTabernaclChoir.Controllers
         private ActionResult RedirectToIndex()
         {
             return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
+        }
+
+        private void SavePost(Post model, HttpPostedFileBase image)
+        {
+            var postId = _service.Save(model);
+
+            if (!_uploadedFileValidator.IsFileUploaded(image))
+                return;
+
+            var imageFileExtension = _uploadedFileValidator.GetFileExtension(image);
+            var imageId = _service.SaveImage(postId, imageFileExtension);
+            _uploadedFileService.SaveImage(image, ImageType.Post, imageId, imageFileExtension);
+        }
+
+        private void ValidateUploadedImage(HttpPostedFileBase file)
+        {
+            string errorMessage;
+
+            if (_uploadedFileValidator.IsFileUploaded(file) && !_uploadedFileValidator.ValidateFile(
+                file,
+                _appSettings.ValidPostImageFileExtensions,
+                _appSettings.MaxPostImageFileSizeKB,
+                out errorMessage))
+            {
+                ModelState.AddModelError("", errorMessage);
+            }
         }
     }
 }
