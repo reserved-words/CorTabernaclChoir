@@ -82,6 +82,7 @@ namespace CorTabernaclChoir.Controllers
         [HttpGet]
         [Authorize]
         [Route("~/News/Edit")]
+        [Title(nameof(NewsEditTitle))]
         public ActionResult Edit(int id)
         {
             return View(_service.GetForEdit(id));
@@ -91,6 +92,7 @@ namespace CorTabernaclChoir.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [Route("~/News/Edit")]
+        [Title(nameof(NewsEditTitle))]
         public ActionResult Edit(Post model, HttpPostedFileBase image)
         {
             ValidateUploadedImage(image);

@@ -403,6 +403,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit News Item.
+        /// </summary>
+        public static string NewsEditTitle {
+            get {
+                return ResourceManager.GetString("NewsEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published {0:dd/MM/yyyy}.
         /// </summary>
         public static string NewsPublished {

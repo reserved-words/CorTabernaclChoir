@@ -46,6 +46,6 @@ namespace CorTabernaclChoir.Common.Models
 
         public PostType Type { get; set; }
 
-        public virtual ICollection<PostImage> PostImages { get; set; }
+        public virtual List<PostImage> PostImages { get; set; }
     }
 }

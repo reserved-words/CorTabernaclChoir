@@ -1,7 +1,7 @@
 ﻿@model CorTabernaclChoir.Common.Models.Post
 @using CorTabernaclChoir.Extensions
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -40,6 +40,28 @@
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Content_W, htmlAttributes: new { @class = "form-control md", rows = 20, style = "min-width: 100%;" })
                 @Html.ValidationMessageFor(model => model.Content_W, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        @for (var i = 0; i < Model.PostImages.Count; i++)
+        {
+            @Html.HiddenFor(m => Model.PostImages[i].Id)
+            @Html.HiddenFor(m => Model.PostImages[i].PostId)
+            @Html.HiddenFor(m => Model.PostImages[i].FileExtension)
+
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    @Html.DisplayPostImage(Model.PostImages[i])
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.Label("Add Image", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="btn btn-sm btn-primary">
+                    Choose File <input type="file" name="image" class="hidden">
+                </label>
             </div>
         </div>
 

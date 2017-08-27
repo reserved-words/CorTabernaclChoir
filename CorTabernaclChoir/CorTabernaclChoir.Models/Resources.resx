@@ -231,6 +231,9 @@
   <data name="NewsAddTitle" xml:space="preserve">
     <value>Add News Item</value>
   </data>
+  <data name="NewsEditTitle" xml:space="preserve">
+    <value>Edit News Item</value>
+  </data>
   <data name="NewsPublished" xml:space="preserve">
     <value>Published {0:dd/MM/yyyy}</value>
   </data>

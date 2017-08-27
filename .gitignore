@@ -245,3 +245,6 @@ ModelManifest.xml
 *PrivateSettings.config
 *client_secret.json
 *Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
+
+# Exclude images
+*\Images\*

@@ -3,11 +3,19 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CorTabernaclChoir.Common.Models;
 
 namespace CorTabernaclChoir.Extensions
 {
     public static class HtmlHelperExtensions
     {
+        public static MvcHtmlString DisplayPostImage(this HtmlHelper html, PostImage image)
+        {
+            var tag = new TagBuilder("img");
+            tag.MergeAttribute("src", $"/Images/Posts/{image.Id}{image.FileExtension}");
+            return MvcHtmlString.Create(tag.ToString());
+        }
+
         public static MvcHtmlString DisplayDateFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string format = "dd/MM/yyyy")
         {
             var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);

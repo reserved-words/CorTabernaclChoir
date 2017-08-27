@@ -39,7 +39,7 @@ namespace CorTabernaclChoir.Services
 
         private static string GetFilePath(ImageType imageType, int id, string fileExtension)
         {
-            return Path.Combine(GetDirectoryPath(imageType), $"{id}{fileExtension}");
+            return HttpContext.Current.Server.MapPath(Path.Combine(GetDirectoryPath(imageType), $"{id}{fileExtension}"));
         }
 
         private static string GetDirectoryPath(ImageType imageType)
