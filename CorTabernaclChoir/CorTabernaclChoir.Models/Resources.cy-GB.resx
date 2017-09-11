@@ -126,6 +126,9 @@
   <data name="AboutTitle" xml:space="preserve">
     <value>Am y Côr</value>
   </data>
+  <data name="AllVisitsLink" xml:space="preserve">
+    <value>Cliciwch yma am fwy o deithiau</value>
+  </data>
   <data name="ContactEmail" xml:space="preserve">
     <value>Ebost</value>
   </data>
@@ -204,14 +207,14 @@
   <data name="MusicalDirector" xml:space="preserve">
     <value>Cyfarwyddwr Cerdd</value>
   </data>
-  <data name="NewsPublished" xml:space="preserve">
-    <value>Cyhoeddwyd {0:dd/MM/yyyy}</value>
-  </data>
   <data name="NewsTitle" xml:space="preserve">
     <value>Newyddion</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Ymlaen</value>
+  </data>
+  <data name="PostPublished" xml:space="preserve">
+    <value>Cyhoeddwyd {0:dd/MM/yyyy}</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>Yn ôl</value>

@@ -97,6 +97,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to view all visits.
+        /// </summary>
+        public static string AllVisitsLink {
+            get {
+                return ResourceManager.GetString("AllVisitsLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string ContactEmail {
@@ -412,15 +421,6 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Published {0:dd/MM/yyyy}.
-        /// </summary>
-        public static string NewsPublished {
-            get {
-                return ResourceManager.GetString("NewsPublished", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to News.
         /// </summary>
         public static string NewsTitle {
@@ -444,6 +444,15 @@ namespace CorTabernaclChoir.Common {
         public static string PostImageUrl {
             get {
                 return ResourceManager.GetString("PostImageUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published {0:dd/MM/yyyy}.
+        /// </summary>
+        public static string PostPublished {
+            get {
+                return ResourceManager.GetString("PostPublished", resourceCulture);
             }
         }
         
@@ -606,6 +615,24 @@ namespace CorTabernaclChoir.Common {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Visit.
+        /// </summary>
+        public static string VisitsAddTitle {
+            get {
+                return ResourceManager.GetString("VisitsAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Visit.
+        /// </summary>
+        public static string VisitsEditTitle {
+            get {
+                return ResourceManager.GetString("VisitsEditTitle", resourceCulture);
             }
         }
         

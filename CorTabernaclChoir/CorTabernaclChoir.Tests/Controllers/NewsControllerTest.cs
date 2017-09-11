@@ -14,7 +14,7 @@ using FluentAssertions;
 namespace CorTabernaclChoir.Tests.Controllers
 {
     [TestClass]
-    public class NewsServiceTest
+    public class NewsControllerTest
     {
         private const string TestErrorMessage = "Some error message";
         private const string TestPropertyName = "PropName";
