@@ -7,6 +7,7 @@ namespace CorTabernaclChoir
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new RequireSecureConnectionAttribute());
             filters.Add(new HandleErrorAttribute());
             filters.Add(new MessageAttribute());
         }

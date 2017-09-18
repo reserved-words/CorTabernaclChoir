@@ -231,6 +231,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attributes\MessageAttribute.cs" />
+    <Compile Include="Attributes\RequireSecureConnectionAttribute.cs" />
     <Compile Include="Attributes\WelshRouteAttribute.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
