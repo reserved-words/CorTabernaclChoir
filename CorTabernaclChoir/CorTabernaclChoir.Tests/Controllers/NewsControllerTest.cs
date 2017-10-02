@@ -27,7 +27,7 @@ namespace CorTabernaclChoir.Tests.Controllers
 
         private readonly PostsViewModel _mockPostsViewModel = new PostsViewModel { PageNo = TestPageNo, Items = new List<PostViewModel>() };
         private readonly PostViewModel _mockPostViewModel = new PostViewModel {Id = TestId };
-        private readonly Post _mockPost = new Post {Id = TestId};
+        private readonly EditPostViewModel _mockPost = new EditPostViewModel { Id = TestId};
 
         private Mock<IPostsService> _mockService;
         private Mock<ICultureService> _mockCultureService;
@@ -53,7 +53,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockService.Setup(h => h.Get(TestPageNo, PostType.News)).Returns(_mockPostsViewModel);
             _mockService.Setup(h => h.Get(TestId)).Returns(_mockPostViewModel);
             _mockService.Setup(h => h.GetForEdit(TestId)).Returns(_mockPost);
-            _mockService.Setup(s => s.Save(It.IsAny<Post>())).Returns(TestId);
+            _mockService.Setup(s => s.Save(It.IsAny<EditPostViewModel>())).Returns(TestId);
             _mockService.Setup(s => s.SaveImage(TestId, It.IsAny<string>())).Returns(TestImageId);
 
             mockAppSettings.Setup(a => a.MaxPostImageFileSizeKB).Returns(maxImageSize);
@@ -137,7 +137,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void AddModel_GivenValidModelWithNoImage_CallsServiceAndRedirects()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest();
 
             // Act
@@ -157,7 +157,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void AddModel_GivenValidModelWithValidImage_CallsServiceAndRedirects()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(true, true);
 
             // Act
@@ -177,14 +177,14 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void AddModel_GivenValidModelWithInvalidImage_ReturnsError()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(true, true, false);
 
             // Act
             var result = subjectUnderTest.Add(model, _mockUploadedImage.Object) as ViewResult;
 
             // Assert
-            _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);
+            _mockService.Verify(s => s.Save(It.IsAny<EditPostViewModel>()), Times.Never);
             _mockService.Verify(s => s.SaveImage(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
@@ -196,14 +196,14 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void AddModel_GivenInvalidModel_ReturnsError()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(false);
 
             // Act
             var result = subjectUnderTest.Add(model, _mockUploadedImage.Object) as ViewResult;
 
             // Assert
-            _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);
+            _mockService.Verify(s => s.Save(It.IsAny<EditPostViewModel>()), Times.Never);
             _mockService.Verify(s => s.SaveImage(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
@@ -223,7 +223,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
 
-            var model = result.Model as Post;
+            var model = result.Model as EditPostViewModel;
             Assert.IsNotNull(model);
             Assert.AreEqual(_mockPost, model);
             Assert.AreEqual("", result.ViewName);
@@ -233,7 +233,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void EditModel_GivenValidModelWithNoImage_CallsServiceAndRedirects()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest();
 
             // Act
@@ -253,7 +253,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void EditModel_GivenValidModelWithValidImage_CallsServiceAndRedirects()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(true, true);
 
             // Act
@@ -273,14 +273,14 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void EditModel_GivenModelWithInvalidImage_ReturnsError()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(true, true, false);
 
             // Act
             var result = subjectUnderTest.Edit(model, _mockUploadedImage.Object) as ViewResult;
 
             // Assert
-            _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);
+            _mockService.Verify(s => s.Save(It.IsAny<EditPostViewModel>()), Times.Never);
             _mockService.Verify(s => s.SaveImage(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
@@ -292,14 +292,14 @@ namespace CorTabernaclChoir.Tests.Controllers
         public void EditModel_GivenInvalidModel_ReturnsError()
         {
             // Arrange
-            var model = new Post();
+            var model = new EditPostViewModel();
             var subjectUnderTest = GetSubjectUnderTest(false);
 
             // Act
             var result = subjectUnderTest.Edit(model, _mockUploadedImage.Object) as ViewResult;
 
             // Assert
-            _mockService.Verify(s => s.Save(It.IsAny<Post>()), Times.Never);
+            _mockService.Verify(s => s.Save(It.IsAny<EditPostViewModel>()), Times.Never);
             _mockService.Verify(s => s.SaveImage(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
@@ -319,7 +319,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
 
-            var model = result.Model as Post;
+            var model = result.Model as EditPostViewModel;
             Assert.IsNotNull(model);
             Assert.AreEqual(_mockPost, model);
             Assert.AreEqual("", result.ViewName);

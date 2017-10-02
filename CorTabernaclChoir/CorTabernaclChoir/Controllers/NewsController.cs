@@ -4,6 +4,7 @@ using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
 using CorTabernaclChoir.Common;
 using System.Web.Mvc;
+using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Interfaces;
 using static CorTabernaclChoir.Common.Resources;
 
@@ -61,7 +62,7 @@ namespace CorTabernaclChoir.Controllers
         [ValidateAntiForgeryToken]
         [Route("~/News/Add")]
         [Title(nameof(NewsAddTitle))]
-        public ActionResult Add(Post model, HttpPostedFileBase image)
+        public ActionResult Add(EditPostViewModel model, HttpPostedFileBase image)
         {
             ValidateUploadedImage(image);
 
@@ -93,7 +94,7 @@ namespace CorTabernaclChoir.Controllers
         [ValidateAntiForgeryToken]
         [Route("~/News/Edit")]
         [Title(nameof(NewsEditTitle))]
-        public ActionResult Edit(Post model, HttpPostedFileBase image)
+        public ActionResult Edit(EditPostViewModel model, HttpPostedFileBase image)
         {
             ValidateUploadedImage(image);
 
@@ -136,7 +137,7 @@ namespace CorTabernaclChoir.Controllers
             return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
         }
 
-        private void SavePost(Post model, HttpPostedFileBase image)
+        private void SavePost(EditPostViewModel model, HttpPostedFileBase image)
         {
             var postId = _service.Save(model);
 

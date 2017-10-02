@@ -18,13 +18,17 @@
     <div class="panel-body">
 
         <p>@Html.Markdown(Model.Content)</p>
-
-        @foreach (var image in Model.Images)
-        {
-            <div class="text-center" style="margin: 1em;">
-                @Html.DisplayPostImage(image)
-            </div>
-        }
+        
+        <div class="row">
+            @foreach (var image in Model.Images)
+            {
+                <div class="col-sm-6">
+                    <div class="thumbnail">
+                        @Html.DisplayPostImage(image)
+                    </div>
+                </div>
+            }
+        </div>
 
     </div>
 

@@ -4,12 +4,20 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CorTabernaclChoir.Common.Models;
+using CorTabernaclChoir.Common.ViewModels;
 
 namespace CorTabernaclChoir.Extensions
 {
     public static class HtmlHelperExtensions
     {
         public static MvcHtmlString DisplayPostImage(this HtmlHelper html, PostImage image)
+        {
+            var tag = new TagBuilder("img");
+            tag.MergeAttribute("src", $"/Images/Posts/{image.Id}{image.FileExtension}");
+            return MvcHtmlString.Create(tag.ToString());
+        }
+
+        public static MvcHtmlString DisplayPostImage(this HtmlHelper html, PostImageViewModel image)
         {
             var tag = new TagBuilder("img");
             tag.MergeAttribute("src", $"/Images/Posts/{image.Id}{image.FileExtension}");

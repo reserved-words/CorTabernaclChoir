@@ -21,6 +21,7 @@ namespace CorTabernaclChoir.Tests.Services
         private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IRepository<Post>> _mockRepository;
         private Mock<IAppSettingsService> _mockAppSettingsService;
+        private Mock<IMapper> _mockMapper;
 
         private int _postsPerPage;
 
@@ -29,9 +30,11 @@ namespace CorTabernaclChoir.Tests.Services
             var mockCultureService = new Mock<ICultureService>();
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
 
-            var mockMapper = new Mock<IMapper>();
-            mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
+            _mockMapper = new Mock<IMapper>();
+            _mockMapper.Setup(m => m.Map<Post, PostViewModel>(It.IsAny<Post>()))
                 .Returns<Post>(p => new PostViewModel { Id = p.Id });
+            _mockMapper.Setup(m => m.Map<EditPostViewModel, Post>(It.IsAny<EditPostViewModel>()))
+                .Returns<EditPostViewModel>(p => new Post { Id = p.Id });
 
             _postsPerPage = postsPerPage;
             _mockAppSettingsService = new Mock<IAppSettingsService>();
@@ -45,7 +48,7 @@ namespace CorTabernaclChoir.Tests.Services
             _mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(_mockRepository.Object);
             
             return new PostsService(() => _mockUnitOfWork.Object, mockCultureService.Object, _mockAppSettingsService.Object,
-                mockMapper.Object, mockGetCurrentTime);
+                _mockMapper.Object, mockGetCurrentTime);
         }
 
         [TestMethod]
@@ -126,7 +129,7 @@ namespace CorTabernaclChoir.Tests.Services
         public void Save_GivenNewRecord_InsertsPost()
         {
             // Arrange
-            var model = new Post { Id = 0 };
+            var model = new EditPostViewModel { Id = 0 };
             var sut = GetSubjectUnderTest();
 
             // Act
@@ -134,7 +137,7 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Assert
             Assert.AreEqual(_mockCurrentTime, model.Published);
-            _mockRepository.Verify(r => r.Insert(model), Times.Once);
+            _mockRepository.Verify(r => r.Insert(It.Is<Post>(p => p.Id == 0)), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 
@@ -142,14 +145,14 @@ namespace CorTabernaclChoir.Tests.Services
         public void Save_GivenExistingRecord_UpdatesPost()
         {
             // Arrange
-            var model = _testData[10];
+            var model = new EditPostViewModel { Id = _testData[10].Id };
             var sut = GetSubjectUnderTest();
 
             // Act
             sut.Save(model);
 
             // Assert
-            _mockRepository.Verify(r => r.Update(model), Times.Once);
+            _mockRepository.Verify(r => r.Update(It.Is<Post>(p => p.Id == _testData[10].Id)), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 

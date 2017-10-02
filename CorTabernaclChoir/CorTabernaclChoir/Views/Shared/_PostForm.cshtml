@@ -1,4 +1,4 @@
-﻿@model CorTabernaclChoir.Common.Models.Post
+﻿@model CorTabernaclChoir.Common.ViewModels.EditPostViewModel
 @using CorTabernaclChoir.Extensions
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -43,18 +43,29 @@
             </div>
         </div>
         
-        @for (var i = 0; i < Model.PostImages.Count; i++)
-        {
-            @Html.HiddenFor(m => Model.PostImages[i].Id)
-            @Html.HiddenFor(m => Model.PostImages[i].PostId)
-            @Html.HiddenFor(m => Model.PostImages[i].FileExtension)
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="row">
+                    @for (var i = 0; i < Model.PostImages.Count; i++)
+                    {
+                        @Html.HiddenFor(m => Model.PostImages[i].Id)
+                        @Html.HiddenFor(m => Model.PostImages[i].PostId)
+                        @Html.HiddenFor(m => Model.PostImages[i].FileExtension)
 
-            <div class="form-group">
-                <div class="col-md-10 col-md-offset-2">
-                    @Html.DisplayPostImage(Model.PostImages[i])
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                @Html.DisplayPostImage(Model.PostImages[i])
+                                <div class="caption">
+                                    @Html.CheckBoxFor(m => Model.PostImages[i].MarkForDeletion)
+                                    @Html.LabelFor(m => Model.PostImages[i].MarkForDeletion)
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        }
+
+        </div>
 
         <div class="form-group">
             @Html.Label("Add Image", new { @class = "control-label col-md-2" })

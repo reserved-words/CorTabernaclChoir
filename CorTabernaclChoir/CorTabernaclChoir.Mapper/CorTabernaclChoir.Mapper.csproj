@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Mapper.cs" />
     <Compile Include="Profiles\EnglishProfile.cs" />
+    <Compile Include="Profiles\PostsProfile.cs" />
     <Compile Include="Profiles\WelshProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -7,8 +7,8 @@ namespace CorTabernaclChoir.Common.Services
     {
         PostsViewModel Get(int page, PostType postType);
         PostViewModel Get(int id);
-        Post GetForEdit(int id);
-        int Save(Post model);
+        EditPostViewModel GetForEdit(int id);
+        int Save(EditPostViewModel model);
         int SaveImage(int postId, string fileExtension);
         void Delete(Post model);
     }

@@ -60,10 +60,12 @@
     <Compile Include="Services\ISocialMediaService.cs" />
     <Compile Include="Services\IYouTubeService.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\PostImageViewModel.cs" />
     <Compile Include="ViewModels\EventSummaryViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryViewModel.cs" />
     <Compile Include="ViewModels\EventsViewModel.cs" />
+    <Compile Include="ViewModels\EditPostViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\Contact.cs" />

@@ -23,6 +23,7 @@ namespace CorTabernaclChoir.Mapper
         {
             return new MapperConfiguration(cfg => {
                 cfg.AddProfile<EnglishProfile>();
+                cfg.AddProfile<PostsProfile>();
             });
         }
 
@@ -30,6 +31,7 @@ namespace CorTabernaclChoir.Mapper
         {
             return new MapperConfiguration(cfg => {
                 cfg.AddProfile<WelshProfile>();
+                cfg.AddProfile<PostsProfile>();
             });
         }
 

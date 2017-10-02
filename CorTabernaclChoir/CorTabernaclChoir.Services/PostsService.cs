@@ -75,18 +75,22 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        public int Save(Post model)
+        public int Save(EditPostViewModel model)
         {
+            var post = _mapper.Map<EditPostViewModel, Post>(model);
+
             using (var uow = _unitOfWorkFactory())
             {
                 if (model.Id > 0)
                 {
-                    uow.Repository<Post>().Update(model);
+                    // Delete removed images
+
+                    uow.Repository<Post>().Update(post);
                 }
                 else
                 {
                     model.Published = _getCurrentTime();
-                    uow.Repository<Post>().Insert(model);
+                    uow.Repository<Post>().Insert(post);
                 }
 
                 uow.Commit();
@@ -114,13 +118,15 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        public Post GetForEdit(int id)
+        public EditPostViewModel GetForEdit(int id)
         {
             using (var uow = _unitOfWorkFactory())
             {
-                return uow.Repository<Post>()
+                var post = uow.Repository<Post>()
                     .Including(n => n.PostImages)
                     .Single(p => p.Id == id);
+
+                return _mapper.Map<Post, EditPostViewModel>(post);
             }
         }
 

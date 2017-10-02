@@ -110,6 +110,7 @@
     <Compile Include="Controllers\VisitsControllerTest.cs" />
     <Compile Include="Controllers\WorksControllerTest.cs" />
     <Compile Include="Mappers\EnglishMapperTest.cs" />
+    <Compile Include="Mappers\PostMapperTest.cs" />
     <Compile Include="Mappers\WelshMapperTest.cs" />
     <Compile Include="Services\AboutServiceTest.cs" />
     <Compile Include="Services\GalleryServiceTest.cs" />
