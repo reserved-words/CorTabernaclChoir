@@ -83,9 +83,12 @@ namespace CorTabernaclChoir.Services
             {
                 if (model.Id > 0)
                 {
-                    // Delete removed images
-
                     uow.Repository<Post>().Update(post);
+
+                    foreach (var image in model.PostImages.Where(im => im.MarkForDeletion))
+                    {
+                        uow.Repository<PostImage>().Delete(image.Id);   
+                    }
                 }
                 else
                 {

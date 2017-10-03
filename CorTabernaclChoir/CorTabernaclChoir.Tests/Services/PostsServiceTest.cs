@@ -19,7 +19,8 @@ namespace CorTabernaclChoir.Tests.Services
         private readonly List<Post> _testData = TestData.Posts();
 
         private Mock<IUnitOfWork> _mockUnitOfWork;
-        private Mock<IRepository<Post>> _mockRepository;
+        private Mock<IRepository<Post>> _mockPostsRepository;
+        private Mock<IRepository<PostImage>> _mockImageRepository;
         private Mock<IAppSettingsService> _mockAppSettingsService;
         private Mock<IMapper> _mockMapper;
 
@@ -43,10 +44,12 @@ namespace CorTabernaclChoir.Tests.Services
             var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
 
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _mockRepository = new Mock<IRepository<Post>>();
-            _mockRepository.Setup(r => r.Including(n => n.PostImages)).Returns(_testData.AsQueryable());
-            _mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(_mockRepository.Object);
-            
+            _mockPostsRepository = new Mock<IRepository<Post>>();
+            _mockImageRepository = new Mock<IRepository<PostImage>>();
+            _mockPostsRepository.Setup(r => r.Including(n => n.PostImages)).Returns(_testData.AsQueryable());
+            _mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(_mockPostsRepository.Object);
+            _mockUnitOfWork.Setup(u => u.Repository<PostImage>()).Returns(_mockImageRepository.Object);
+
             return new PostsService(() => _mockUnitOfWork.Object, mockCultureService.Object, _mockAppSettingsService.Object,
                 _mockMapper.Object, mockGetCurrentTime);
         }
@@ -137,7 +140,7 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Assert
             Assert.AreEqual(_mockCurrentTime, model.Published);
-            _mockRepository.Verify(r => r.Insert(It.Is<Post>(p => p.Id == 0)), Times.Once);
+            _mockPostsRepository.Verify(r => r.Insert(It.Is<Post>(p => p.Id == 0)), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 
@@ -145,14 +148,38 @@ namespace CorTabernaclChoir.Tests.Services
         public void Save_GivenExistingRecord_UpdatesPost()
         {
             // Arrange
-            var model = new EditPostViewModel { Id = _testData[10].Id };
+            var id = _testData[10].Id;
+            var deletedImageId = 55;
+            var keepImageId = 56;
+            var model = new EditPostViewModel
+            {
+                Id = id,
+                PostImages = new List<PostImageViewModel>
+                {
+                    new PostImageViewModel
+                    {
+                        Id = keepImageId,
+                        PostId = id,
+                        MarkForDeletion = false
+                    },
+                    new PostImageViewModel
+                    {
+                        Id = deletedImageId,
+                        PostId = id,
+                        MarkForDeletion = true
+                    }
+                }
+            };
+
             var sut = GetSubjectUnderTest();
 
             // Act
             sut.Save(model);
 
             // Assert
-            _mockRepository.Verify(r => r.Update(It.Is<Post>(p => p.Id == _testData[10].Id)), Times.Once);
+            _mockPostsRepository.Verify(r => r.Update(It.Is<Post>(p => p.Id == id)), Times.Once);
+            _mockImageRepository.Verify(r => r.Delete(deletedImageId), Times.Once);
+            _mockImageRepository.Verify(r => r.Delete(keepImageId), Times.Never);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 
@@ -167,7 +194,7 @@ namespace CorTabernaclChoir.Tests.Services
             sut.Delete(model);
 
             // Assert
-            _mockRepository.Verify(r => r.Delete(model), Times.Once);
+            _mockPostsRepository.Verify(r => r.Delete(model), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
     }
