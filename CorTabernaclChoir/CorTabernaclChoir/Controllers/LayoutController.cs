@@ -22,7 +22,6 @@ namespace CorTabernaclChoir.Controllers
 
         [Route("~/Layout/Banner")]
         [WelshRoute("Cynllun/Baner")]
-        [OutputCache(Duration=60)]
         public ActionResult Banner()
         {
             return PartialView("_Banner", _service.GetMusicalDirectorName());
