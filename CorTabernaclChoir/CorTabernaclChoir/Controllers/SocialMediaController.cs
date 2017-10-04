@@ -50,13 +50,13 @@ namespace CorTabernaclChoir.Controllers
         [Route("~/SocialMedia/Add")]
         [ValidateAntiForgeryToken]
         [Title(nameof(SocialMediaAddTitle))]
-        public ActionResult Add(SocialMediaViewModel model, HttpPostedFileBase logo)
+        public ActionResult Add(SocialMediaViewModel model, HttpPostedFileBase image)
         {
-            ValidateLogo(logo, model.ImageFileId, nameof(model.ImageFileId));
+            ValidateLogo(image, model.ImageFileId, nameof(model.ImageFileId));
 
             if (ModelState.IsValid)
             {
-                var imageFile = logo == null ? null : _uploadedFileService.Convert(logo);
+                var imageFile = image == null ? null : _uploadedFileService.Convert(image);
 
                 _service.Add(model, imageFile);
 

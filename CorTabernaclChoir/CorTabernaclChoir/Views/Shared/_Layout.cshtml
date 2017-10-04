@@ -10,6 +10,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/toastr")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
@@ -33,29 +34,12 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/custom")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/toastr")
 
     @RenderSection("scripts", required: false)
-
-    <script type="text/javascript">
-        $(function () {
-
-            var toggleLanguage = function () {
-                $.post({
-                    url: "/Home/ToggleLanguage",
-                    success: function(data) {
-                        window.location.reload();
-                    }
-                });
-            }
-
-            $("#ToggleLanguage").click(toggleLanguage);
-        });
-    </script>
     
     @Html.Partial("_Message")
 

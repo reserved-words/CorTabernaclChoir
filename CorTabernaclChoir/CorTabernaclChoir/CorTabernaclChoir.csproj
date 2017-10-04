@@ -384,6 +384,7 @@
     <Content Include="Views\News\Item.cshtml" />
     <Content Include="Views\Shared\_PostItem.cshtml" />
     <Content Include="Views\Visits\Item.cshtml" />
+    <Content Include="Views\Shared\_UploadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

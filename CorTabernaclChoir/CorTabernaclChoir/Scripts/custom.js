@@ -1,4 +1,29 @@
-﻿$(function () {
+﻿var readURL = function (input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#uploadedImage').attr('src', e.target.result);
+            $('#uploadedImage').attr('alt', input.files[0].name);
+            $('#uploadedImage').removeClass("hidden");
+            $('#cancelUploadImage').removeClass("hidden");
+            $('#uploadImagePlaceholder').addClass("hidden");
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+var toggleLanguage = function () {
+    $.post({
+        url: "/Home/ToggleLanguage",
+        success: function (data) {
+            window.location.reload();
+        }
+    });
+}
+
+$(function () {
 
     $.each($(".md"),
         function (index, value) {
@@ -8,5 +33,19 @@
                 status: false
             });
         });
+
+    $("#ToggleLanguage").click(toggleLanguage);
+
+    $("#fileUpload").change(function () {
+        readURL(this);
+    });
+
+    $("#cancelUploadImage").click(function () {
+        $('#uploadedImage').attr('src', "");
+        $('#uploadedImage').attr('alt', "");
+        $('#uploadedImage').addClass("hidden");
+        $('#cancelUploadImage').addClass("hidden");
+        $('#uploadImagePlaceholder').removeClass("hidden");
+    });
 
 });
