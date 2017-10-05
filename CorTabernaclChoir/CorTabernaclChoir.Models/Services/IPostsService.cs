@@ -11,5 +11,6 @@ namespace CorTabernaclChoir.Common.Services
         int Save(EditPostViewModel model);
         int SaveImage(int postId, string fileExtension);
         void Delete(Post model);
+        void DeleteImage(int testImageId);
     }
 }

@@ -142,5 +142,19 @@ namespace CorTabernaclChoir.Services
                 uow.Commit();
             }
         }
+
+        public void DeleteImage(int id)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var image = uow.Repository<PostImage>().GetById(id);
+
+                image.Post.PostImages.Remove(image);
+
+                uow.Repository<PostImage>().Delete(id);
+
+                uow.Commit();
+            }
+        }
     }
 }

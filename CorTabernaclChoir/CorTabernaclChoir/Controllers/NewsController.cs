@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
@@ -70,9 +71,11 @@ namespace CorTabernaclChoir.Controllers
             {
                 SavePost(model, image);
 
-                MessageContainer.AddSaveSuccessMessage();
-
-                return RedirectToIndex();
+                if (ModelState.IsValid)
+                {
+                    MessageContainer.AddSaveSuccessMessage();
+                    return RedirectToIndex();
+                }
             }
 
             MessageContainer.AddSaveErrorMessage();
@@ -102,9 +105,11 @@ namespace CorTabernaclChoir.Controllers
             {
                 SavePost(model, image);
 
-                MessageContainer.AddSaveSuccessMessage();
-
-                return RedirectToIndex();
+                if (ModelState.IsValid)
+                {
+                    MessageContainer.AddSaveSuccessMessage();
+                    return RedirectToIndex();
+                }
             }
 
             MessageContainer.AddSaveErrorMessage();
@@ -146,7 +151,17 @@ namespace CorTabernaclChoir.Controllers
 
             var imageFileExtension = _uploadedFileValidator.GetFileExtension(image);
             var imageId = _service.SaveImage(postId, imageFileExtension);
-            _uploadedFileService.SaveImage(image, ImageType.Post, imageId, imageFileExtension);
+            
+            try
+            {
+                _uploadedFileService.SaveImage(image, ImageType.Post, imageId, imageFileExtension);
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                _service.DeleteImage(imageId);
+                ModelState.AddModelError("", PostImageSaveErrorMessage);
+            }
         }
 
         private void ValidateUploadedImage(HttpPostedFileBase file)

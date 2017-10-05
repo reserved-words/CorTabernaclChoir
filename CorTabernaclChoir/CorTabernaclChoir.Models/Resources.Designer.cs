@@ -439,6 +439,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The post was saved successfully but there was an unexpected error saving the uploaded image..
+        /// </summary>
+        public static string PostImageSaveErrorMessage {
+            get {
+                return ResourceManager.GetString("PostImageSaveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ./Images/Posts/{0}.jpg.
         /// </summary>
         public static string PostImageUrl {

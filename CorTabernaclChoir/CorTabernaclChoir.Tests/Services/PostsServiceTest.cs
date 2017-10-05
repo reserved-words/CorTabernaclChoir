@@ -9,14 +9,20 @@ using System.Linq;
 using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
+using FluentAssertions;
 
 namespace CorTabernaclChoir.Tests.Services
 {
     [TestClass]
     public class PostsServiceTest
     {
+        private const int TestImageId = 5436;
+
         private readonly DateTime _mockCurrentTime = new DateTime(2017,1,1);
         private readonly List<Post> _testData = TestData.Posts();
+
+        private readonly PostImage _testPostImage = new PostImage {Id = TestImageId};
+        private readonly Post _testPostWithImage = new Post();
 
         private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IRepository<Post>> _mockPostsRepository;
@@ -41,12 +47,16 @@ namespace CorTabernaclChoir.Tests.Services
             _mockAppSettingsService = new Mock<IAppSettingsService>();
             _mockAppSettingsService.Setup(s => s.NumberOfItemsPerPage).Returns(_postsPerPage);
 
+            _testPostWithImage.PostImages = new List<PostImage> { _testPostImage };
+            _testPostImage.Post = _testPostWithImage;
+
             var mockGetCurrentTime = new GetCurrentTime(() => _mockCurrentTime);
 
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockPostsRepository = new Mock<IRepository<Post>>();
             _mockImageRepository = new Mock<IRepository<PostImage>>();
             _mockPostsRepository.Setup(r => r.Including(n => n.PostImages)).Returns(_testData.AsQueryable());
+            _mockImageRepository.Setup(r => r.GetById(TestImageId)).Returns(_testPostImage);
             _mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(_mockPostsRepository.Object);
             _mockUnitOfWork.Setup(u => u.Repository<PostImage>()).Returns(_mockImageRepository.Object);
 
@@ -195,6 +205,22 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Assert
             _mockPostsRepository.Verify(r => r.Delete(model), Times.Once);
+            _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
+        }
+
+        [TestMethod]
+        public void DeleteImage_DeletesImage()
+        {
+            // Arrange
+            var sut = GetSubjectUnderTest();
+            
+
+            // Act
+            sut.DeleteImage(TestImageId);
+
+            // Assert
+            _testPostWithImage.PostImages.Count(im => im.Id == TestImageId).Should().Be(0);
+            _mockImageRepository.Verify(r => r.Delete(TestImageId), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
     }

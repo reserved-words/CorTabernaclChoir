@@ -243,6 +243,9 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="PostImageSaveErrorMessage" xml:space="preserve">
+    <value>The post was saved successfully but there was an unexpected error saving the uploaded image.</value>
+  </data>
   <data name="PostImageUrl" xml:space="preserve">
     <value>./Images/Posts/{0}.jpg</value>
   </data>

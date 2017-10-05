@@ -1,4 +1,5 @@
-﻿using CorTabernaclChoir.Common.Models;
+﻿using System;
+using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Controllers;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Interfaces;
 using FluentAssertions;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Tests.Controllers
 {
@@ -212,6 +214,32 @@ namespace CorTabernaclChoir.Tests.Controllers
         }
 
         [TestMethod]
+        public void AddModel_GivenImageFileSaveFails_ReturnsError()
+        {
+            // Arrange
+            var model = new EditPostViewModel();
+            var subjectUnderTest = GetSubjectUnderTest(true, true);
+            _mockUploadedFileService
+                .Setup(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()))
+                .Throws<Exception>();
+
+            // Act
+            var result = subjectUnderTest.Add(model, _mockUploadedImage.Object) as ViewResult;
+
+            // Assert
+            _mockService.Verify(s => s.Save(model), Times.Once);
+            _mockService.Verify(s => s.SaveImage(TestId, TestFileExtension), Times.Once);
+            _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), TestImageId, TestFileExtension), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
+            _mockService.Verify(s => s.DeleteImage(TestImageId), Times.Once);
+            subjectUnderTest.ModelState.IsValid.Should().BeFalse();
+            subjectUnderTest.ModelState[""].Errors.Count.Should().Be(1);
+            subjectUnderTest.ModelState[""].Errors[0].ErrorMessage.Should().Be(PostImageSaveErrorMessage);
+            result.Model.Should().Be(model);
+            result.ViewName.Should().Be("");
+        }
+
+        [TestMethod]
         public void Edit_ReturnsCorrectView()
         {
             // Arrange
@@ -303,6 +331,32 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockService.Verify(s => s.SaveImage(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
+            result.Model.Should().Be(model);
+            result.ViewName.Should().Be("");
+        }
+
+        [TestMethod]
+        public void EditModel_GivenImageFileSaveFails_ReturnsError()
+        {
+            // Arrange
+            var model = new EditPostViewModel();
+            var subjectUnderTest = GetSubjectUnderTest(true, true);
+            _mockUploadedFileService
+                .Setup(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()))
+                .Throws<Exception>();
+
+            // Act
+            var result = subjectUnderTest.Edit(model, _mockUploadedImage.Object) as ViewResult;
+
+            // Assert
+            _mockService.Verify(s => s.Save(model), Times.Once);
+            _mockService.Verify(s => s.SaveImage(TestId, TestFileExtension), Times.Once);
+            _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), TestImageId, TestFileExtension), Times.Once);
+            _mockMessageContainer.Verify(m => m.AddSaveErrorMessage());
+            _mockService.Verify(s => s.DeleteImage(TestImageId), Times.Once);
+            subjectUnderTest.ModelState.IsValid.Should().BeFalse();
+            subjectUnderTest.ModelState[""].Errors.Count.Should().Be(1);
+            subjectUnderTest.ModelState[""].Errors[0].ErrorMessage.Should().Be(PostImageSaveErrorMessage);
             result.Model.Should().Be(model);
             result.ViewName.Should().Be("");
         }
