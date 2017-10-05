@@ -55,7 +55,7 @@ namespace CorTabernaclChoir.Controllers
         [Title(nameof(NewsAddTitle))]
         public ActionResult Add()
         {
-            return View(new Post { Type = PostType.News });
+            return View(new EditPostViewModel { Type = PostType.News });
         }
 
         [HttpPost]

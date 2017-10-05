@@ -128,7 +128,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
 
-            var model = result.Model as Post;
+            var model = result.Model as EditPostViewModel;
             Assert.IsNotNull(model);
             Assert.AreEqual(0, model.Id);
             Assert.AreEqual(model.Type, PostType.News);
