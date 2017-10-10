@@ -47,8 +47,12 @@ namespace CorTabernaclChoir.Controllers
             {
                 _service.Save(model);
 
+                MessageContainer.AddSaveSuccessMessage();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            MessageContainer.AddSaveErrorMessage();
 
             return View(model);
         }
