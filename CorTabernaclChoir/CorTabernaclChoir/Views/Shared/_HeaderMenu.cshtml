@@ -39,7 +39,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    @Html.ActionLink(Resources.SwitchLanguageLabel, "ToggleLanguage", "Home", new { returnUrl = Context.Request.Url }, null)
+                    <a href="@ViewBag.TranslatedRoute">@(Resources.SwitchLanguageLabel)</a>
                 </li>
             </ul>
 

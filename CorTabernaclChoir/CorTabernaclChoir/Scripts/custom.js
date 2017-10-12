@@ -14,15 +14,6 @@
     }
 }
 
-var toggleLanguage = function () {
-    $.post({
-        url: "/Home/ToggleLanguage",
-        success: function (data) {
-            window.location.reload();
-        }
-    });
-}
-
 $(function () {
 
     $.each($(".md"),
@@ -33,8 +24,6 @@ $(function () {
                 status: false
             });
         });
-
-    $("#ToggleLanguage").click(toggleLanguage);
 
     $("#fileUpload").change(function () {
         readURL(this);

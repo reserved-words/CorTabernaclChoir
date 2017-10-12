@@ -151,7 +151,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
-            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyCulture].Should().Be(DefaultLanguage);
             result.RouteValues[RouteKeyPage].Should().Be(1);
         }
 
@@ -171,7 +171,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockUploadedFileService.Verify(s => s.SaveImage(_mockUploadedImage.Object, ImageType.Post, TestImageId, TestFileExtension), Times.Once);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
-            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyCulture].Should().Be(DefaultLanguage);
             result.RouteValues[RouteKeyPage].Should().Be(1);
         }
 
@@ -273,7 +273,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockUploadedFileService.Verify(s => s.SaveImage(It.IsAny<HttpPostedFileBase>(), It.IsAny<ImageType>(), It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
-            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyCulture].Should().Be(DefaultLanguage);
             result.RouteValues[RouteKeyPage].Should().Be(1);
         }
 
@@ -293,7 +293,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockUploadedFileService.Verify(s => s.SaveImage(_mockUploadedImage.Object, ImageType.Post, TestImageId, TestFileExtension), Times.Once);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
-            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyCulture].Should().Be(DefaultLanguage);
             result.RouteValues[RouteKeyPage].Should().Be(1);
         }
 
@@ -393,7 +393,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             _mockService.Verify(s => s.Delete(model), Times.Once);
             _mockMessageContainer.Verify(m => m.AddSaveSuccessMessage());
             result.Should().NotBeNull();
-            result.RouteValues[RouteKeyCulture].Should().Be(Resources.DefaultCulture);
+            result.RouteValues[RouteKeyCulture].Should().Be(DefaultLanguage);
             result.RouteValues[RouteKeyPage].Should().Be(1);
         }
     }

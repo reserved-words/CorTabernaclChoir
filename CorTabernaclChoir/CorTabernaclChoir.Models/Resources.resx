@@ -150,7 +150,13 @@
   <data name="ContactTitle" xml:space="preserve">
     <value>Contacting the Choir</value>
   </data>
-  <data name="DefaultCulture" xml:space="preserve">
+  <data name="CultureEnglish" xml:space="preserve">
+    <value>en-GB</value>
+  </data>
+  <data name="CultureWelsh" xml:space="preserve">
+    <value>cy-GB</value>
+  </data>
+  <data name="DefaultLanguage" xml:space="preserve">
     <value>en</value>
   </data>
   <data name="GalleryImageCaption" xml:space="preserve">
@@ -188,6 +194,12 @@
   </data>
   <data name="JoinTitle" xml:space="preserve">
     <value>Joining the Choir</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="LanguageWelsh" xml:space="preserve">
+    <value>cy</value>
   </data>
   <data name="MenuAbout" xml:space="preserve">
     <value>About</value>

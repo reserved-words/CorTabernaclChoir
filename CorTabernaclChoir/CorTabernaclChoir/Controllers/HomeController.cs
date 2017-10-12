@@ -54,15 +54,5 @@ namespace CorTabernaclChoir.Controllers
 
             return View(model);
         }
-
-        [HttpGet]
-        [Route("~/Home/ToggleLanguage")]
-        [WelshRoute("Hafan/NewidIaith")]
-        public ActionResult ToggleLanguage(string culture)
-        {
-            var newCulture = _cultureService.ToggleCulture(culture);
-
-            return RedirectToAction(nameof(Index), new { culture = newCulture });
-        }
     }
 }

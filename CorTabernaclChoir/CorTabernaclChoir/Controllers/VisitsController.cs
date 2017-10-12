@@ -134,7 +134,7 @@ namespace CorTabernaclChoir.Controllers
 
         private ActionResult RedirectToIndex()
         {
-            return RedirectToAction(nameof(Index), new { culture = DefaultCulture, page = 1 });
+            return RedirectToAction(nameof(Index), new { culture = DefaultLanguage, page = 1 });
         }
 
         private void SavePost(EditPostViewModel model, HttpPostedFileBase image)

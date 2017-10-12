@@ -1,10 +1,13 @@
-﻿using CorTabernaclChoir.Common;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using System.Web.Routing;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Attributes
 {
     public class TitleAttribute : ActionFilterAttribute
     {
+        private const string RouteKeyCulture = "culture";
+
         public TitleAttribute(string titleResourceName, string menuResourceName = "")
         {
             TitleResourceName = titleResourceName;
@@ -16,8 +19,19 @@ namespace CorTabernaclChoir.Attributes
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            filterContext.Controller.ViewBag.Title = Resources.ResourceManager.GetString(TitleResourceName);
-            filterContext.Controller.ViewBag.MenuTitle = Resources.ResourceManager.GetString(MenuResourceName);
+            filterContext.Controller.ViewBag.Title = ResourceManager.GetString(TitleResourceName);
+            filterContext.Controller.ViewBag.MenuTitle = ResourceManager.GetString(MenuResourceName);
+
+            var culture = filterContext.RouteData.Values[RouteKeyCulture].ToString() == LanguageWelsh ? LanguageEnglish : LanguageWelsh;
+
+            filterContext.Controller.ViewBag.TranslatedRoute = UrlHelper.GenerateUrl(
+                null,
+                filterContext.ActionDescriptor.ActionName,
+                filterContext.ActionDescriptor.ControllerDescriptor.ControllerName, 
+                new RouteValueDictionary { { RouteKeyCulture, culture } },
+                RouteTable.Routes, 
+                filterContext.RequestContext,
+                false);
 
             base.OnActionExecuted(filterContext);
         }

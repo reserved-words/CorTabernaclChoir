@@ -160,11 +160,29 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to en-GB.
+        /// </summary>
+        public static string CultureEnglish {
+            get {
+                return ResourceManager.GetString("CultureEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cy-GB.
+        /// </summary>
+        public static string CultureWelsh {
+            get {
+                return ResourceManager.GetString("CultureWelsh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to en.
         /// </summary>
-        public static string DefaultCulture {
+        public static string DefaultLanguage {
             get {
-                return ResourceManager.GetString("DefaultCulture", resourceCulture);
+                return ResourceManager.GetString("DefaultLanguage", resourceCulture);
             }
         }
         
@@ -273,6 +291,24 @@ namespace CorTabernaclChoir.Common {
         public static string JoinTitle {
             get {
                 return ResourceManager.GetString("JoinTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string LanguageEnglish {
+            get {
+                return ResourceManager.GetString("LanguageEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cy.
+        /// </summary>
+        public static string LanguageWelsh {
+            get {
+                return ResourceManager.GetString("LanguageWelsh", resourceCulture);
             }
         }
         

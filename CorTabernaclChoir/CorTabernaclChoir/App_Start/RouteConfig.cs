@@ -5,25 +5,23 @@ using CorTabernaclChoir.Controllers;
 using CorTabernaclChoir.Extensions;
 using RouteLocalization.Mvc;
 using RouteLocalization.Mvc.Setup;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir
 {
     public class RouteConfig
     {
-        private const string EnglishLanguage = "en";
-        private const string WelshLanguage = "cy";
-
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapMvcAttributeRoutes(Localization.LocalizationDirectRouteProvider);
             
-            ISet<string> acceptedCultures = new HashSet<string> { EnglishLanguage, WelshLanguage };
+            ISet<string> acceptedCultures = new HashSet<string> { LanguageEnglish, LanguageWelsh };
 
             var configuration = new Configuration
             {
-                DefaultCulture = EnglishLanguage,
+                DefaultCulture = DefaultLanguage,
                 AcceptedCultures = acceptedCultures,
                 AttributeRouteProcessing = AttributeRouteProcessing.AddAsNeutralAndDefaultCultureRoute,
                 AddCultureAsRoutePrefix = true
@@ -33,8 +31,8 @@ namespace CorTabernaclChoir
 
             localization.TranslateInitialAttributeRoutes();
 
-            localization.ForCulture(WelshLanguage)
-                .ForController<HomeController>().AddTranslation(x => x.Index(""), x => x.ToggleLanguage(""))
+            localization.ForCulture(LanguageWelsh)
+                .ForController<HomeController>().AddTranslation(x => x.Index(""))
                 .ForController<LayoutController>().AddTranslation(x => x.Sidebar(""), x => x.Banner())
                 .ForController<AboutController>().AddTranslation(x => x.Index(""))
                 .ForController<GalleryController>().AddTranslation(x => x.Index(""))

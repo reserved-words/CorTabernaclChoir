@@ -36,39 +36,5 @@ namespace CorTabernaclChoir.Tests.Controllers
             Assert.AreEqual(mockViewModel, result.Model);
             Assert.AreEqual("", result.ViewName);
         }
-
-        [TestMethod]
-        public void ToggleLanguage_GivenEnglishCulture_CallsCultureService()
-        {
-            // Arrange
-            var mockHandler = new Mock<IHomeService>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockLogger = new Mock<ILogger>();
-            var mockMessageContainer = new Mock<IMessageContainer>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
-
-            // Act
-            ViewResult result = controller.ToggleLanguage("en") as ViewResult;
-
-            // Assert
-            mockCultureService.Verify(c => c.ToggleCulture("en"), Times.Once);
-        }
-
-        [TestMethod]
-        public void ToggleLanguage_GivenWelshCulture_CallsCultureService()
-        {
-            // Arrange
-            var mockHandler = new Mock<IHomeService>();
-            var mockCultureService = new Mock<ICultureService>();
-            var mockLogger = new Mock<ILogger>();
-            var mockMessageContainer = new Mock<IMessageContainer>();
-            var controller = new HomeController(mockHandler.Object, mockCultureService.Object, mockLogger.Object, mockMessageContainer.Object);
-
-            // Act
-            ViewResult result = controller.ToggleLanguage("cy") as ViewResult;
-
-            // Assert
-            mockCultureService.Verify(c => c.ToggleCulture("cy"), Times.Once);
-        }
     }
 }
