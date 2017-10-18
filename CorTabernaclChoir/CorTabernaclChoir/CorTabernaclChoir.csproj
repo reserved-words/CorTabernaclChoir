@@ -385,6 +385,12 @@
     <Content Include="Views\Shared\_PostItem.cshtml" />
     <Content Include="Views\Visits\Item.cshtml" />
     <Content Include="Views\Shared\_UploadImage.cshtml" />
+    <Content Include="Views\Events\Add.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Events\Item.cshtml" />
+    <Content Include="Views\Events\_Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

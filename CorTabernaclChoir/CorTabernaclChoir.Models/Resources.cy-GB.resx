@@ -183,6 +183,9 @@
   <data name="MenuContact" xml:space="preserve">
     <value>Cysylltu</value>
   </data>
+  <data name="MenuEvents" xml:space="preserve">
+    <value>Digwyddiadau</value>
+  </data>
   <data name="MenuGallery" xml:space="preserve">
     <value>Oriel</value>
   </data>
@@ -230,6 +233,9 @@
   </data>
   <data name="RecordingsTitle" xml:space="preserve">
     <value>Recordiadau</value>
+  </data>
+  <data name="SidebarEventsLink" xml:space="preserve">
+    <value>Cliciwch yma am fwy o ddigwyddiadau</value>
   </data>
   <data name="SidebarFacebookCaption" xml:space="preserve">
     <value>Dilynwch ni ar Facebook</value>

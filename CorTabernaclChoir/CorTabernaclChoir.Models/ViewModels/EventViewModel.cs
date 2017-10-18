@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorTabernaclChoir.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace CorTabernaclChoir.Common.ViewModels
     {
         public EventViewModel()
         {
-            Images = new List<int>();
+            Images = new List<PostImage>();
         }
 
         public int Id { get; set; }
@@ -19,6 +20,7 @@ namespace CorTabernaclChoir.Common.ViewModels
         public string Venue { get; set; }
         public string Address { get; set; }
         public string Details { get; set; }
-        public List<int> Images { get; set; }
+        public DateTime Published { get; set; }
+        public List<PostImage> Images { get; set; }
     }
 }

@@ -10,9 +10,12 @@ namespace CorTabernaclChoir.Common.Services
 {
     public interface IEventsService
     {
-        EventsViewModel Get(int page);
-        Event GetForEdit(int id);
-        void Save(Event model);
+        EventsViewModel GetAll(int page);
+        EventViewModel GetById(int id);
+        EditEventViewModel GetForEdit(int id);
+        int Save(EditEventViewModel model);
+        int SaveImage(int eventId, string fileExtension);
         void Delete(Event model);
+        void DeleteImage(int imageId);
     }
 }

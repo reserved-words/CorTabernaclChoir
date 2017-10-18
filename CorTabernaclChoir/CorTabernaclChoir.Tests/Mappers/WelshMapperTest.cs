@@ -75,6 +75,30 @@ namespace CorTabernaclChoir.Tests.Mappers
         }
 
         [TestMethod]
+        public void MapEvent_ReturnsCorrectModel()
+        {
+            // Arrange
+            var mockCultureService = new Mock<ICultureService>();
+            var testData = TestData.Events().First();
+            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(true);
+
+            var sut = new Mapper.Mapper(mockCultureService.Object);
+
+            // Act
+            var result = sut.Map<Event, EventViewModel>(testData);
+
+            // Assert
+            Assert.AreEqual(testData.Id, result.Id);
+            Assert.AreEqual(testData.Title_W, result.Title);
+            Assert.AreEqual(testData.Date, result.Date);
+            Assert.AreEqual(testData.Content_W, result.Details);
+            Assert.AreEqual(testData.Venue_W, result.Venue);
+            Assert.AreEqual(testData.Address_W, result.Address);
+            Assert.AreEqual(testData.PostImages.First(), result.Images.First());
+            Assert.AreEqual(testData.PostImages.Last(), result.Images.Last());
+        }
+
+        [TestMethod]
         public void MapSocialMedia_ReturnsCorrectModel()
         {
             // Arrange

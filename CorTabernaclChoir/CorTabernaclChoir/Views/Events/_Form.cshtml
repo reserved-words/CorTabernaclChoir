@@ -1,0 +1,81 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.EditEventViewModel
+@using CorTabernaclChoir.Extensions
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Type)
+    @Html.HiddenFor(m => m.Published)
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title_E, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title_E, new { htmlAttributes = new { @class = "form-control", style = "min-width: 100%;" } })
+                @Html.ValidationMessageFor(model => model.Title_E, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title_W, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title_W, new { htmlAttributes = new { @class = "form-control", style = "min-width: 100%;" } })
+                @Html.ValidationMessageFor(model => model.Title_W, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content_E, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Content_E, htmlAttributes: new { @class = "form-control md", rows = 20, style = "min-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.Content_E, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content_W, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Content_W, htmlAttributes: new { @class = "form-control md", rows = 20, style = "min-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.Content_W, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="row">
+                    @for (var i = 0; i < Model.PostImages.Count; i++)
+                    {
+                        @Html.HiddenFor(m => Model.PostImages[i].Id)
+                        @Html.HiddenFor(m => Model.PostImages[i].PostId)
+                        @Html.HiddenFor(m => Model.PostImages[i].FileExtension)
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                @Html.DisplayPostImage(Model.PostImages[i])
+                                <div class="caption">
+                                    @Html.CheckBoxFor(m => Model.PostImages[i].MarkForDeletion)
+                                    @Html.LabelFor(m => Model.PostImages[i].MarkForDeletion)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                    <div class="col-sm-6 col-md-4">                        
+                        @Html.Partial("_UploadImage")
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.DisplaySaveButton()
+                @Html.DisplayCancelButton("./1")
+            </div>
+        </div>
+    </div>
+}

@@ -10,6 +10,5 @@ namespace CorTabernaclChoir.Common.ViewModels
         public List<EventViewModel> Items { get; set; }
         public int? PreviousPage { get; set; }
         public int? NextPage { get; set; }
-        public string ControllerName { get; set; }
     }
 }

@@ -187,6 +187,24 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Event.
+        /// </summary>
+        public static string EventsAddTitle {
+            get {
+                return ResourceManager.GetString("EventsAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Event.
+        /// </summary>
+        public static string EventsEditTitle {
+            get {
+                return ResourceManager.GetString("EventsEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ({1}).
         /// </summary>
         public static string GalleryImageCaption {
@@ -327,6 +345,15 @@ namespace CorTabernaclChoir.Common {
         public static string MenuContact {
             get {
                 return ResourceManager.GetString("MenuContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string MenuEvents {
+            get {
+                return ResourceManager.GetString("MenuEvents", resourceCulture);
             }
         }
         
@@ -543,6 +570,15 @@ namespace CorTabernaclChoir.Common {
         public static string RecordingsTitle {
             get {
                 return ResourceManager.GetString("RecordingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to see all events.
+        /// </summary>
+        public static string SidebarEventsLink {
+            get {
+                return ResourceManager.GetString("SidebarEventsLink", resourceCulture);
             }
         }
         

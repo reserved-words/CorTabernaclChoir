@@ -4,24 +4,30 @@ using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Data.Contracts;
+using CorTabernaclChoir.Common.Delegates;
 
 namespace CorTabernaclChoir.Services
 {
     public class EventsService : IEventsService
     {
         private readonly IMapper _mapper;
+        private readonly ICultureService _cultureService;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
+        private readonly GetCurrentTime _getCurrentTime;
         private readonly int _itemsPerPage;
 
-        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService, IMapper mapper)
+        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService,
+            IMapper mapper, GetCurrentTime getCurrentTime)
         {
-            _unitOfWorkFactory = unitOfWorkFactory;
+            _cultureService = cultureService;
             _mapper = mapper;
+            _unitOfWorkFactory = unitOfWorkFactory;
+            _getCurrentTime = getCurrentTime;
 
             _itemsPerPage = appSettingsService.NumberOfItemsPerPage;
         }
 
-        public EventsViewModel Get(int page)
+        public EventsViewModel GetAll(int page)
         {
             using (var uow = _unitOfWorkFactory())
             {
@@ -47,28 +53,50 @@ namespace CorTabernaclChoir.Services
             }
         }
 
-        public void Save(Event model)
+        public EventViewModel GetById(int id)
         {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var entity = uow.Repository<Event>()
+                    .Including(e => e.PostImages)
+                    .Single(e => e.Id == id);
+
+                return _mapper.Map<Event, EventViewModel>(entity);
+            }
+        }
+
+        public int Save(EditEventViewModel model)
+        {
+            var post = _mapper.Map<EditEventViewModel, Event>(model);
+
             using (var uow = _unitOfWorkFactory())
             {
                 if (model.Id > 0)
                 {
-                    uow.Repository<Event>().Update(model);
+                    uow.Repository<Event>().Update(post);
+
+                    foreach (var image in model.PostImages.Where(im => im.MarkForDeletion))
+                    {
+                        uow.Repository<PostImage>().Delete(image.Id);
+                    }
                 }
                 else
                 {
-                    uow.Repository<Event>().Insert(model);
+                    model.Published = _getCurrentTime();
+                    uow.Repository<Event>().Insert(post);
                 }
 
                 uow.Commit();
+
+                return model.Id;
             }
         }
 
-        public Event GetForEdit(int id)
+        public EditEventViewModel GetForEdit(int id)
         {
             using (var uow = _unitOfWorkFactory())
             {
-                return uow.Repository<Event>().GetById(id);
+                throw new NotImplementedException();
             }
         }
 
@@ -77,6 +105,39 @@ namespace CorTabernaclChoir.Services
             using (var uow = _unitOfWorkFactory())
             {
                 uow.Repository<Event>().Delete(model);
+
+                uow.Commit();
+            }
+        }
+
+        public int SaveImage(int postId, string fileExtension)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var postImage = new PostImage
+                {
+                    PostId = postId,
+                    FileExtension = fileExtension
+                };
+
+                uow.Repository<PostImage>()
+                    .Insert(postImage);
+
+                uow.Commit();
+
+                return postImage.Id;
+            }
+        }
+
+        public void DeleteImage(int id)
+        {
+            using (var uow = _unitOfWorkFactory())
+            {
+                var image = uow.Repository<PostImage>().GetById(id);
+
+                image.Post.PostImages.Remove(image);
+
+                uow.Repository<PostImage>().Delete(id);
 
                 uow.Commit();
             }

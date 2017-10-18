@@ -60,6 +60,7 @@
     <Compile Include="Services\ISocialMediaService.cs" />
     <Compile Include="Services\IYouTubeService.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\EditEventViewModel.cs" />
     <Compile Include="ViewModels\PostImageViewModel.cs" />
     <Compile Include="ViewModels\EventSummaryViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />

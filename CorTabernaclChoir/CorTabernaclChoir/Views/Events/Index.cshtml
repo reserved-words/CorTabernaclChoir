@@ -1,0 +1,30 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.EventsViewModel
+@using CorTabernaclChoir.Extensions
+@using CorTabernaclChoir.Common
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayAddButton(Url.Action("Add", "Events"))
+    </div>
+</div>
+
+<br />
+
+@foreach (var item in Model.Items)
+{
+    @Html.Partial("_PostItem", item)
+}
+
+@if (Model.PreviousPage.HasValue)
+{
+    <small>
+        @Html.ActionLink(Resources.Previous, "Index", Model.ControllerName, new { page = Model.PreviousPage }, new { style = "float: left;" })
+    </small>
+}
+
+@if (Model.NextPage.HasValue)
+{
+    <small>
+        @Html.ActionLink(Resources.Next, "Index", Model.ControllerName, new { page = Model.NextPage }, new { style = "float: right;" })
+    </small>
+}

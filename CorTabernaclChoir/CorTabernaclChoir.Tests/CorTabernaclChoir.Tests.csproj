@@ -102,6 +102,7 @@
     <Compile Include="Controllers\AdminControllerTest.cs" />
     <Compile Include="Controllers\AboutControllerTest.cs" />
     <Compile Include="Controllers\GalleryControllerTest.cs" />
+    <Compile Include="Controllers\EventsControllerTest.cs" />
     <Compile Include="Controllers\SocialMediaControllerTest.cs" />
     <Compile Include="Controllers\LayoutControllerTest.cs" />
     <Compile Include="Controllers\JoinControllerTest.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Mappers\PostMapperTest.cs" />
     <Compile Include="Mappers\WelshMapperTest.cs" />
     <Compile Include="Services\AboutServiceTest.cs" />
+    <Compile Include="Services\EventsServiceTest.cs" />
     <Compile Include="Services\GalleryServiceTest.cs" />
     <Compile Include="Services\SocialMediaServiceTest.cs" />
     <Compile Include="Services\LayoutServiceTest.cs" />

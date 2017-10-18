@@ -159,6 +159,12 @@
   <data name="DefaultLanguage" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="EventsAddTitle" xml:space="preserve">
+    <value>Add Event</value>
+  </data>
+  <data name="EventsEditTitle" xml:space="preserve">
+    <value>Edit Event</value>
+  </data>
   <data name="GalleryImageCaption" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
@@ -206,6 +212,9 @@
   </data>
   <data name="MenuContact" xml:space="preserve">
     <value>Contact</value>
+  </data>
+  <data name="MenuEvents" xml:space="preserve">
+    <value>Events</value>
   </data>
   <data name="MenuGallery" xml:space="preserve">
     <value>Gallery</value>
@@ -278,6 +287,9 @@
   </data>
   <data name="RecordingsTitle" xml:space="preserve">
     <value>Recordings</value>
+  </data>
+  <data name="SidebarEventsLink" xml:space="preserve">
+    <value>Click here to see all events</value>
   </data>
   <data name="SidebarLatestNews" xml:space="preserve">
     <value>Latest News</value>
