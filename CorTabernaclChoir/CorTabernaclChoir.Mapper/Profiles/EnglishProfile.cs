@@ -3,6 +3,7 @@ using AutoMapper;
 using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.ViewModels;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Mapper.Profiles
 {
@@ -41,6 +42,14 @@ namespace CorTabernaclChoir.Mapper.Profiles
                 .ForMember(dest => dest.Address, act => act.MapFrom(src => src.Address_E))
                 .ForMember(dest => dest.Details, act => act.MapFrom(src => src.Content_E))
                 .ForMember(dest => dest.Images, act => act.MapFrom(src => src.PostImages.ToList()));
+
+            CreateMap<Event, EventSummaryViewModel>()
+                .ForMember(dest => dest.Title, act => act.MapFrom(src => src.Title_E))
+                .ForMember(dest => dest.Venue, act => act.MapFrom(src => src.Venue_E))
+                .ForMember(dest => dest.DateTime, act => act.MapFrom(src => string.Format(EventDateTimeFormat, src.Date)));
+
+            CreateMap<Post, PostSummaryViewModel>()
+                .ForMember(dest => dest.Title, act => act.MapFrom(src => src.Title_E));
 
             CreateMap<SocialMediaAccount, SocialMediaViewModel>();
         }

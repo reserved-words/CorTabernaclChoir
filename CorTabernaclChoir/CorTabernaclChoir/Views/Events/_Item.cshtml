@@ -1,0 +1,35 @@
+﻿@model CorTabernaclChoir.Common.ViewModels.EventViewModel
+@using CorTabernaclChoir.Common
+@using CorTabernaclChoir.Extensions
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h4>
+            @Html.DisplayFor(m => m.Title)
+            @Html.DisplayDeleteButton(Url.Action("Delete", "Events", new { id = Model.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+            @Html.DisplayEditButton(Url.Action("Edit", "Events", new { id = Model.Id }), new { @class = "pull-right", style = "margin-left: 5px;" })
+        </h4>
+    </div>
+
+    <div class="panel-body">
+
+        <p>@Html.Markdown(Model.Details)</p>
+
+        <div class="row">
+            @foreach (var image in Model.Images)
+            {
+                <div class="col-sm-6">
+                    <div class="thumbnail">
+                        @Html.DisplayPostImage(image)
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        <i><small>@string.Format(Resources.PostPublished, Model.Published)</small></i>
+    </div>
+</div>

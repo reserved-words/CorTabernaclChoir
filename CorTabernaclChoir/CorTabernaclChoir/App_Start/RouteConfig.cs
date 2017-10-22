@@ -40,7 +40,7 @@ namespace CorTabernaclChoir
                 .ForController<RecordingsController>().AddTranslation(x => x.Index(""))
                 .ForController<WorksController>().AddTranslation(x => x.Index(""))
                 .ForController<NewsController>().AddTranslation(x => x.Index("", 0), x => x.Item("", 0))
-                .ForController<EventsController>().AddTranslation(x => x.Index("", 0), x => x.Item("", 0))
+                .ForController<EventsController>().AddTranslation(x => x.Index(""), x => x.Item("", 0))
                 .ForController<VisitsController>().AddTranslation(x => x.Index("", 0), x => x.Item("", 0));
         }
     }

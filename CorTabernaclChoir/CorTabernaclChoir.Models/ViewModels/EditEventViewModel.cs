@@ -13,6 +13,9 @@ namespace CorTabernaclChoir.Common.ViewModels
 
         public int Id { get; set; }
 
+        [Required]
+        public DateTime Date { get; set; }
+
         [StringLength(200)]
         [Required]
         [Display(Name = "Title (E)")]
@@ -25,35 +28,36 @@ namespace CorTabernaclChoir.Common.ViewModels
 
         [StringLength(2000)]
         [Required]
-        [Display(Name = "Content (E)")]
+        [Display(Name = "Details (E)")]
         public string Content_E { get; set; }
 
         [StringLength(2000)]
         [Required]
-        [Display(Name = "Content (W)")]
+        [Display(Name = "Details (W)")]
         public string Content_W { get; set; }
 
         public DateTime Published { get; set; }
 
         public List<PostImageViewModel> PostImages { get; set; }
 
-        [Required]
-        public DateTime Date { get; set; }
-
         [StringLength(200)]
         [Required]
+        [Display(Name = "Venue (E)")]
         public string Venue_E { get; set; }
 
         [StringLength(200)]
         [Required]
+        [Display(Name = "Venue (W)")]
         public string Venue_W { get; set; }
 
         [StringLength(200)]
         [Required]
+        [Display(Name = "Address (E)")]
         public string Address_E { get; set; }
 
         [StringLength(200)]
         [Required]
+        [Display(Name = "Address (W)")]
         public string Address_W { get; set; }
     }
     

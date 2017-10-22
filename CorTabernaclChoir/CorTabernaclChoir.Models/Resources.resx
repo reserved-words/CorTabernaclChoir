@@ -159,6 +159,9 @@
   <data name="DefaultLanguage" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="EventDateTimeFormat" xml:space="preserve">
+    <value>{0:dd MMMM yyyy} at {0:h\:mm tt}</value>
+  </data>
   <data name="EventsAddTitle" xml:space="preserve">
     <value>Add Event</value>
   </data>

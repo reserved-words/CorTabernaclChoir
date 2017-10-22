@@ -187,6 +187,15 @@ namespace CorTabernaclChoir.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0:dd MMMM yyyy} at {0:h\:mm tt}.
+        /// </summary>
+        public static string EventDateTimeFormat {
+            get {
+                return ResourceManager.GetString("EventDateTimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Event.
         /// </summary>
         public static string EventsAddTitle {

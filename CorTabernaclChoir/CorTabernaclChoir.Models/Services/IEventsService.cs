@@ -1,16 +1,11 @@
 ﻿using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorTabernaclChoir.Common.Services
 {
     public interface IEventsService
     {
-        EventsViewModel GetAll(int page);
+        EventsViewModel GetAll();
         EventViewModel GetById(int id);
         EditEventViewModel GetForEdit(int id);
         int Save(EditEventViewModel model);

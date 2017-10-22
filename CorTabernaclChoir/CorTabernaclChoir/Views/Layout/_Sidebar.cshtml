@@ -44,8 +44,9 @@
                 @foreach (var item in Model.UpcomingEvents)
                 {
                     <li>
-                        @Html.DisplayDateFor(m => item.Date)<br />
-                        @Html.ActionLink(item.Title, "Item", "Events", new { id = item.Id }, null)
+                        @Html.ActionLink(item.Title, "Item", "Events", new { id = item.Id }, null)<br />
+                        @Html.DisplayFor(m => item.DateTime)<br />
+                        @Html.DisplayFor(m => item.Venue)
                     </li>
                 }
 

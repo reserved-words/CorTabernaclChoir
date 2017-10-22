@@ -11,44 +11,38 @@ namespace CorTabernaclChoir.Services
     public class EventsService : IEventsService
     {
         private readonly IMapper _mapper;
-        private readonly ICultureService _cultureService;
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
         private readonly GetCurrentTime _getCurrentTime;
-        private readonly int _itemsPerPage;
 
-        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, ICultureService cultureService, IAppSettingsService appSettingsService,
-            IMapper mapper, GetCurrentTime getCurrentTime)
+        public EventsService(Func<IUnitOfWork> unitOfWorkFactory, IMapper mapper, GetCurrentTime getCurrentTime)
         {
-            _cultureService = cultureService;
             _mapper = mapper;
             _unitOfWorkFactory = unitOfWorkFactory;
             _getCurrentTime = getCurrentTime;
-
-            _itemsPerPage = appSettingsService.NumberOfItemsPerPage;
         }
 
-        public EventsViewModel GetAll(int page)
+        public EventsViewModel GetAll()
         {
             using (var uow = _unitOfWorkFactory())
             {
-                var totalItems = uow.Repository<Event>()
-                    .Including(n => n.PostImages)
-                    .Count();
-
-                var maximumPageNumber = (double)totalItems / _itemsPerPage;
+                var currentTime = _getCurrentTime();
 
                 return new EventsViewModel
                 {
-                    PageNo = page,
-                    Items = uow.Repository<Event>()
+                    Upcoming = uow.Repository<Event>()
                         .Including(n => n.PostImages)
-                        .OrderByDescending(n => n.Date)
-                        .Skip((page - 1) * _itemsPerPage)
-                        .Take(_itemsPerPage)
+                        .Where(n => n.Date >= currentTime)
+                        .OrderBy(n => n.Date)
+                        .ToList()
                         .Select(n => _mapper.Map<Event,EventViewModel>(n))
                         .ToList(),
-                    PreviousPage = page == 1 ? (int?)null : page - 1,
-                    NextPage = (page >= maximumPageNumber) ? (int?)null : (page + 1)
+                    Past = uow.Repository<Event>()
+                        .Including(n => n.PostImages)
+                        .Where(n => n.Date < currentTime)
+                        .OrderByDescending(n => n.Date)
+                        .ToList()
+                        .Select(n => _mapper.Map<Event, EventSummaryViewModel>(n))
+                        .ToList()
                 };
             }
         }
@@ -82,7 +76,7 @@ namespace CorTabernaclChoir.Services
                 }
                 else
                 {
-                    model.Published = _getCurrentTime();
+                    post.Published = _getCurrentTime();
                     uow.Repository<Event>().Insert(post);
                 }
 

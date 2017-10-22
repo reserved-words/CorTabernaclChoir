@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using static CorTabernaclChoir.Common.Resources;
 
 namespace CorTabernaclChoir.Tests.Mappers
 {
@@ -75,11 +77,30 @@ namespace CorTabernaclChoir.Tests.Mappers
         }
 
         [TestMethod]
+        public void MapPostToSummary_ReturnsCorrectModel()
+        {
+            // Arrange
+            var mockCultureService = new Mock<ICultureService>();
+            var testData = TestData.Posts().First();
+            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(true);
+
+            var sut = new Mapper.Mapper(mockCultureService.Object);
+
+            // Act
+            var result = sut.Map<Post, PostSummaryViewModel>(testData);
+
+            // Assert
+            Assert.AreEqual(testData.Id, result.Id);
+            Assert.AreEqual(testData.Title_W, result.Title);
+            Assert.AreEqual(testData.Published, result.Published);
+        }
+
+        [TestMethod]
         public void MapEvent_ReturnsCorrectModel()
         {
             // Arrange
             var mockCultureService = new Mock<ICultureService>();
-            var testData = TestData.Events().First();
+            var testData = TestData.Events(new DateTime(2017, 1, 1)).First();
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(true);
 
             var sut = new Mapper.Mapper(mockCultureService.Object);
@@ -96,6 +117,27 @@ namespace CorTabernaclChoir.Tests.Mappers
             Assert.AreEqual(testData.Address_W, result.Address);
             Assert.AreEqual(testData.PostImages.First(), result.Images.First());
             Assert.AreEqual(testData.PostImages.Last(), result.Images.Last());
+        }
+
+        [TestMethod]
+        public void MapEventToSummary_ReturnsCorrectModel()
+        {
+            // Arrange
+            var mockCultureService = new Mock<ICultureService>();
+            var testData = TestData.Events(new DateTime(2017, 1, 1)).First();
+            mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(true);
+
+            var sut = new Mapper.Mapper(mockCultureService.Object);
+
+            // Act
+            var result = sut.Map<Event, EventSummaryViewModel>(testData);
+
+            // Assert
+            Assert.AreEqual(testData.Id, result.Id);
+            Assert.AreEqual(testData.Title_W, result.Title);
+            Assert.AreEqual(testData.Date, result.Date);
+            Assert.AreEqual(string.Format(EventDateTimeFormat, testData.Date), result.DateTime);
+            Assert.AreEqual(testData.Venue_W, result.Venue);
         }
 
         [TestMethod]

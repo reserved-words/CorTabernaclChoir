@@ -12,22 +12,22 @@ namespace CorTabernaclChoir.Services
     {
         private readonly Func<IUnitOfWork> _unitOfWorkFactory;
         private readonly ICultureService _cultureService;
+        private readonly IMapper _mapper;
         private readonly IAppSettingsService _appSettingsService;
         private readonly GetCurrentTime _getCurrentTime;
 
-        public LayoutService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService, 
-            ICultureService cultureService, GetCurrentTime getCurrentTime)
+        public LayoutService(Func<IUnitOfWork> unitOfWorkFactory, IAppSettingsService appSettingsService,
+            IMapper mapper, GetCurrentTime getCurrentTime, ICultureService cultureService)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
-            _cultureService = cultureService;
+            _mapper = mapper;
             _appSettingsService = appSettingsService;
             _getCurrentTime = getCurrentTime;
+            _cultureService = cultureService;
         }
 
         public SidebarViewModel GetSidebar()
         {
-            var welsh = _cultureService.IsCurrentCultureWelsh();
-
             using (var uow = _unitOfWorkFactory())
             {
                 var socialMediaLinks = uow.Repository<SocialMediaAccount>().GetAll()
@@ -48,13 +48,7 @@ namespace CorTabernaclChoir.Services
                     .OrderBy(e => e.Date)
                     .Take(_appSettingsService.NumberOfEventsInSidebar)
                     .ToList()
-                    .Select(e => new EventSummaryViewModel
-                    {
-                        Id = e.Id,
-                        Title = welsh ? e.Title_W : e.Title_E,
-                        Date = e.Date,
-                        Venue = welsh ? e.Venue_W : e.Venue_E
-                    })
+                    .Select(e => _mapper.Map<Event, EventSummaryViewModel>(e))
                     .ToList();
 
                 var latestNews = uow.Repository<Post>().GetAll()
@@ -62,12 +56,7 @@ namespace CorTabernaclChoir.Services
                     .OrderByDescending(p => p.Published)
                     .Take(_appSettingsService.NumberOfNewsItemsInSidebar)
                     .ToList()
-                    .Select(n => new PostSummaryViewModel
-                    {
-                        Id = n.Id,
-                        Published = n.Published,
-                        Title = welsh ? n.Title_W : n.Title_E
-                    })
+                    .Select(n => _mapper.Map<Post,PostSummaryViewModel>(n))
                     .ToList();
 
                 var contact = uow.Repository<Contact>().GetSingle();
@@ -77,7 +66,9 @@ namespace CorTabernaclChoir.Services
                     SocialMediaLinks = socialMediaLinks,
                     UpcomingEvents = upcomingEvents,
                     LatestNews = latestNews,
-                    ContactInformation = welsh ? contact.MainText_W : contact.MainText_E
+                    ContactInformation = _cultureService.IsCurrentCultureWelsh() 
+                        ? contact.MainText_W 
+                        : contact.MainText_E
                 };
             }
         }

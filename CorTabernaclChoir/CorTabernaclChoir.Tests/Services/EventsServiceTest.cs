@@ -19,33 +19,30 @@ namespace CorTabernaclChoir.Tests.Services
         private const int TestImageId = 5436;
 
         private readonly DateTime _mockCurrentTime = new DateTime(2017, 1, 1);
-        private readonly List<Event> _testData = TestData.Events();
-
         private readonly PostImage _testPostImage = new PostImage { Id = TestImageId };
         private readonly Event _testPostWithImage = new Event();
 
         private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<IRepository<Event>> _mockEventsRepository;
         private Mock<IRepository<PostImage>> _mockImageRepository;
-        private Mock<IAppSettingsService> _mockAppSettingsService;
         private Mock<IMapper> _mockMapper;
 
-        private int _itemsPerPage;
+        private List<Event> _testData;
 
-        private EventsService GetSubjectUnderTest(int postsPerPage = 5)
+        private EventsService GetSubjectUnderTest()
         {
+            _testData = TestData.Events(_mockCurrentTime);
+
             var mockCultureService = new Mock<ICultureService>();
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
 
             _mockMapper = new Mock<IMapper>();
             _mockMapper.Setup(m => m.Map<Event, EventViewModel>(It.IsAny<Event>()))
                 .Returns<Event>(p => new EventViewModel { Id = p.Id });
+            _mockMapper.Setup(m => m.Map<Event, EventSummaryViewModel>(It.IsAny<Event>()))
+                .Returns<Event>(p => new EventSummaryViewModel { Id = p.Id });
             _mockMapper.Setup(m => m.Map<EditEventViewModel, Event>(It.IsAny<EditEventViewModel>()))
                 .Returns<EditEventViewModel>(p => new Event { Id = p.Id });
-
-            _itemsPerPage = postsPerPage;
-            _mockAppSettingsService = new Mock<IAppSettingsService>();
-            _mockAppSettingsService.Setup(s => s.NumberOfItemsPerPage).Returns(_itemsPerPage);
 
             _testPostWithImage.PostImages = new List<PostImage> { _testPostImage };
             _testPostImage.Post = _testPostWithImage;
@@ -60,69 +57,43 @@ namespace CorTabernaclChoir.Tests.Services
             _mockUnitOfWork.Setup(u => u.Repository<Event>()).Returns(_mockEventsRepository.Object);
             _mockUnitOfWork.Setup(u => u.Repository<PostImage>()).Returns(_mockImageRepository.Object);
 
-            return new EventsService(() => _mockUnitOfWork.Object, mockCultureService.Object, _mockAppSettingsService.Object,
-                _mockMapper.Object, mockGetCurrentTime);
+            return new EventsService(() => _mockUnitOfWork.Object, _mockMapper.Object, mockGetCurrentTime);
         }
 
         [TestMethod]
-        public void Get_GivenPage1News_ReturnsCorrectModel()
+        public void Get_ReturnsCorrectModel()
         {
             // Arrange
-            var pageNo = 1;
             var sut = GetSubjectUnderTest();
 
             // Act
-            var result = sut.GetAll(pageNo);
+            var result = sut.GetAll();
 
             // Assert
-            Assert.AreEqual(pageNo, result.PageNo);
-            Assert.IsNull(result.PreviousPage);
-            Assert.AreEqual(pageNo + 1, result.NextPage);
-            Assert.AreEqual(_itemsPerPage, result.Items.Count);
-
-            var itemsShouldBe = _testData
-                .OrderByDescending(t => t.Published)
-                .Skip(_itemsPerPage * (pageNo - 1))
-                .Take(_itemsPerPage)
+            var upcomingItemsShouldBe = _testData
+                .Where(t => t.Date >= _mockCurrentTime)
+                .OrderBy(t => t.Date)
                 .ToList();
 
-            Assert.AreEqual(itemsShouldBe.First().Id, result.Items.First().Id);
-            Assert.AreEqual(itemsShouldBe.Last().Id, result.Items.Last().Id);
-        }
-
-        [TestMethod]
-        public void Get_GivenLastPageVisits_ReturnsCorrectModel()
-        {
-            // Arrange
-            var pageNo = 3;
-            var sut = GetSubjectUnderTest(10);
-
-            // Act
-            var result = sut.GetAll(pageNo);
-
-            // Assert
-            Assert.AreEqual(pageNo, result.PageNo);
-            Assert.AreEqual(pageNo - 1, result.PreviousPage);
-            Assert.IsNull(result.NextPage);
-            Assert.AreEqual(5, result.Items.Count);
-
-            var itemsShouldBe = _testData
-                .OrderByDescending(t => t.Published)
-                .Skip(_itemsPerPage * (pageNo - 1))
-                .Take(_itemsPerPage)
+            var pastItemsShouldBe = _testData
+                .Where(t => t.Date < _mockCurrentTime)
+                .OrderByDescending(t => t.Date)
                 .ToList();
 
-            Assert.AreEqual(itemsShouldBe.First().Id, result.Items.First().Id);
-            Assert.AreEqual(itemsShouldBe.Last().Id, result.Items.Last().Id);
+            Assert.AreEqual(upcomingItemsShouldBe.Count, result.Upcoming.Count);
+            Assert.AreEqual(upcomingItemsShouldBe.First().Id, result.Upcoming.First().Id);
+            Assert.AreEqual(upcomingItemsShouldBe.Last().Id, result.Upcoming.Last().Id);
+            Assert.AreEqual(pastItemsShouldBe.Count, result.Past.Count);
+            Assert.AreEqual(pastItemsShouldBe.First().Id, result.Past.First().Id);
+            Assert.AreEqual(pastItemsShouldBe.Last().Id, result.Past.Last().Id);
         }
 
         [TestMethod]
         public void GetById_ReturnsCorrectModel()
         {
             // Arrange
-            var testId = _testData[5].Id;
-
             var sut = GetSubjectUnderTest();
+            var testId = _testData[5].Id;
 
             // Act
             var result = sut.GetById(testId);
@@ -133,7 +104,7 @@ namespace CorTabernaclChoir.Tests.Services
         }
 
         [TestMethod]
-        public void Save_GivenNewRecord_InsertsPost()
+        public void Save_GivenNewRecord_InsertsEvent()
         {
             // Arrange
             var model = new EditEventViewModel { Id = 0 };
@@ -143,8 +114,7 @@ namespace CorTabernaclChoir.Tests.Services
             sut.Save(model);
 
             // Assert
-            Assert.AreEqual(_mockCurrentTime, model.Published);
-            _mockEventsRepository.Verify(r => r.Insert(It.Is<Event>(p => p.Id == 0)), Times.Once);
+            _mockEventsRepository.Verify(r => r.Insert(It.Is<Event>(p => p.Id == 0 && p.Published == _mockCurrentTime)), Times.Once);
             _mockUnitOfWork.Verify(u => u.Commit(), Times.Once);
         }
 
@@ -152,6 +122,7 @@ namespace CorTabernaclChoir.Tests.Services
         public void Save_GivenExistingRecord_UpdatesPost()
         {
             // Arrange
+            var sut = GetSubjectUnderTest();
             var id = _testData[10].Id;
             var deletedImageId = 55;
             var keepImageId = 56;
@@ -175,8 +146,6 @@ namespace CorTabernaclChoir.Tests.Services
                 }
             };
 
-            var sut = GetSubjectUnderTest();
-
             // Act
             sut.Save(model);
 
@@ -191,8 +160,8 @@ namespace CorTabernaclChoir.Tests.Services
         public void Delete_DeletesEvent()
         {
             // Arrange
-            var model = _testData[2];
             var sut = GetSubjectUnderTest();
+            var model = _testData[2];
 
             // Act
             sut.Delete(model);

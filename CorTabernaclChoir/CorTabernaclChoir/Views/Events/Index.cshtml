@@ -1,6 +1,5 @@
 ﻿@model CorTabernaclChoir.Common.ViewModels.EventsViewModel
 @using CorTabernaclChoir.Extensions
-@using CorTabernaclChoir.Common
 
 <div class="row">
     <div class="col-xs-12">
@@ -8,23 +7,23 @@
     </div>
 </div>
 
-<br />
+<h4>Upcoming Events</h4>
 
-@foreach (var item in Model.Items)
+@foreach (var item in Model.Upcoming)
 {
-    @Html.Partial("_PostItem", item)
-}
+    @Html.Partial("_Item", item)
+}       
 
-@if (Model.PreviousPage.HasValue)
-{
-    <small>
-        @Html.ActionLink(Resources.Previous, "Index", Model.ControllerName, new { page = Model.PreviousPage }, new { style = "float: left;" })
-    </small>
-}
+<h4>Past Events</h4>
 
-@if (Model.NextPage.HasValue)
-{
-    <small>
-        @Html.ActionLink(Resources.Next, "Index", Model.ControllerName, new { page = Model.NextPage }, new { style = "float: right;" })
-    </small>
-}
+<div class="panel panel-default">
+    <table class="table table-striped table-condensed">
+        @foreach (var item in Model.Past)
+        {
+            <tr>
+                <td style="width: 10em;">@Html.DisplayDateFor(m => item.Date)</td>
+                <td>@Html.ActionLink(item.Title, "Item", "Events", new { id = item.Id }, null)</td>
+            </tr>
+        }
+    </table>
+</div>

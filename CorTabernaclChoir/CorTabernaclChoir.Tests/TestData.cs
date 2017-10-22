@@ -1,4 +1,5 @@
-﻿using CorTabernaclChoir.Common.Models;
+﻿using System;
+using CorTabernaclChoir.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -154,7 +155,7 @@ namespace CorTabernaclChoir.Tests
             return list;
         }
 
-        public static List<Event> Events()
+        public static List<Event> Events(DateTime currentTime)
         {
             var list = new List<Event>();
 
@@ -163,7 +164,7 @@ namespace CorTabernaclChoir.Tests
                 list.Add(new Event
                 {
                     Id = i + 1,
-                    Date = new System.DateTime(2000, 1, 1, 14, 15, 2).AddDays(-1 * i),
+                    Date = currentTime.AddDays(-10 + 1*i),
                     Content_E = "Some content in English " + i,
                     Content_W = "Some content in Welsh " + i,
                     Title_E = "English Title " + i,

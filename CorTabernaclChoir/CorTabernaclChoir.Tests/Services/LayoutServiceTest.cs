@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
+using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Services;
 using CorTabernaclChoir.Data.Contracts;
 using FluentAssertions;
@@ -16,15 +17,18 @@ namespace CorTabernaclChoir.Tests.Services
     public class LayoutServiceTest
     {
         private readonly List<Post> _posts = TestData.Posts();
-        private readonly List<Event> _events = TestData.Events();
         private readonly List<SocialMediaAccount> _socialMediaAccounts = TestData.SocialMediaAccounts();
         private readonly Contact _contact = TestData.Contact();
         private readonly int _numberOfNewsItems = 5;
         private readonly int _numberOfEvents = 2;
         private readonly DateTime _currentDateTime = new DateTime(1999, 12, 25);
 
+        private List<Event> _events;
+
         private LayoutService GetService(bool cultureIsWelsh)
         {
+            _events = TestData.Events(_currentDateTime);
+
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockPostsRepository = new Mock<IRepository<Post>>();
             var mockEventsRepository = new Mock<IRepository<Event>>();
@@ -32,6 +36,7 @@ namespace CorTabernaclChoir.Tests.Services
             var mockContactRepository = new Mock<IRepository<Contact>>();
             var mockSystemVariablesService = new Mock<IAppSettingsService>();
             var mockCultureService = new Mock<ICultureService>();
+            var mockMapper = new Mock<IMapper>();
 
             mockUnitOfWork.Setup(u => u.Repository<Post>()).Returns(mockPostsRepository.Object);
             mockUnitOfWork.Setup(u => u.Repository<Event>()).Returns(mockEventsRepository.Object);
@@ -46,13 +51,19 @@ namespace CorTabernaclChoir.Tests.Services
             mockSystemVariablesService.Setup(s => s.NumberOfNewsItemsInSidebar).Returns(_numberOfNewsItems);
             mockSystemVariablesService.Setup(s => s.NumberOfNewsItemsInSidebar).Returns(_numberOfNewsItems);
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(cultureIsWelsh);
+            mockMapper.Setup(m => m.Map<Event, EventSummaryViewModel>(It.IsAny<Event>()))
+                .Returns<Event>(e => new EventSummaryViewModel { Id = e.Id, Date = e.Date });
+            mockMapper.Setup(m => m.Map<Post, PostSummaryViewModel>(It.IsAny<Post>()))
+                .Returns<Post>(p => new PostSummaryViewModel {Id = p.Id, Published = p.Published });
+
             GetCurrentTime mockGetCurrentTime = () => _currentDateTime;
 
             return new LayoutService(
                 () => mockUnitOfWork.Object,
                 mockSystemVariablesService.Object,
-                mockCultureService.Object,
-                mockGetCurrentTime);
+                mockMapper.Object,
+                mockGetCurrentTime,
+                mockCultureService.Object);
         }
 
         [TestMethod]
@@ -75,11 +86,11 @@ namespace CorTabernaclChoir.Tests.Services
 
             var firstNewsItem = result.LatestNews.First();
             var originalFirstNewsItem = _posts.Single(p => p.Id == firstNewsItem.Id);
-            firstNewsItem.Title.Should().Be(originalFirstNewsItem.Title_E);
+            firstNewsItem.Id.Should().Be(originalFirstNewsItem.Id);
 
             var firstEvent = result.UpcomingEvents.First();
             var originalFirstEvent = _events.Single(p => p.Id == firstEvent.Id);
-            firstEvent.Title.Should().Be(originalFirstEvent.Title_E);
+            firstEvent.Id.Should().Be(originalFirstEvent.Id);
 
             var firstSocialMedia = result.SocialMediaLinks.First();
             var originalFirstSocialMedia = _socialMediaAccounts.Single(p => p.Url == firstSocialMedia.Url);
@@ -107,11 +118,11 @@ namespace CorTabernaclChoir.Tests.Services
 
             var firstNewsItem = result.LatestNews.First();
             var originalFirstNewsItem = _posts.Single(p => p.Id == firstNewsItem.Id);
-            firstNewsItem.Title.Should().Be(originalFirstNewsItem.Title_W);
+            firstNewsItem.Id.Should().Be(originalFirstNewsItem.Id);
 
             var firstEvent = result.UpcomingEvents.First();
             var originalFirstEvent = _events.Single(p => p.Id == firstEvent.Id);
-            firstEvent.Title.Should().Be(originalFirstEvent.Title_W);
+            firstEvent.Id.Should().Be(originalFirstEvent.Id);
 
             var firstSocialMedia = result.SocialMediaLinks.First();
             var originalFirstSocialMedia = _socialMediaAccounts.Single(p => p.Url == firstSocialMedia.Url);

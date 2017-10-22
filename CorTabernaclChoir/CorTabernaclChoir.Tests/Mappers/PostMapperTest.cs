@@ -83,7 +83,7 @@ namespace CorTabernaclChoir.Tests.Mappers
         {
             // Arrange
             var mockCultureService = new Mock<ICultureService>();
-            var testData = TestData.Events().First();
+            var testData = TestData.Events(new DateTime(2017,1,1)).First();
             mockCultureService.Setup(s => s.IsCurrentCultureWelsh()).Returns(false);
 
             var sut = new Mapper.Mapper(mockCultureService.Object);

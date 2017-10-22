@@ -20,6 +20,9 @@
                 <li class="@(ViewBag.MenuTitle == Resources.MenuNews ? "active" : "")">
                     @Html.ActionLink(Resources.MenuNews, "Index", "News", new { page = 1 }, null)
                 </li>
+                <li class="@(ViewBag.MenuTitle == Resources.MenuEvents ? "active" : "")">
+                    @Html.ActionLink(Resources.MenuEvents, "Index", "Events")
+                </li>
                 <li class="@(ViewBag.MenuTitle == Resources.MenuRecordings ? "active" : "")">
                     @Html.ActionLink(Resources.MenuRecordings, "Index", "Recordings")
                 </li>

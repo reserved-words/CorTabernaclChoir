@@ -31,13 +31,13 @@ namespace CorTabernaclChoir.Controllers
             _uploadedFileService = uploadedFileService;
         }
 
-        [Route("~/Events/{page}")]
-        [WelshRoute("Digwyddiadau/{page}")]
-        public ActionResult Index(string culture, int page)
+        [Route("~/Events")]
+        [WelshRoute("Digwyddiadau")]
+        public ActionResult Index(string culture)
         {
             _cultureService.ValidateCulture(culture);
 
-            return View(_service.GetAll(page));
+            return View(_service.GetAll());
         }
 
         [Route("~/Events/Item/{id}")]

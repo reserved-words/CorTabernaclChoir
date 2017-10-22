@@ -6,9 +6,13 @@ namespace CorTabernaclChoir.Common.ViewModels
 {
     public class EventsViewModel
     {
-        public int PageNo { get; set; }
-        public List<EventViewModel> Items { get; set; }
-        public int? PreviousPage { get; set; }
-        public int? NextPage { get; set; }
+        public EventsViewModel()
+        {
+            Upcoming = new List<EventViewModel>();
+            Past = new List<EventSummaryViewModel>();
+        }
+
+        public List<EventViewModel> Upcoming { get; set; }
+        public List<EventSummaryViewModel> Past { get; set; }
     }
 }

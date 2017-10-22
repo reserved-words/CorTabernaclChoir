@@ -147,6 +147,9 @@
   <data name="ContactTitle" xml:space="preserve">
     <value>Cysylltu â'r Côr</value>
   </data>
+  <data name="EventDateTimeFormat" xml:space="preserve">
+    <value>{0:dd MMMM yyyy} am {0:h\:mm tt}</value>
+  </data>
   <data name="GenericErrorMessage" xml:space="preserve">
     <value>Roedd problem annisgwyl. Ymddiheurwn am unrhyw anghyfleuster. Os yw'r broblem yn parhau cysylltwch â ni os gwelwch yn dda.</value>
   </data>

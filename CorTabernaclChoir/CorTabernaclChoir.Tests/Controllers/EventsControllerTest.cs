@@ -27,7 +27,7 @@ namespace CorTabernaclChoir.Tests.Controllers
         private const string RouteKeyPage = "page";
         private const string TestFileExtension = ".smt";
 
-        private readonly EventsViewModel _mockEventsViewModel = new EventsViewModel { PageNo = TestPageNo, Items = new List<EventViewModel>() };
+        private readonly EventsViewModel _mockEventsViewModel = new EventsViewModel();
         private readonly EventViewModel _mockEventViewModel = new EventViewModel { Id = TestId };
         private readonly EditEventViewModel _mockEvent = new EditEventViewModel { Id = TestId};
 
@@ -52,7 +52,7 @@ namespace CorTabernaclChoir.Tests.Controllers
             var maxImageSize = 500;
             var validImageFileExtensions = new [] {".test"};
 
-            _mockService.Setup(h => h.GetAll(TestPageNo)).Returns(_mockEventsViewModel);
+            _mockService.Setup(h => h.GetAll()).Returns(_mockEventsViewModel);
             _mockService.Setup(h => h.GetById(TestId)).Returns(_mockEventViewModel);
             _mockService.Setup(h => h.GetForEdit(TestId)).Returns(_mockEvent);
             _mockService.Setup(s => s.Save(It.IsAny<EditEventViewModel>())).Returns(TestId);
@@ -87,10 +87,10 @@ namespace CorTabernaclChoir.Tests.Controllers
             var sut = GetSubjectUnderTest();
 
             // Act
-            var result = sut.Index("en", TestPageNo) as ViewResult;
+            var result = sut.Index("en") as ViewResult;
 
             // Assert
-            _mockService.Verify(h => h.GetAll(TestPageNo), Times.Once);
+            _mockService.Verify(h => h.GetAll(), Times.Once);
             _mockCultureService.Verify(c => c.ValidateCulture("en"), Times.Once);
 
             Assert.IsNotNull(result);
