@@ -41,6 +41,8 @@ namespace CorTabernaclChoir.Tests.Services
                 .Returns<Event>(p => new EventViewModel { Id = p.Id });
             _mockMapper.Setup(m => m.Map<Event, EventSummaryViewModel>(It.IsAny<Event>()))
                 .Returns<Event>(p => new EventSummaryViewModel { Id = p.Id });
+            _mockMapper.Setup(m => m.Map<Event, EditEventViewModel>(It.IsAny<Event>()))
+                .Returns<Event>(p => new EditEventViewModel { Id = p.Id });
             _mockMapper.Setup(m => m.Map<EditEventViewModel, Event>(It.IsAny<EditEventViewModel>()))
                 .Returns<EditEventViewModel>(p => new Event { Id = p.Id });
 
@@ -97,6 +99,21 @@ namespace CorTabernaclChoir.Tests.Services
 
             // Act
             var result = sut.GetById(testId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(testId, result.Id);
+        }
+
+        [TestMethod]
+        public void GetForEdit_ReturnsCorrectModel()
+        {
+            // Arrange
+            var sut = GetSubjectUnderTest();
+            var testId = _testData[5].Id;
+
+            // Act
+            var result = sut.GetForEdit(testId);
 
             // Assert
             Assert.IsNotNull(result);

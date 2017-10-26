@@ -90,7 +90,11 @@ namespace CorTabernaclChoir.Services
         {
             using (var uow = _unitOfWorkFactory())
             {
-                throw new NotImplementedException();
+                var entity = uow.Repository<Event>()
+                    .Including(e => e.PostImages)
+                    .Single(e => e.Id == id);
+
+                return _mapper.Map<Event, EditEventViewModel>(entity);
             }
         }
 
@@ -122,7 +126,7 @@ namespace CorTabernaclChoir.Services
                 return postImage.Id;
             }
         }
-
+        
         public void DeleteImage(int id)
         {
             using (var uow = _unitOfWorkFactory())
