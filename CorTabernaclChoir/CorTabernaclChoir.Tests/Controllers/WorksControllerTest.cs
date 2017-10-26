@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using CorTabernaclChoir.Common;
 using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Tests.Controllers

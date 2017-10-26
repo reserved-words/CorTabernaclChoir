@@ -1,5 +1,4 @@
-﻿using CorTabernaclChoir.Common;
-using CorTabernaclChoir.Common.Models;
+﻿using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Controllers;
 using CorTabernaclChoir.Interfaces;

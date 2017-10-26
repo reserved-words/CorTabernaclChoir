@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
-using CorTabernaclChoir.Common;
+﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CorTabernaclChoir.Controllers;
 using Moq;

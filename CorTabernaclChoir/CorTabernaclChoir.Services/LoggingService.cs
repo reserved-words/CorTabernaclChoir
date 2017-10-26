@@ -1,5 +1,5 @@
 ﻿using System;
-using CorTabernaclChoir.Common;
+using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Data.Contracts;
 

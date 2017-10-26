@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Delegates\GetCurrentTime.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
-    <Compile Include="ILogger.cs" />
+    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\ContactEmail.cs" />
     <Compile Include="Models\Event.cs" />

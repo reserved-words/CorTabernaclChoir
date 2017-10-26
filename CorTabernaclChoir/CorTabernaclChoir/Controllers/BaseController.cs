@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
-using CorTabernaclChoir.Common;
+﻿using System;
+using System.Web.Mvc;
+using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
 
 namespace CorTabernaclChoir.Controllers
@@ -30,6 +31,11 @@ namespace CorTabernaclChoir.Controllers
         public ActionResult Error()
         {
             return View("Error");
+        }
+
+        protected void LogError(Exception ex, string message)
+        {
+            _logger.Error(ex, Request.Url?.ToString(), message);
         }
     }
 }

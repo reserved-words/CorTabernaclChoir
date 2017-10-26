@@ -1,8 +1,8 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
-using CorTabernaclChoir.Common;
 using System.Web.Mvc;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Interfaces;
@@ -70,9 +70,11 @@ namespace CorTabernaclChoir.Controllers
             {
                 SavePost(model, image);
 
-                MessageContainer.AddSaveSuccessMessage();
-
-                return RedirectToIndex();
+                if (ModelState.IsValid)
+                {
+                    MessageContainer.AddSaveSuccessMessage();
+                    return RedirectToIndex();
+                }
             }
 
             MessageContainer.AddSaveErrorMessage();
@@ -102,9 +104,11 @@ namespace CorTabernaclChoir.Controllers
             {
                 SavePost(model, image);
 
-                MessageContainer.AddSaveSuccessMessage();
-
-                return RedirectToIndex();
+                if (ModelState.IsValid)
+                {
+                    MessageContainer.AddSaveSuccessMessage();
+                    return RedirectToIndex();
+                }
             }
 
             MessageContainer.AddSaveErrorMessage();
@@ -146,7 +150,17 @@ namespace CorTabernaclChoir.Controllers
 
             var imageFileExtension = _uploadedFileValidator.GetFileExtension(image);
             var imageId = _service.SaveImage(postId, imageFileExtension);
-            _uploadedFileService.SaveImage(image, ImageType.Post, imageId, imageFileExtension);
+
+            try
+            {
+                _uploadedFileService.SaveImage(image, ImageType.Post, imageId, imageFileExtension);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, "Error saving visit post image");
+                _service.DeleteImage(imageId);
+                ModelState.AddModelError("", PostImageSaveErrorMessage);
+            }
         }
 
         private void ValidateUploadedImage(HttpPostedFileBase file)

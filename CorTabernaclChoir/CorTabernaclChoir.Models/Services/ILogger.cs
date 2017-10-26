@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorTabernaclChoir.Common
+namespace CorTabernaclChoir.Common.Services
 {
     public interface ILogger
     {

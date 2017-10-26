@@ -3,7 +3,6 @@ using System.Web;
 using CorTabernaclChoir.Common.Models;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Attributes;
-using CorTabernaclChoir.Common;
 using System.Web.Mvc;
 using CorTabernaclChoir.Common.ViewModels;
 using CorTabernaclChoir.Interfaces;
@@ -158,7 +157,7 @@ namespace CorTabernaclChoir.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception
+                LogError(ex, "Error saving news post image");
                 _service.DeleteImage(imageId);
                 ModelState.AddModelError("", PostImageSaveErrorMessage);
             }

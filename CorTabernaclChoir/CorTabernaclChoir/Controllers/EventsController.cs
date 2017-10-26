@@ -158,7 +158,7 @@ namespace CorTabernaclChoir.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception
+                LogError(ex, "Error saving event image");
                 _service.DeleteImage(imageId);
                 ModelState.AddModelError("", PostImageSaveErrorMessage);
             }
