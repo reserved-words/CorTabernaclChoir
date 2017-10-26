@@ -3,6 +3,7 @@ using CorTabernaclChoir.Common.Delegates;
 using CorTabernaclChoir.Common.Services;
 using CorTabernaclChoir.Interfaces;
 using CorTabernaclChoir.Messages;
+using Ninject.Web.Common.WebHost;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CorTabernaclChoir.App_Start.NinjectWebCommon), "Stop")]
